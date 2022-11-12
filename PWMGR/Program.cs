@@ -11,6 +11,9 @@ newLabel.Draw();
 newLabel.Text = "someText";
 newLabel.Draw();
 
+Label newLabel2 = new Label(new Point(0, 0), "This is a Label!", 9, Alignment.Right);
+newLabel.Draw();
+
 
 RadioButtonGroup radioGroup = new RadioButtonGroup();
 RadioButton r1 = new RadioButton(new Point(0, 13), "Radio 1");
@@ -26,6 +29,8 @@ radioGroup.DrawItems();
 
 Menu mainMenu = new Menu();
 CheckBox checkBox = new CheckBox(new Point(0, 11), "CheckBox");
+TextField textField = new TextField(new Point(0, 4), 40, "enter stuff here");
+
 MenuItem op1 = new MenuItem(new Point(0, 5), "Option 1") 
 {
     action = delegate
@@ -79,12 +84,22 @@ MenuItem op3 = new MenuItem(new Point(0, 9), "Click Me after Checkbox!")
         }
     }
 };
+MenuItem op4 = new MenuItem(new Point(0, 10), "Print text in TextEntry")
+{
+    action = delegate
+    {
+        Console.SetCursorPosition(0, 20);
+        Console.Write(textField.text);
+    }
+};
 
-
+mainMenu.Add(textField);
 mainMenu.Add(op1);
 mainMenu.Add(op2);
 mainMenu.Add(op3);
+mainMenu.Add(op4);
 mainMenu.Add(checkBox);
+
 
 mainMenu.DrawItems();
 mainMenu.isMonitoringInput = true;

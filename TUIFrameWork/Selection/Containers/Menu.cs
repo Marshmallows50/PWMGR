@@ -40,6 +40,7 @@ public class Menu : Selector
     {
         while (isMonitoringInput)
         {
+            Console.CursorVisible = false;
             ConsoleKeyInfo keyInfo = Console.ReadKey();
             // TODO: Make this a switch statement
             if (keyInfo.Key == ConsoleKey.UpArrow)
