@@ -6,13 +6,19 @@ public abstract class Selector
     protected List<ISelectable> selectableItems;
     protected ISelectable selected;
     public bool isMonitoringInput;
-    
-    // methods
-    public abstract void Add(ISelectable item);
 
+    
+    #region Abstract Methods
+    //Determines which menu item is selected and what to do with it.
+    public abstract void MonitorInput();
+    public abstract void Add(ISelectable item);
+    #endregion
+
+    #region Regular Methods
     public void Remove(ISelectable item)
     {
         selectableItems.Remove(item);
+        UnSetAsChild(item);
     }
 
     public void DrawItems()
@@ -23,6 +29,17 @@ public abstract class Selector
         }
     }
 
-    //Determines which menu item is selected and what to do with it.
-    public abstract void MonitorInput();
+    protected void SetAsChild(ISelectable item)
+    {
+        item.ParentSelector = this;
+    }
+
+    private void UnSetAsChild(ISelectable item)
+    {
+        item.ParentSelector = null;
+    }
+    #endregion
+
+
+
 }

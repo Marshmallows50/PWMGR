@@ -6,6 +6,7 @@ public class RadioButtonGroup : Selector
 {
     // fields
     public int indexOfToggled;
+    
     //properties
     public bool IsEscapable { get; }
     public bool HasToggled { get; internal set; }
@@ -30,6 +31,7 @@ public class RadioButtonGroup : Selector
             {
                 selected = selectableItems[0];
             }
+            SetAsChild(item);
         }
         else
         {

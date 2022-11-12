@@ -1,11 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using TUIFrameWork.Selection.Components;
 using TUIFrameWork.Selection.Containers;
-using TUIFrameWork;
+using TUIFrameWork.Selection;
 using TUIFrameWork.Components;
+using TUIFrameWork;
 
 
 Label newLabel = new Label(new Point(0, 0), "This is a Label!", 10, Alignment.Center);
+newLabel.Draw();
+newLabel.Text = "someText";
 newLabel.Draw();
 
 

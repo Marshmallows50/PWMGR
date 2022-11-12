@@ -12,6 +12,9 @@ public class MenuItem : ISelectable
     private string text;
     public Action? action;
     
+    //properties
+    public Selector? ParentSelector { get; set; }
+
     #region Contructor
     // ctor for MenuItem
     public MenuItem(Point position, string text)

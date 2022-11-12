@@ -1,6 +1,7 @@
+using TUIFrameWork.Selection;
 namespace TUIFrameWork.Components;
 
-public enum Alignment { Left, Center, Right }
+
 
 public class Label
 {

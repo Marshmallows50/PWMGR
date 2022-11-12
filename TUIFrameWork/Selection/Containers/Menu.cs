@@ -33,6 +33,7 @@ public class Menu : Selector
         {
             selected = selectableItems[0];
         }
+        SetAsChild(item);
     }
     
     public override void MonitorInput()

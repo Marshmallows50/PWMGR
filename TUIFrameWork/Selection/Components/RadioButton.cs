@@ -6,9 +6,10 @@ public class RadioButton : ISelectable
     //fields
     private Point position;
     private string text;
-    
+
     //properties
     public bool Toggled { get; private set; }
+    public Selector? ParentSelector { get; set; }
 
     #region Constructor
     public RadioButton(Point position, string text)
