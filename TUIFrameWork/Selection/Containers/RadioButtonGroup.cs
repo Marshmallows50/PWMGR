@@ -101,6 +101,7 @@ public class RadioButtonGroup : Selector
             }
             else if (keyInfo.Key == ConsoleKey.Escape && IsEscapable)
             {
+                selected.Deselect();
                 isMonitoringInput = false;
             }
         }
