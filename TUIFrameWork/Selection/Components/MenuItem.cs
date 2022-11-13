@@ -1,3 +1,4 @@
+using TUIFrameWork.Containers;
 namespace TUIFrameWork.Selection.Components;
 
 
@@ -8,18 +9,18 @@ namespace TUIFrameWork.Selection.Components;
 public class MenuItem : ISelectable
 {   
     //fields
-    private Point position;
     private string text;
     public Action? action;
     
     //properties
     public Selector? ParentSelector { get; set; }
-
+    public Point Position {  get; set; }
+    
     #region Contructor
     // ctor for MenuItem
-    public MenuItem(Point position, string text)
+    public MenuItem(string text, Point? position=null)
     {
-        this.position = position;
+        Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
     }
     #endregion
@@ -28,16 +29,16 @@ public class MenuItem : ISelectable
     // Generic Draw method for our menu items.
     public void Draw()
     {
+        Frame.SetCursorToPoint(Position);
         Console.BackgroundColor = ConsoleColor.Black;
-        Panel.SetCursorToPoint(position);
         Console.Write(text);
     }
 
     //Highlighter for currently selected menu item.
     public void Select()
     {
+        Frame.SetCursorToPoint(Position);
         Console.BackgroundColor = ConsoleColor.Gray;
-        Panel.SetCursorToPoint(position);
         Console.Write(text);
         Console.BackgroundColor = ConsoleColor.Black;
     }

@@ -4,22 +4,23 @@ using TUIFrameWork.Selection.Containers;
 using TUIFrameWork.Selection;
 using TUIFrameWork.Components;
 using TUIFrameWork;
+using TUIFrameWork.Containers;
 
 
-Label newLabel = new Label(new Point(0, 0), "This is a Label!", 10, Alignment.Center);
+Label newLabel = new Label("This is a Label!", 10, Alignment.Center, new Point(0,0));
 newLabel.Draw();
 newLabel.Text = "someText";
 newLabel.Draw();
 
-Label newLabel2 = new Label(new Point(0, 0), "This is a Label!", 9, Alignment.Right);
+Label newLabel2 = new Label("This is a Label!", 9, Alignment.Center, new Point(0,0));
 newLabel.Draw();
 
 
 RadioButtonGroup radioGroup = new RadioButtonGroup();
-RadioButton r1 = new RadioButton(new Point(0, 13), "Radio 1");
-RadioButton r2 = new RadioButton(new Point(0, 14), "Radio 2");
-RadioButton r3 = new RadioButton(new Point(0, 15), "Radio 3");
-RadioButton r4 = new RadioButton(new Point(0, 16), "Radio 4");
+RadioButton r1 = new RadioButton("Radio 1", new Point(0, 13));
+RadioButton r2 = new RadioButton("Radio 2", new Point(0, 14));
+RadioButton r3 = new RadioButton("Radio 3", new Point(0, 15));
+RadioButton r4 = new RadioButton("Radio 4", new Point(0, 16));
 
 radioGroup.Add(r1);
 radioGroup.Add(r2);
@@ -28,19 +29,20 @@ radioGroup.Add(r4);
 radioGroup.DrawItems();
 
 Menu mainMenu = new Menu();
-CheckBox checkBox = new CheckBox(new Point(0, 11), "CheckBox");
-TextField textField = new TextField(new Point(0, 4), 40, "enter stuff here");
+CheckBox checkBox = new CheckBox("CheckBox", new Point(0, 11));
+TextField textField = new TextField(40, "enter stuff here", new Point(0, 4));
 
-MenuItem op1 = new MenuItem(new Point(0, 5), "Option 1") 
+MenuItem op1 = new MenuItem("Option 1", new Point(0, 5)) 
 {
     action = delegate
     {
         Console.SetCursorPosition(0, 1);
-        Console.Write("Selected Option 1");
+        Console.Write(Frame.WindowHeight + " ");
+        Console.Write(Frame.WindowWidth);
     }
 };
 
-MenuItem op2 = new MenuItem(new Point(0, 7), "Option 2")
+MenuItem op2 = new MenuItem("Option 2", new Point(0, 7))
 {
     action = delegate
     {
@@ -73,7 +75,7 @@ MenuItem op2 = new MenuItem(new Point(0, 7), "Option 2")
     }
 };
 
-MenuItem op3 = new MenuItem(new Point(0, 9), "Click Me after Checkbox!")
+MenuItem op3 = new MenuItem("Click Me after Checkbox!", new Point(0, 9))
 {
     action = delegate
     {
@@ -84,7 +86,7 @@ MenuItem op3 = new MenuItem(new Point(0, 9), "Click Me after Checkbox!")
         }
     }
 };
-MenuItem op4 = new MenuItem(new Point(0, 10), "Print text in TextEntry")
+MenuItem op4 = new MenuItem("Print text in TextEntry", new Point(0, 10))
 {
     action = delegate
     {
@@ -102,5 +104,8 @@ mainMenu.Add(checkBox);
 
 
 mainMenu.DrawItems();
+// Console.Clear();
 mainMenu.isMonitoringInput = true;
 mainMenu.MonitorInput();
+
+Console.ReadKey();

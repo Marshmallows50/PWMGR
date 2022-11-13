@@ -1,16 +1,15 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
-using TUIFrameWork.Selection;
+using TUIFrameWork.Containers;
 namespace TUIFrameWork.Selection.Components;
 
 public class TextField : ISelectable
 {
     //fields
-    private Point position;
     private int length;
     private bool M;
-    StringBuilder sb;
+    private StringBuilder sb;
     
     private string placeHolder;
 
@@ -19,11 +18,12 @@ public class TextField : ISelectable
     
     //properties
     public Selector? ParentSelector { get; set; }
+    public Point Position {  get; set; }
 
     #region Constructor
-    public TextField(Point position, int length, string placeHolder=" ")
+    public TextField(int length, string placeHolder=" ", Point? position=null)
     {
-        this.position = position;
+        Position = position ?? Frame.GetCursorPositionAsPoint();
         this.length = length;
         this.placeHolder = placeHolder;
     }
@@ -33,10 +33,10 @@ public class TextField : ISelectable
     public void Draw()
     {
         Console.BackgroundColor = ConsoleColor.White;
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         Console.Write(new string(' ',length));
         
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
         switch (isModified)
         {
@@ -56,10 +56,10 @@ public class TextField : ISelectable
     public void Select()
     {
         Console.BackgroundColor = ConsoleColor.DarkGray;
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         Console.Write(new string(' ',length));
         
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
         switch (isModified)
         {
@@ -84,11 +84,11 @@ public class TextField : ISelectable
     public void Act()
     {
         Console.CursorVisible = true;
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
         Console.BackgroundColor = ConsoleColor.DarkGray;
         Console.Write(new string(' ',length));
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         if (isModified)
         {
             M = true;
@@ -141,10 +141,10 @@ public class TextField : ISelectable
 
     private void WriteCurrent()
     {
-        int x = position.X+sb.Length;
-        Console.SetCursorPosition(x,position.Y);
+        int x = Position.X+sb.Length;
+        Console.SetCursorPosition(x,Position.Y);
         Console.Write(" ");
-        Console.SetCursorPosition(x,position.Y);
+        Console.SetCursorPosition(x,Position.Y);
 
     }
     private void ResetColors()

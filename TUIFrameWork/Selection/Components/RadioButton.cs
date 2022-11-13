@@ -1,20 +1,20 @@
-using TUIFrameWork.Selection;
+using TUIFrameWork.Containers;
 namespace TUIFrameWork.Selection.Components;
 
 public class RadioButton : ISelectable
 {
     //fields
-    private Point position;
     private string text;
 
     //properties
     public bool Toggled { get; private set; }
     public Selector? ParentSelector { get; set; }
+    public Point Position {  get; set; }
 
     #region Constructor
-    public RadioButton(Point position, string text)
+    public RadioButton(string text, Point? position=null)
     {
-        this.position = position;
+        Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
     }
     #endregion
@@ -50,7 +50,7 @@ public class RadioButton : ISelectable
     #region Functionality Methods
     private void UpdateConsole()
     {
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         if (Toggled)
             Console.Write($"{text}: (X)");
         else

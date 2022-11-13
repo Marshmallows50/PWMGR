@@ -1,19 +1,20 @@
-namespace TUIFrameWork.Selection.Components; 
+using TUIFrameWork.Containers;
+namespace TUIFrameWork.Selection.Components;
 
 public class CheckBox : ISelectable
 {
     //fields
-    private Point position;
     private string text;
 
     // properties
     public bool Toggled { get; private set; }
     public Selector? ParentSelector { get; set; }
+    public Point Position {  get; set; }
     
     #region Constructor
-    public CheckBox(Point position, string text)
+    public CheckBox(string text, Point? position=null)
     {
-        this.position = position;
+        Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
     }
     #endregion
@@ -50,7 +51,7 @@ public class CheckBox : ISelectable
     #region Functionality Methods
     private void UpdateConsole()
     {
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
         if (Toggled)
             Console.Write($"{text}: [X]");
         else

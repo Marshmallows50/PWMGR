@@ -17,6 +17,8 @@ Table
 HorizontalLine
 DropDown
 ---------------
+!!!IMPORTANT: make HorizontalMenu and HorizontalRadioButtonGroup classes.
+
 Have TextInputField be a fixed length and scroll text on overflow
 Code Cleanup for Selector.cs, Menu.cs, and RadioButtonGroup.cs
 add option to choose colors (fg and bg) for every component

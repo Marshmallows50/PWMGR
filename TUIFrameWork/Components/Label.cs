@@ -1,27 +1,35 @@
+using System.Linq.Expressions;
+using TUIFrameWork.Containers;
 using TUIFrameWork.Selection;
 namespace TUIFrameWork.Components;
 
 
 
-public class Label
+public class Label : IComponent
 {
-    public string Text { get; set; }
-    
-    private Point position;
+    //fields
     private int margin;
-    private Alignment alignment; 
+    private Alignment alignment;
+    
+    //properties
+    public string Text { get; set; }
+    public Point Position {  get; set; }
 
-    public Label(Point position, string text, int margin=0, Alignment alignment=Alignment.Left)
+    #region Constructor
+    public Label(string text, int margin=0, Alignment alignment=Alignment.Left, Point? position=null)
     {
-        this.position = position;
         Text = text;
         this.margin = margin;
         this.alignment = alignment;
+        Position = position ?? Frame.GetCursorPositionAsPoint();
     }
+    #endregion
 
+    #region Interface Methods
     public void Draw()
     {
-        Panel.SetCursorToPoint(position);
+        Frame.SetCursorToPoint(Position);
+        Frame.SetCursorToPoint(Position);
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         switch (alignment)
         {
@@ -37,4 +45,6 @@ public class Label
                 break;
         }
     }
+    #endregion
+    
 }
