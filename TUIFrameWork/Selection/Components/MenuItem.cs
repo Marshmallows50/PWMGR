@@ -15,13 +15,15 @@ public class MenuItem : ISelectable
     //properties
     public Selector? ParentSelector { get; set; }
     public Point Position {  get; set; }
-    
+    public int width { get; set; }
+
     #region Contructor
     // ctor for MenuItem
     public MenuItem(string text, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
+        ProcessWidth();
     }
     #endregion
     
@@ -54,6 +56,11 @@ public class MenuItem : ISelectable
     {
         if (action != null) //If an action has been set
             action();
+    }
+    
+    public void ProcessWidth()
+    {
+        width = text.Length;
     }
     #endregion
 }

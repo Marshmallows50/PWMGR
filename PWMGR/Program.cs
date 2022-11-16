@@ -9,7 +9,7 @@ using TUIFrameWork.Containers;
 
 Label newLabel = new Label("This is a Label!", 10, Alignment.Center, new Point(0,0));
 newLabel.Draw();
-newLabel.Text = "someText";
+newLabel.SetText("SomeText");
 newLabel.Draw();
 
 Label newLabel2 = new Label("This is a Label!", 9, Alignment.Center, new Point(0,0));
@@ -22,13 +22,14 @@ RadioButton r2 = new RadioButton("Radio 2", new Point(0, 14));
 RadioButton r3 = new RadioButton("Radio 3", new Point(0, 15));
 RadioButton r4 = new RadioButton("Radio 4", new Point(0, 16));
 
-radioGroup.Add(r1);
-radioGroup.Add(r2);
-radioGroup.Add(r3);
-radioGroup.Add(r4);
+// radioGroup.Add(r1);
+// radioGroup.Add(r2);
+// radioGroup.Add(r3);
+// radioGroup.Add(r4);
 radioGroup.DrawItems();
 
-Menu mainMenu = new Menu();
+Console.SetCursorPosition(0, 4);
+Menu mainMenu = new Menu(false, LayoutDirection.Row, 2);
 CheckBox checkBox = new CheckBox("CheckBox", new Point(0, 11));
 TextField textField = new TextField(40, "enter stuff here", new Point(0, 4));
 
@@ -82,7 +83,7 @@ MenuItem op3 = new MenuItem("Click Me after Checkbox!", new Point(0, 9))
         if (checkBox.Toggled)
         {
             Console.SetCursorPosition(0, 2);
-            Console.Write("Selected Option 3");
+            Console.Write($"the width is: {mainMenu.width} and the height is: {mainMenu.height}");
         }
     }
 };
@@ -96,11 +97,11 @@ MenuItem op4 = new MenuItem("Print text in TextEntry", new Point(0, 10))
 };
 
 mainMenu.Add(textField);
-mainMenu.Add(op1);
-mainMenu.Add(op2);
+// mainMenu.Add(op1);
+// mainMenu.Add(op2);
 mainMenu.Add(op3);
 mainMenu.Add(op4);
-mainMenu.Add(checkBox);
+// mainMenu.Add(checkBox);
 
 
 mainMenu.DrawItems();

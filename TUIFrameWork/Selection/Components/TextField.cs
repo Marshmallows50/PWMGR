@@ -7,7 +7,6 @@ namespace TUIFrameWork.Selection.Components;
 public class TextField : ISelectable
 {
     //fields
-    private int length;
     private bool M;
     private StringBuilder sb;
     
@@ -19,12 +18,13 @@ public class TextField : ISelectable
     //properties
     public Selector? ParentSelector { get; set; }
     public Point Position {  get; set; }
+    public int width { get; set; }
 
     #region Constructor
-    public TextField(int length, string placeHolder=" ", Point? position=null)
+    public TextField(int width, string placeHolder=" ", Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
-        this.length = length;
+        this.width = width;
         this.placeHolder = placeHolder;
     }
     #endregion
@@ -34,7 +34,7 @@ public class TextField : ISelectable
     {
         Console.BackgroundColor = ConsoleColor.White;
         Frame.SetCursorToPoint(Position);
-        Console.Write(new string(' ',length));
+        Console.Write(new string(' ',width));
         
         Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
@@ -57,7 +57,7 @@ public class TextField : ISelectable
     {
         Console.BackgroundColor = ConsoleColor.DarkGray;
         Frame.SetCursorToPoint(Position);
-        Console.Write(new string(' ',length));
+        Console.Write(new string(' ',width));
         
         Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
@@ -87,7 +87,7 @@ public class TextField : ISelectable
         Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
         Console.BackgroundColor = ConsoleColor.DarkGray;
-        Console.Write(new string(' ',length));
+        Console.Write(new string(' ',width));
         Frame.SetCursorToPoint(Position);
         if (isModified)
         {
@@ -102,6 +102,9 @@ public class TextField : ISelectable
 
 
     }
+
+    public void ProcessWidth(){} //not needed. width is a parameter in constructor.
+
     #endregion
 
     #region Functionality Methods

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TUIFrameWork.Containers;
 using TUIFrameWork.Selection;
 namespace TUIFrameWork.Selection.Containers;
 
@@ -17,10 +18,15 @@ public class Menu : Selector
     
     #region Constructor
     //ctor for Menu.
-    public Menu(bool isEscapable=false)
+    public Menu(bool isEscapable=false, LayoutDirection direction=LayoutDirection.Column, int gap=0, Point? position=null)
     {
+        Position = position ?? Frame.GetCursorPositionAsPoint();
         selectableItems = new List<ISelectable>();
         IsEscapable = isEscapable;
+        
+        this.gap = gap;
+        this.direction = direction;
+        ProcessDimensions();
     }
     #endregion
 
@@ -28,11 +34,41 @@ public class Menu : Selector
     //Adds a menu item to our menu.
     public override void Add(ISelectable item)
     {
+        // TODO: Determine and assign item.Position based off of gap. update width and height
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                if (selectableItems.Count == 0)
+                {
+                    item.Position = new Point(this.Position.X, this.Position.Y);
+                }
+                else
+                {
+                    item.Position = new Point(this.Position.X, this.Position.Y + selectableItems.Count +
+                                                               (selectableItems.Count * gap));
+                }
+                
+                break;
+            case LayoutDirection.Row:
+                if (selectableItems.Count == 0)
+                {
+                    item.Position = new Point(this.Position.X, this.Position.Y);
+                }
+                else
+                {
+                    item.Position = new Point(this.Position.X + width,this.Position.Y);
+                }
+
+                break;
+                
+        }
         selectableItems.Add(item);
+        ProcessDimensions();
         if (selectableItems.Count == 1)
         {
             selected = selectableItems[0];
         }
+        
         SetAsChild(item);
     }
     

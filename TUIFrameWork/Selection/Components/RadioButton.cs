@@ -10,12 +10,14 @@ public class RadioButton : ISelectable
     public bool Toggled { get; private set; }
     public Selector? ParentSelector { get; set; }
     public Point Position {  get; set; }
+    public int width { get; set; }
 
     #region Constructor
     public RadioButton(string text, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
+        ProcessWidth();
     }
     #endregion
 
@@ -45,6 +47,13 @@ public class RadioButton : ISelectable
             Toggled = true;
         UpdateConsole();
     }
+
+
+    public void ProcessWidth()
+    {
+        width = text.Length + 5;
+    }
+    
     #endregion
     
     #region Functionality Methods

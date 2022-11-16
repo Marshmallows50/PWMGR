@@ -1,3 +1,4 @@
+using TUIFrameWork.Containers;
 using TUIFrameWork.Selection;
 using TUIFrameWork.Selection.Components;
 namespace TUIFrameWork.Selection.Containers;
@@ -9,14 +10,19 @@ public class RadioButtonGroup : Selector
     
     //properties
     public bool IsEscapable { get; }
-    public bool HasToggled { get; internal set; }
+    public bool HasToggled { get; private set; }
     
     #region Constructor
     // Constructor
-    public RadioButtonGroup(bool isEscapable=true)
+    public RadioButtonGroup(bool isEscapable=true, LayoutDirection direction=LayoutDirection.Column, int gap=1, Point? position=null)
     {
+        Position = position ?? Frame.GetCursorPositionAsPoint();
         selectableItems = new List<ISelectable>();
         IsEscapable = isEscapable;
+        
+        this.gap = gap;
+        this.direction = direction;
+        ProcessDimensions();
     }
     #endregion
 
@@ -83,7 +89,6 @@ public class RadioButtonGroup : Selector
                     selected.Act();
                     HasToggled = true;
                     indexOfToggled = selectableItems.IndexOf(selected);
-
                 }
                 else
                 {

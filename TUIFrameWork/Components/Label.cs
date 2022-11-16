@@ -10,10 +10,14 @@ public class Label : IComponent
     //fields
     private int margin;
     private Alignment alignment;
-    
+
     //properties
-    public string Text { get; set; }
-    public Point Position {  get; set; }
+    public string Text { get; private set; }
+    public Point Position { get; set; }
+    public int width { get; set; }
+    
+    
+    public int Height { get;}
 
     #region Constructor
     public Label(string text, int margin=0, Alignment alignment=Alignment.Left, Point? position=null)
@@ -22,6 +26,8 @@ public class Label : IComponent
         this.margin = margin;
         this.alignment = alignment;
         Position = position ?? Frame.GetCursorPositionAsPoint();
+        width = Text.Length + this.margin;
+        Height = 1;
     }
     #endregion
 
@@ -46,5 +52,11 @@ public class Label : IComponent
         }
     }
     #endregion
+
+    public void SetText(string text)
+    {
+        Text = text;
+        width = Text.Length + margin;
+    }
     
 }
