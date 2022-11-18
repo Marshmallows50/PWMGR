@@ -2,68 +2,81 @@ using TUIFrameWork.Containers;
 
 namespace TUIFrameWork.Selection;
 
-public abstract class Selector : IComponent
+public abstract class Selector : Container
 {
-    //fields
-    protected LayoutDirection direction;
-    protected int gap;
+    #region Fields and Properties
     protected List<ISelectable> selectableItems;
     protected ISelectable selected;
     public bool isMonitoringInput;
     
-    public ConsoleColor foregroundColor = ConsoleColor.White;
-    public ConsoleColor backgroundColor = ConsoleColor.Black;
+    public bool IsEscapable { get; set; }
+    #endregion
     
     
-    public Point Position {  get; set; }
-    public int width { get; set; }
-    public int height { get; set; }
-
-    
-
-        #region Interface Methods
-    public void Draw()
+    #region Abstract Class Method Overrides
+    public override void Draw()
     {
-        DrawItems();
+        Console.BackgroundColor = backgroundColor;
+        Frame.SetCursorToPoint(Position);
+        for (int i = 0; i < Height; i++)
+        {
+            Console.Write(new string(' ', Width) + "\n");
+        }
+        foreach (ISelectable item in selectableItems)
+        {
+            item.Draw();
+        }
+    }
+    
+    public override void ProcessDimensions()
+    {
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                Height = selectableItems.Count + (selectableItems.Count * gap);
+                
+                int largest = 0;
+                foreach (ISelectable item in selectableItems)
+                {
+                    if (item.Width > largest)
+                        largest = item.Width;
+                }
+
+                Width = largest;
+                break;
+            
+            case LayoutDirection.Row:
+                Width = 0;
+                foreach (ISelectable item in selectableItems)
+                {
+                    Width += item.Width + gap;
+                }
+
+                int tallest = 0;
+                foreach (ISelectable item in selectableItems)
+                {
+                    if (item.Height > tallest)
+                        tallest = item.Height;
+                }
+
+                Height = tallest;
+                break;
+        }
     }
     #endregion
     
+    
     #region Abstract Methods
-    //Determines which menu item is selected and what to do with it.
     public abstract void MonitorInput();
+    
     public abstract void Add(ISelectable item);
     #endregion
 
+    
     #region Regular Methods
     public void Remove(ISelectable item)
     {
         selectableItems.Remove(item);
-        UnSetAsChild(item);
-    }
-
-    public void DrawItems()
-    {
-        Console.BackgroundColor = backgroundColor;
-        Frame.SetCursorToPoint(Position);
-        for (int i = 0; i < height; i++)
-        {
-            Console.Write(new string(' ', width) + "\n");
-        }
-        foreach (ISelectable item in selectableItems)
-        {
-            
-            item.Draw();
-        }
-    }
-
-    protected void SetAsChild(ISelectable item)
-    {
-        item.ParentSelector = this;
-    }
-
-    private void UnSetAsChild(ISelectable item)
-    {
-        item.ParentSelector = null;
     }
 
     public void SetColors(ConsoleColor background, ConsoleColor foreground)
@@ -71,40 +84,5 @@ public abstract class Selector : IComponent
         backgroundColor = background;
         foregroundColor = foreground;
     }
-
-    protected void ProcessDimensions()
-    {
-        switch (direction)
-        {
-            case LayoutDirection.Column:
-                height = selectableItems.Count + (selectableItems.Count * gap);
-                
-                int largest = 0;
-                foreach (ISelectable item in selectableItems)
-                {
-                    if (item.width > largest)
-                    {
-                        largest = item.width;
-                    }
-                }
-
-                width = largest;
-                break;
-            
-            case LayoutDirection.Row:
-                width = 0;
-                foreach (ISelectable item in selectableItems)
-                {
-                    width += item.width + gap;
-                }
-
-                height = 1;
-                break;
-                
-        }
-    }
     #endregion
-
-
-
 }

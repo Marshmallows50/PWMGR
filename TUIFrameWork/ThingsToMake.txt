@@ -10,7 +10,7 @@ Label - done
 ISelectable - implemented
 Selector - implemented
 ---------------
-TextInputField
+TextInputField - done
 Panel
 Table
 ---------------

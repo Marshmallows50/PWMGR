@@ -6,58 +6,35 @@ namespace TUIFrameWork.Selection.Components;
 
 public class TextField : ISelectable
 {
-    //fields
-    private bool M;
-    private StringBuilder sb;
-    
-    private string placeHolder;
-
-    public string? text;
+    #region Fields and Properties
+    private bool isReadingInput;
     private bool isModified;
     
-    //properties
-    public Selector? ParentSelector { get; set; }
+    private StringBuilder sb;
+    public string? text;
+    private string placeHolder;
+    
     public Point Position {  get; set; }
-    public int width { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
+    #endregion
 
     #region Constructor
     public TextField(int width, string placeHolder=" ", Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
-        this.width = width;
+        Width = width;
+        Height = 1;
         this.placeHolder = placeHolder;
     }
     #endregion
     
     #region Interface Methods
-    public void Draw()
-    {
-        Console.BackgroundColor = ConsoleColor.White;
-        Frame.SetCursorToPoint(Position);
-        Console.Write(new string(' ',width));
-        
-        Frame.SetCursorToPoint(Position);
-        Console.ForegroundColor = ConsoleColor.Black;
-        switch (isModified)
-        {
-            case true:
-                Console.Write(text);
-                break;
-            case false:
-                if (!placeHolder.Equals(" ")) // placeholder is optional
-                {
-                    Console.Write(placeHolder);
-                }
-                break;
-        }
-        ResetColors();
-    }
-
     public void Select()
     {
         Console.BackgroundColor = ConsoleColor.DarkGray;
         Frame.SetCursorToPoint(Position);
-        Console.Write(new string(' ',width));
+        Console.Write(new string(' ',Width));
         
         Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
@@ -87,11 +64,11 @@ public class TextField : ISelectable
         Frame.SetCursorToPoint(Position);
         Console.ForegroundColor = ConsoleColor.Black;
         Console.BackgroundColor = ConsoleColor.DarkGray;
-        Console.Write(new string(' ',width));
+        Console.Write(new string(' ',Width));
         Frame.SetCursorToPoint(Position);
         if (isModified)
         {
-            M = true;
+            isReadingInput = true;
             ReadInput();
         }
         else
@@ -99,22 +76,41 @@ public class TextField : ISelectable
             text = Console.ReadLine();
             isModified = true;
         }
-
-
     }
 
-    public void ProcessWidth(){} //not needed. width is a parameter in constructor.
-
+    public void Draw()
+    {
+        Console.BackgroundColor = ConsoleColor.White;
+        Frame.SetCursorToPoint(Position);
+        Console.Write(new string(' ',Width));
+        
+        Frame.SetCursorToPoint(Position);
+        Console.ForegroundColor = ConsoleColor.Black;
+        switch (isModified)
+        {
+            case true:
+                Console.Write(text);
+                break;
+            case false:
+                if (!placeHolder.Equals(" ")) // placeholder is optional
+                {
+                    Console.Write(placeHolder);
+                }
+                break;
+        }
+        ResetColors();
+    }
+    
+    public void ProcessDimensions(){ } // not needed, Width and Height are defined in constructor
     #endregion
 
     #region Functionality Methods
-
     private void ReadInput()
     {
         sb = new StringBuilder();
         sb.Append(text);
         Console.Write(sb.ToString());
-        while (M)
+        while (isReadingInput)
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
             switch(keyInfo.Key)
@@ -133,7 +129,7 @@ public class TextField : ISelectable
                     
                 case ConsoleKey.Enter:
                     text = sb.ToString();
-                    M = false;
+                    isReadingInput = false;
                     break;
                 default:
                     sb.Append(keyInfo.KeyChar);
@@ -155,7 +151,5 @@ public class TextField : ISelectable
         Console.ForegroundColor = ConsoleColor.White;
         Console.BackgroundColor = ConsoleColor.Black;
     }
-    
-
     #endregion
 }

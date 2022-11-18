@@ -7,34 +7,34 @@ namespace TUIFrameWork.Components;
 
 public class Label : IComponent
 {
-    //fields
+    #region Fields and Properties
     private int margin;
     private Alignment alignment;
-
-    //properties
+    
     public string Text { get; private set; }
+    
     public Point Position { get; set; }
-    public int width { get; set; }
-    
-    
-    public int Height { get;}
+    public int Width { get; set; }
+    public int Height { get; set; }
+    #endregion
 
     #region Constructor
     public Label(string text, int margin=0, Alignment alignment=Alignment.Left, Point? position=null)
     {
+        Position = position ?? Frame.GetCursorPositionAsPoint();
+        
         Text = text;
+        
         this.margin = margin;
         this.alignment = alignment;
-        Position = position ?? Frame.GetCursorPositionAsPoint();
-        width = Text.Length + this.margin;
-        Height = 1;
+        
+        ProcessDimensions();
     }
     #endregion
 
     #region Interface Methods
     public void Draw()
     {
-        Frame.SetCursorToPoint(Position);
         Frame.SetCursorToPoint(Position);
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         switch (alignment)
@@ -51,12 +51,19 @@ public class Label : IComponent
                 break;
         }
     }
+
+    public void ProcessDimensions()
+    {
+        Width = Text.Length + margin;
+        Height = 1;
+    }
     #endregion
 
+    #region Functionality Methods
     public void SetText(string text)
     {
         Text = text;
-        width = Text.Length + margin;
+        Width = Text.Length + margin;
     }
-    
+    #endregion
 }

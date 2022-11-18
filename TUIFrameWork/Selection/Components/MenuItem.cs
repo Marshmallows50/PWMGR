@@ -1,42 +1,28 @@
 using TUIFrameWork.Containers;
 namespace TUIFrameWork.Selection.Components;
 
-
-/// <summary>
-/// The Menu Class is responsible for our Menu functionality.
-///Using the arrow keys, the user  can select and activate a menu item such as Start Game or View Scores.
-/// </summary>
 public class MenuItem : ISelectable
-{   
-    //fields
+{
+    #region Fields and Properties
     private string text;
     public Action? action;
     
-    //properties
-    public Selector? ParentSelector { get; set; }
     public Point Position {  get; set; }
-    public int width { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
+    #endregion
 
     #region Contructor
-    // ctor for MenuItem
     public MenuItem(string text, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
-        ProcessWidth();
+        
+        ProcessDimensions();
     }
     #endregion
     
     #region Interface Methods
-    // Generic Draw method for our menu items.
-    public void Draw()
-    {
-        Frame.SetCursorToPoint(Position);
-        Console.BackgroundColor = ConsoleColor.Black;
-        Console.Write(text);
-    }
-
-    //Highlighter for currently selected menu item.
     public void Select()
     {
         Frame.SetCursorToPoint(Position);
@@ -44,23 +30,29 @@ public class MenuItem : ISelectable
         Console.Write(text);
         Console.BackgroundColor = ConsoleColor.Black;
     }
-
-    //Deselect item and redraws it
+    
     public void Deselect()
     {
         Draw();
     }
     
-    // performs action based on option selected
     public void Act()
     {
         if (action != null) //If an action has been set
             action();
     }
     
-    public void ProcessWidth()
+    public void Draw()
     {
-        width = text.Length;
+        Frame.SetCursorToPoint(Position);
+        Console.BackgroundColor = ConsoleColor.Black;
+        Console.Write(text);
+    }
+    
+    public void ProcessDimensions()
+    {
+        Width = text.Length;
+        Height = 1;
     }
     #endregion
 }

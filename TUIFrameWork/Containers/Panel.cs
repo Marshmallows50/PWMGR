@@ -4,60 +4,47 @@ using TUIFrameWork.Selection;
 
 namespace TUIFrameWork.Containers;
 
-// public enum Layout { Hamburger, SideHamburger, KindaLikeGrid }
+// public enum LayoutAlignment { Start, Center, End }
 
-public enum LayoutAlignment { Start, Center, End }
-
-public class Panel
+public class Panel : Container
 {
-    // configure and set layouts
-    // add and remove Panels and Components
-    // Draw and ReDraw Itself with every component
-    // automatically manage positioning of each Panel Component inside of it based on the layout
-    // Manage Colors (foreground and background) for each Panel and Component inside it
-    // Manage what component or panel is currently monitoring inputs
-    // Manage where components or panels inside of it are and what their order is.
-    
-    // possibly make a separate ScrollablePanel
-    // possible css flexbox or css grid like layouts?
+    //TODO: should container two lists. One for each IComponent and one of Containers for the purpose of changing who is MonitorInput()-ing
+    //TODO: justify-content and align-items equivalent
+
+    //TODO: size (Width and Height) should be automatic until the user sets it manually. Constructor should not initialize Width and Height.
+    //TODO: if size was set manually, ProcessDimensions should just do nothing.
+    //TODO: if size is set manually, the values should be based off a percentage of parents dimensions. if panel has no parent, use Console.Window sizes
+
+    //TODO: main panel should always have 100% Width and Height.
     
     
-    public int width;
-    public int height;
-    private int gap;
-    private int margin;
+    #region Fields and Properties
+    private IList<IComponent> containedItems = new List<IComponent>();
+    private IList<Selector> selectorContainers = new List<Selector>();
+    private Selector monitoring;
+    private Container parent;
+    #endregion
     
-    private Point position;
-    private LayoutAlignment hAlignment;
-    private LayoutAlignment vAlignment;
-
-    private LayoutDirection direction;
-    public Panel? ParentPanel { get; private set; }
-
-    private List<IComponent> children;
-
-
-    public Panel(Point position, int width, int gap=1, int margin=1, LayoutDirection direction = LayoutDirection.Row)
+    
+    #region Constructor
+    public Panel(LayoutDirection direction, int gap, Point? position = null)
     {
-        this.position = position;
-        this.width = width;
+        Position = position ?? Frame.GetCursorPositionAsPoint();
         
-        this.margin = margin;
-        this.gap = gap;
         this.direction = direction;
-        
-        children = new List<IComponent>();
+        this.gap = gap;
+    }
+    #endregion
+
+    #region Abstract Class Method Overrides
+    public override void Draw()
+    {
+        throw new NotImplementedException();
     }
 
-    public void Add(IComponent component)
+    public override void ProcessDimensions()
     {
-        children.Add(component);
+        throw new NotImplementedException();
     }
-
-    public void Remove(IComponent component)
-    {
-        children.Remove(component);
-    }
-    
-    
+    #endregion
 }

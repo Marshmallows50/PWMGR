@@ -3,21 +3,21 @@ namespace TUIFrameWork.Selection.Components;
 
 public class CheckBox : ISelectable
 {
-    //fields
+    #region Fields and Properties
     private string text;
-
-    // properties
     public bool Toggled { get; private set; }
-    public Selector? ParentSelector { get; set; }
+    
     public Point Position {  get; set; }
-    public int width { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
+    #endregion
 
     #region Constructor
     public CheckBox(string text, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
-        ProcessWidth();
+        ProcessDimensions();
     }
     #endregion
     
@@ -34,12 +34,6 @@ public class CheckBox : ISelectable
         Draw();
     }
 
-    public void Draw()
-    {
-        Console.BackgroundColor = ConsoleColor.Black;
-        UpdateConsole();
-    }
-    
     public void Act()
     {
         if (Toggled)
@@ -49,9 +43,16 @@ public class CheckBox : ISelectable
         UpdateConsole();
     }
     
-    public void ProcessWidth()
+    public void Draw()
     {
-        width = text.Length + 5;
+        Console.BackgroundColor = ConsoleColor.Black;
+        UpdateConsole();
+    }
+    
+    public void ProcessDimensions()
+    {
+        Width = text.Length + 5;
+        Height = 1;
     }
     #endregion
     
