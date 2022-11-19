@@ -6,8 +6,8 @@ namespace TUIFrameWork;
 public class Point
 {
     // properties
-    public int X { get; }
-    public int Y { get; }
+    public int X { get; set; }
+    public int Y { get; set; }
 
     
     //ctor Point

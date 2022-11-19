@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using TUIFrameWork.Selection;
 
 namespace TUIFrameWork.Containers;
@@ -117,56 +118,7 @@ public class Panel : Container
 
     protected override void CalculatePosition(IComponent item)
     {
-        int index = containedItems.IndexOf(item);
-        int x;
-        switch (direction)
-        {
-            // case LayoutDirection.Column:
-            //     // TODO: gap appears before first item instead of after it.
-            //     item.Position = containedItems.IndexOf(item) == 0 ?
-            //         new Point(this.Position.X, this.Position.Y) : 
-            //         new Point(this.Position.X, this.Position.Y + Height + (gap));
-            //     break;
-            // case LayoutDirection.Row:
-            //     item.Position = containedItems.IndexOf(item) == 0 ? 
-            //         new Point(this.Position.X, this.Position.Y) : 
-            //         new Point(this.Position.X + Width + gap,this.Position.Y);
-            //     break;
 
-            case LayoutDirection.Column:
-                
-                int sumHeightUntilIndex = 0;
-                for (int i = 0; i < index; i++)
-                {
-                    sumHeightUntilIndex += containedItems[i].Height + gap;
-                }
-                
-                x = (Width - item.Width) /2;
-                item.Position = containedItems.IndexOf(item) == 0 ?
-                    new Point(x, this.Position.Y) : 
-                    new Point(x, this.Position.Y + sumHeightUntilIndex); // dont add gap because extra
-                                                                         // gap is added inside for loop
-                break;
-            case LayoutDirection.Row:
-                int sumWidthOfItems = 0;
-                int sumWidthUntilIndex = 0;
-
-                foreach (IComponent containedItem in containedItems)
-                {
-                    sumWidthOfItems += containedItem.Width + gap;
-                }
-                for (int i = 0; i < index; i++)
-                {
-                    sumWidthUntilIndex += containedItems[i].Width + gap;
-                }
-                
-                x = (Width - sumWidthOfItems - gap) /2; // an extra gap is added inside for loop
-                item.Position = containedItems.IndexOf(item) == 0 ? 
-                    new Point(x, this.Position.Y) : 
-                    new Point(x+ sumWidthUntilIndex,this.Position.Y); // dont add gap because extra
-                                                                      // gap is added inside for loop
-                break;
-        }
     }
 
     public override void CalcAllPositions()
@@ -220,60 +172,80 @@ public class Panel : Container
 
     #region Position Calculation Methods
 
-    private void HCenter(IComponent item)
+    private void HorizontalCenter(IComponent item)
     {
         int index = containedItems.IndexOf(item);
         int x;
         switch (direction)
         {
-            // case LayoutDirection.Column:
-            //     // TODO: gap appears before first item instead of after it.
-            //     item.Position = containedItems.IndexOf(item) == 0 ?
-            //         new Point(this.Position.X, this.Position.Y) : 
-            //         new Point(this.Position.X, this.Position.Y + Height + (gap));
-            //     break;
-            // case LayoutDirection.Row:
-            //     item.Position = containedItems.IndexOf(item) == 0 ? 
-            //         new Point(this.Position.X, this.Position.Y) : 
-            //         new Point(this.Position.X + Width + gap,this.Position.Y);
-            //     break;
-
             case LayoutDirection.Column:
-                
-                int sumHeightUntilIndex = 0;
-                for (int i = 0; i < index; i++)
-                {
-                    sumHeightUntilIndex += containedItems[i].Height + gap;
-                }
-                
-                x = (Width - item.Width) /2;
-                item.Position = containedItems.IndexOf(item) == 0 ?
-                    new Point(x, this.Position.Y) : 
-                    new Point(x, this.Position.Y + sumHeightUntilIndex); // dont add gap because extra
-                                                                         // gap is added inside for loop
+                item.Position.X = (Width - item.Width) /2;
                 break;
+            
             case LayoutDirection.Row:
                 int sumWidthOfItems = 0;
                 int sumWidthUntilIndex = 0;
 
                 foreach (IComponent containedItem in containedItems)
-                {
                     sumWidthOfItems += containedItem.Width + gap;
+                
+                for (int i = 0; i < index; i++)
+                    sumWidthUntilIndex += containedItems[i].Width + gap;
+
+                x = (Width - sumWidthOfItems - gap) /2;
+                
+                item.Position.X = index == 0 ? x : x + sumWidthUntilIndex;
+                break;
+        }
+    }
+
+    private void HorizontalStart(IComponent item)
+    {
+        int index = containedItems.IndexOf(item);
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                int sumHeightUntilIndex = 0;
+                for (int i = 0; i < index; i++)
+                {
+                    sumHeightUntilIndex += containedItems[i].Height + gap;
                 }
+
+                item.Position.Y = (index == 0) ? Position.Y : Position.Y + sumHeightUntilIndex;
+                break;
+                
+            case LayoutDirection.Row:
+                int sumWidthUntilIndex = 0;
                 for (int i = 0; i < index; i++)
                 {
                     sumWidthUntilIndex += containedItems[i].Width + gap;
                 }
+
+                item.Position.X = (index == 0) ? Position.X : Position.X + sumWidthUntilIndex;
                 
-                x = (Width - sumWidthOfItems - gap) /2; // an extra gap is added inside for loop
-                item.Position = containedItems.IndexOf(item) == 0 ? 
-                    new Point(x, this.Position.Y) : 
-                    new Point(x+ sumWidthUntilIndex,this.Position.Y); // dont add gap because extra
-                                                                      // gap is added inside for loop
                 break;
         }
     }
-    
+
+    private void HorizonalEnd()
+    {
+        
+    }
+
+    private void VerticalStart()
+    {
+        
+    }
+
+    private void VerticalCenter()
+    {
+        
+    }
+
+    private void VerticalEnd()
+    {
+        
+    }
 
     #endregion
 }
