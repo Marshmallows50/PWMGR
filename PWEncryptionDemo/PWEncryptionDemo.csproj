@@ -7,4 +7,25 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Content Include="bin\Debug\net6.0\Data.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TUIFrameWork\TUIFrameWork.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Decrypt" />
+      <Folder Include="Encrypt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Docs\Data.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
