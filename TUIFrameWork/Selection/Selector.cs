@@ -22,6 +22,7 @@ public abstract class Selector : Container
         for (int i = 0; i < Height; i++)
         {
             Console.Write(new string(' ', Width) + "\n");
+            Frame.SetCursorToPoint(Position);
         }
         foreach (ISelectable item in selectableItems)
         {
@@ -67,6 +68,7 @@ public abstract class Selector : Container
         }
     }
     
+    //TODO: simplify this method to make a bit more efficient.
     protected override void CalculatePosition(IComponent item)
     {
         int index = selectableItems.IndexOf((ISelectable) item);

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using TUIFrameWork.Selection;
 
 namespace TUIFrameWork.Containers;
@@ -29,9 +26,10 @@ public class Panel : Container
     
     public bool isMainPanel; // might not be needed
     private bool isManuallySized; // might not be needed
-    
-    public int widthPercent;
+
+    private double widthPercent;
     public int heightPercent;
+    
     #endregion
     
     
@@ -43,6 +41,8 @@ public class Panel : Container
         this.direction = direction;
         this.gap = gap;
 
+        parent = null;
+        hAlignment = HAlignment.Start;
         // this.margin = margin;
         // Height = Console.WindowHeight;
         // Width = Console.WindowWidth;
@@ -118,7 +118,20 @@ public class Panel : Container
 
     protected override void CalculatePosition(IComponent item)
     {
+        // item.Position = new Point(Position.X, Position.Y);
+        switch (hAlignment)
+        {                                            
 
+            case HAlignment.Start:
+                HorizontalStart(item);
+                break;
+            case HAlignment.Center:
+                HorizontalCenter(item);
+                break;
+            case HAlignment.End:
+                HorizontalEnd(item);
+                break;
+        }
     }
 
     public override void CalcAllPositions()
@@ -146,14 +159,11 @@ public class Panel : Container
         CalcAllPositions();
     }   
     
-    public void setWidth(int width)
+    public void setWidth(double width)
     {
-        if (!isMainPanel)
-        {
-            widthPercent = width;
-            isManuallySized = true;
-            ProcessDimensions();
-        }
+        widthPercent = width;
+        isManuallySized = true;
+        ProcessDimensions();
     }
 
     private void ProcessWidth(Action codeBlock) 
@@ -162,43 +172,20 @@ public class Panel : Container
         {
             codeBlock.Invoke();
         }
-        else if (!isManuallySized && parent == null)
-            Width = Console.WindowWidth * (widthPercent / 100);
         else
-            Width = parent.Width * (widthPercent / 100);
+            try
+            {
+                 Width = (int)(parent.Width * (widthPercent / 100));
+            }
+            catch
+            {
+                Width = (int)(Console.WindowWidth * (widthPercent / 100));
+            }
     }
     
     #endregion
 
     #region Position Calculation Methods
-
-    private void HorizontalCenter(IComponent item)
-    {
-        int index = containedItems.IndexOf(item);
-        int x;
-        switch (direction)
-        {
-            case LayoutDirection.Column:
-                item.Position.X = (Width - item.Width) /2;
-                break;
-            
-            case LayoutDirection.Row:
-                int sumWidthOfItems = 0;
-                int sumWidthUntilIndex = 0;
-
-                foreach (IComponent containedItem in containedItems)
-                    sumWidthOfItems += containedItem.Width + gap;
-                
-                for (int i = 0; i < index; i++)
-                    sumWidthUntilIndex += containedItems[i].Width + gap;
-
-                x = (Width - sumWidthOfItems - gap) /2;
-                
-                item.Position.X = index == 0 ? x : x + sumWidthUntilIndex;
-                break;
-        }
-    }
-
     private void HorizontalStart(IComponent item)
     {
         int index = containedItems.IndexOf(item);
@@ -226,10 +213,58 @@ public class Panel : Container
                 break;
         }
     }
-
-    private void HorizonalEnd()
+    
+    private void HorizontalCenter(IComponent item)
     {
-        
+        int index = containedItems.IndexOf(item);
+        int x;
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                item.Position.X = (Width - item.Width) /2;
+                break;
+            
+            case LayoutDirection.Row:
+                int sumWidthOfItems = 0;
+                int sumWidthUntilIndex = 0;
+
+                foreach (IComponent containedItem in containedItems)
+                    sumWidthOfItems += containedItem.Width + gap;
+                
+                for (int i = 0; i < index; i++)
+                    sumWidthUntilIndex += containedItems[i].Width + gap;
+
+                x = (Width - sumWidthOfItems - gap) /2;
+                
+                item.Position.X = index == 0 ? x : x + sumWidthUntilIndex;
+                break;
+        }
+    }
+    
+    private void HorizontalEnd(IComponent item)
+    {
+        int index = containedItems.IndexOf(item);
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                item.Position.X = Width - item.Width;
+                break;
+            case LayoutDirection.Row:
+                int sumWidthOfItems = 0;
+                int sumWidthUntilIndex = 0;
+
+                foreach (IComponent containedItem in containedItems)
+                    sumWidthOfItems += containedItem.Width + gap;
+                
+                for (int i = 0; i < index; i++)
+                    sumWidthUntilIndex += containedItems[i].Width + gap;
+
+                int startingP = Width - sumWidthOfItems + gap;
+
+                item.Position.X = index == 0 ? startingP : startingP + sumWidthUntilIndex;
+                break;
+                
+        }
     }
 
     private void VerticalStart()

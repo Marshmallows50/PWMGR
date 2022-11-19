@@ -8,7 +8,7 @@ using TUIFrameWork.Components;
 using TUIFrameWork;
 using TUIFrameWork.Containers;
 
-Panel testPanel = new Panel(LayoutDirection.Row, 1, 0);
+Panel testPanel = new Panel(LayoutDirection.Row, 2, 0);
 
 Label newLabel = new Label("This is a Label!", 10, Alignment.Center);
 // newLabel.Draw();
@@ -18,7 +18,7 @@ Label newLabel = new Label("This is a Label!", 10, Alignment.Center);
 // Label newLabel2 = new Label("This is a Label!", 9, Alignment.Center, new Point(0,0));
 // newLabel.Draw();
 
-RadioButtonGroup radioGroup = new RadioButtonGroup(true, 0, LayoutDirection.Column);
+RadioButtonGroup radioGroup = new RadioButtonGroup(true, 1, LayoutDirection.Column);
 RadioButton r1 = new RadioButton("Radio 1");
 RadioButton r2 = new RadioButton("Radio 2");
 RadioButton r3 = new RadioButton("Radio 3");
@@ -32,7 +32,7 @@ radioGroup.Add(r4);
 // radioGroup.Draw();
 
 // Console.SetCursorPosition(0, 4);
-Menu mainMenu = new Menu(false, 2, LayoutDirection.Column);
+Menu mainMenu = new Menu(false, 1, LayoutDirection.Column);
 CheckBox checkBox = new CheckBox("CheckBox");
 TextField textField = new TextField(40, "enter stuff here");
 MenuItem op1 = new MenuItem("Print window Dimensions")
@@ -98,6 +98,8 @@ MenuItem op4 = new MenuItem("Print text in TextEntry")
     }
 };
 
+radioGroup.backgroundColor = ConsoleColor.Red;
+
 mainMenu.Add(textField);
 mainMenu.Add(op1);
 mainMenu.Add(op2);
@@ -112,7 +114,10 @@ testPanel.Add(newLabel);
 testPanel.Add(mainMenu);
 testPanel.Add(radioGroup);
 
-testPanel.Width = 100;
+
+testPanel.setWidth(90);
+testPanel.CalcAllPositions();
+testPanel.hAlignment = HAlignment.End;
 testPanel.CalcAllPositions();
 testPanel.Draw();
 
