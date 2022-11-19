@@ -5,6 +5,7 @@ namespace TUIFrameWork.Selection;
 public abstract class Selector : Container
 {
     #region Fields and Properties
+
     protected List<ISelectable> selectableItems;
     protected ISelectable selected;
     public bool isMonitoringInput;
@@ -30,6 +31,8 @@ public abstract class Selector : Container
     
     public override void ProcessDimensions()
     {
+        Width = 0;
+        Height = 0;
         switch (direction)
         {
             case LayoutDirection.Column:
@@ -46,11 +49,11 @@ public abstract class Selector : Container
                 break;
             
             case LayoutDirection.Row:
-                Width = 0;
                 foreach (ISelectable item in selectableItems)
                 {
                     Width += item.Width + gap;
                 }
+                Width -= gap;
 
                 int tallest = 0;
                 foreach (ISelectable item in selectableItems)
@@ -61,6 +64,38 @@ public abstract class Selector : Container
 
                 Height = tallest;
                 break;
+        }
+    }
+    
+    protected override void CalculatePosition(IComponent item)
+    {
+        int index = selectableItems.IndexOf((ISelectable) item);
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                item.Position = index == 0 ?
+                    new Point(this.Position.X, this.Position.Y) : 
+                    item.Position = new Point(this.Position.X, this.Position.Y + index + (index * gap));
+                break;
+            case LayoutDirection.Row:
+                int SumWidthUntilIndex = 0;
+                for (int i = 0; i < index; i++)
+                {
+                    SumWidthUntilIndex += selectableItems[i].Width;
+                }
+                
+                item.Position = index == 0 ? 
+                    new Point(this.Position.X, this.Position.Y) : 
+                    new Point(this.Position.X + SumWidthUntilIndex + (index*gap),this.Position.Y);
+                break;
+        }
+    }
+    
+    public override void CalcAllPositions()
+    {
+        foreach (ISelectable item in selectableItems)
+        {
+            CalculatePosition(item);
         }
     }
     #endregion

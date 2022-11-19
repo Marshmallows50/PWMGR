@@ -8,7 +8,7 @@ public class CheckBox : ISelectable
     public bool Toggled { get; private set; }
     
     public Point Position {  get; set; }
-    public int Width { get; set; }
+    public int Width { get; internal set; }
     public int Height { get; set; }
     #endregion
 

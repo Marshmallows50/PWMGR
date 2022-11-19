@@ -14,7 +14,7 @@ public static class Frame
     
     
     /// <summary>
-    /// static ctor of Frame. Trys to set the window and buffer size
+    /// static ctor of Frame. Trys to set the window size
     /// of the console, but will fail if not running on Windows OS.
     /// </summary>
     static Frame()
@@ -22,7 +22,6 @@ public static class Frame
         try
         {
             Console.SetWindowSize(100,30);
-            Console.SetBufferSize(100,30);
         }
         catch (Exception e)
         {

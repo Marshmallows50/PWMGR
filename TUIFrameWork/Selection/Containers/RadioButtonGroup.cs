@@ -20,7 +20,7 @@ public class RadioButtonGroup : Selector
         this.selectableItems = new List<ISelectable>();
         this.gap = gap;
         this.direction = direction;
-        
+
         ProcessDimensions();
     }
     #endregion
@@ -28,29 +28,10 @@ public class RadioButtonGroup : Selector
     #region Abstract Class Method Overrides
     public override void Add(ISelectable item)
     {
-        // TODO: remove if else and replace with try/catch block
         if (item is RadioButton radioButton)
         {
-            switch (direction)
-            {
-                case LayoutDirection.Column:
-                    if (selectableItems.Count == 0)
-                    {
-                        radioButton.Position = new Point(this.Position.X, this.Position.Y);
-                    }
-                    else
-                    {
-                        radioButton.Position = new Point(this.Position.X, this.Position.Y + selectableItems.Count +
-                                                                   (selectableItems.Count * gap));
-                    }
-                
-                    break;
-                case LayoutDirection.Row:
-                    radioButton.Position = selectableItems.Count == 0 ? 
-                        new Point(this.Position.X, this.Position.Y) : new Point(this.Position.X + Width,this.Position.Y);
-                    break;
-            }
             selectableItems.Add(radioButton);
+            CalculatePosition(radioButton);
             
             if (selectableItems.Count == 1)
             {

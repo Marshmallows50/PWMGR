@@ -1,4 +1,6 @@
 using TUIFrameWork.Containers;
+using TUIFrameWork.Selection.Components;
+
 namespace TUIFrameWork.Selection.Containers;
 
 public class Menu : Selector
@@ -12,7 +14,7 @@ public class Menu : Selector
         this.selectableItems = new List<ISelectable>();
         this.gap = gap;
         this.direction = direction;
-        
+
         ProcessDimensions();
     }
     #endregion
@@ -20,30 +22,12 @@ public class Menu : Selector
     #region Abstract Class Method Overrides
     public override void Add(ISelectable item)
     {
-        switch (direction)
-        {
-            case LayoutDirection.Column:
-                if (selectableItems.Count == 0)
-                {
-                    item.Position = new Point(this.Position.X, this.Position.Y);
-                }
-                else
-                {
-                    item.Position = new Point(this.Position.X, this.Position.Y + selectableItems.Count +
-                                                               (selectableItems.Count * gap));
-                }
-                
-                break;
-            case LayoutDirection.Row:
-                item.Position = selectableItems.Count == 0 ? 
-                    new Point(this.Position.X, this.Position.Y) : new Point(this.Position.X + Width,this.Position.Y);
-                break;
-        }
         selectableItems.Add(item);
+        CalculatePosition(item);
         
         if (selectableItems.Count == 1)
         {
-            selected = selectableItems[0];
+            selected = (ISelectable) selectableItems[0];
         }
         
         ProcessDimensions();

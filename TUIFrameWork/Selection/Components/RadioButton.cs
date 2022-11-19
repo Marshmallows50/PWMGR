@@ -20,7 +20,7 @@ public class RadioButton : ISelectable
         ProcessDimensions();
     }
     #endregion
-
+    
     #region Interface Methods
     public void Select()
     {

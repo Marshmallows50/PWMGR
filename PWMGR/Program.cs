@@ -8,45 +8,44 @@ using TUIFrameWork.Components;
 using TUIFrameWork;
 using TUIFrameWork.Containers;
 
+Panel testPanel = new Panel(LayoutDirection.Row, 1, 0);
 
-Label newLabel = new Label("This is a Label!", 10, Alignment.Center, new Point(0,0));
-newLabel.Draw();
-newLabel.SetText("SomeText");
-newLabel.Draw();
+Label newLabel = new Label("This is a Label!", 10, Alignment.Center);
+// newLabel.Draw();
+// newLabel.SetText("SomeText");
+// newLabel.Draw();
 
-Label newLabel2 = new Label("This is a Label!", 9, Alignment.Center, new Point(0,0));
-newLabel.Draw();
+// Label newLabel2 = new Label("This is a Label!", 9, Alignment.Center, new Point(0,0));
+// newLabel.Draw();
 
-RadioButtonGroup radioGroup = new RadioButtonGroup(true, 0, LayoutDirection.Column, new Point(5, 13));
+RadioButtonGroup radioGroup = new RadioButtonGroup(true, 0, LayoutDirection.Column);
 RadioButton r1 = new RadioButton("Radio 1");
 RadioButton r2 = new RadioButton("Radio 2");
 RadioButton r3 = new RadioButton("Radio 3");
 RadioButton r4 = new RadioButton("Radio 4");
 
 
-
 radioGroup.Add(r1);
 radioGroup.Add(r2);
 radioGroup.Add(r3);
 radioGroup.Add(r4);
-radioGroup.Draw();
+// radioGroup.Draw();
 
-Console.SetCursorPosition(0, 4);
-Menu mainMenu = new Menu(false, 0, LayoutDirection.Column);
-CheckBox checkBox = new CheckBox("CheckBox", new Point(0, 11));
-TextField textField = new TextField(40, "enter stuff here", new Point(0, 4));
-
-MenuItem op1 = new MenuItem("Print window Dimensions", new Point(0, 5)) 
+// Console.SetCursorPosition(0, 4);
+Menu mainMenu = new Menu(false, 2, LayoutDirection.Column);
+CheckBox checkBox = new CheckBox("CheckBox");
+TextField textField = new TextField(40, "enter stuff here");
+MenuItem op1 = new MenuItem("Print window Dimensions")
 {
     action = delegate
     {
-        Console.SetCursorPosition(0, 1);
+        Console.SetCursorPosition(70, 1);
         Console.Write(Frame.WindowHeight + " ");
         Console.Write(Frame.WindowWidth);
     }
 };
 
-MenuItem op2 = new MenuItem("Go to RadioButtons", new Point(0, 7))
+MenuItem op2 = new MenuItem("Go to RadioButtons")
 {
     action = delegate
     {
@@ -56,7 +55,7 @@ MenuItem op2 = new MenuItem("Go to RadioButtons", new Point(0, 7))
         
         // radioGroup is Escapable by default. Pressing escape will make it stop monitoring for inputs
         // code underneath will be executed after ESC key is pressed in radio Group.
-        Console.SetCursorPosition(0,3);
+        Console.SetCursorPosition(70,3);
         switch (radioGroup.indexOfToggled)
         {
             case 0:
@@ -79,22 +78,22 @@ MenuItem op2 = new MenuItem("Go to RadioButtons", new Point(0, 7))
     }
 };
 
-MenuItem op3 = new MenuItem("Click Me after Checkbox!", new Point(0, 9))
+MenuItem op3 = new MenuItem("Click Me after Checkbox!")
 {
     action = delegate
     {
         if (checkBox.Toggled)
         {
-            Console.SetCursorPosition(0, 2);
+            Console.SetCursorPosition(70, 2);
             Console.Write($"the Width is: {mainMenu.Width} and the height is: {mainMenu.Height}");
         }
     }
 };
-MenuItem op4 = new MenuItem("Print text in TextEntry", new Point(0, 10))
+MenuItem op4 = new MenuItem("Print text in TextEntry")
 {
     action = delegate
     {
-        Console.SetCursorPosition(0, 20);
+        Console.SetCursorPosition(70, 20);
         Console.Write(textField.text);
     }
 };
@@ -107,9 +106,17 @@ mainMenu.Add(op4);
 mainMenu.Add(checkBox);
 
 
-mainMenu.Draw();
+// mainMenu.Draw();
 // Console.Clear();
-mainMenu.isMonitoringInput = true;
+testPanel.Add(newLabel);
+testPanel.Add(mainMenu);
+testPanel.Add(radioGroup);
+
+testPanel.Width = 100;
+testPanel.CalcAllPositions();
+testPanel.Draw();
+
+// mainMenu.isMonitoringInput = true;
 mainMenu.MonitorInput();
 
 Console.ReadKey();
