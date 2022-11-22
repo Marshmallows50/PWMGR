@@ -84,8 +84,8 @@ rowContainer2.ProcessDimensions();
 mainPanel.direction = LayoutDirection.Column;
 mainPanel.hAlignment = HAlignment.Center;
 mainPanel.vAlignment = VAlignment.Center;
-mainPanel.setHeight(70); // 70 percent of window size
-mainPanel.setWidth(70); // 70 percent of window size
+mainPanel.SetHeight(70); // 70 percent of window size
+mainPanel.SetWidth(70); // 70 percent of window size
 mainPanel.ProcessDimensions();
 mainPanel.CalcAllPositions(); // figure out positions of children inside panel
 
@@ -206,8 +206,8 @@ void Stats(Panel panel, Panel rowContainer3, Panel mainPanel1)
 // panel1.Add(radioGroup);
 //
 //
-// panel1.setWidth(90);
-// panel1.setHeight(90);
+// panel1.SetWidth(90);
+// panel1.SetHeight(90);
 // panel1.hAlignment = HAlignment.Center;
 // panel1.vAlignment = VAlignment.End;
 //

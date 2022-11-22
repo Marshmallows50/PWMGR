@@ -5,32 +5,27 @@ namespace TUIFrameWork.Selection;
 public abstract class Selector : Container
 {
     #region Fields and Properties
-
-    protected List<ISelectable> selectableItems;
     protected ISelectable selected;
-    public bool isMonitoringInput;
+    protected bool isMonitoringInput;
     
     public bool IsEscapable { get; set; }
     #endregion
-    
-    
-    #region Abstract Class Method Overrides
-    public override void Draw()
+
+    #region Constructor
+    protected Selector(bool isEscapable=false, int gap=0, LayoutDirection direction=LayoutDirection.Column, Point? position=null)
     {
+        Position = position ?? Frame.GetCursorPositionAsPoint();
+        IsEscapable = isEscapable;
+        
+        this.gap = gap;
+        this.direction = direction;
+
         ProcessDimensions();
-        Console.BackgroundColor = backgroundColor;
-        Frame.SetCursorToPoint(Position);
-        for (int i = 0; i < Height; i++)
-        {
-            Console.Write(new string(' ', Width) + "\n");
-            Console.SetCursorPosition(Position.X, Position.Y + 1 + i);
-        }
-        foreach (var item in selectableItems)
-        {
-            item.Draw();
-        }
     }
+    #endregion
     
+    
+    #region Inherited Abstract Methods
     public override void ProcessDimensions()
     {
         Width = 0;
@@ -38,10 +33,10 @@ public abstract class Selector : Container
         switch (direction)
         {
             case LayoutDirection.Column:
-                Height = selectableItems.Count + (selectableItems.Count * gap);
+                Height = containedItems.Count + (containedItems.Count * gap);
                 
                 int largest = 0;
-                foreach (ISelectable item in selectableItems)
+                foreach (IComponent item in containedItems)
                 {
                     if (item.Width > largest)
                         largest = item.Width;
@@ -51,14 +46,14 @@ public abstract class Selector : Container
                 break;
             
             case LayoutDirection.Row:
-                foreach (ISelectable item in selectableItems)
+                foreach (IComponent item in containedItems)
                 {
                     Width += item.Width + gap;
                 }
                 Width -= gap;
 
                 int tallest = 0;
-                foreach (ISelectable item in selectableItems)
+                foreach (IComponent item in containedItems)
                 {
                     if (item.Height > tallest)
                         tallest = item.Height;
@@ -72,7 +67,7 @@ public abstract class Selector : Container
     //TODO: simplify this method to make a bit more efficient.
     protected override void CalculatePosition(IComponent item)
     {
-        int index = selectableItems.IndexOf((ISelectable) item);
+        int index = containedItems.IndexOf((ISelectable) item);
         switch (direction)
         {
             case LayoutDirection.Column:
@@ -81,22 +76,22 @@ public abstract class Selector : Container
                     item.Position = new Point(this.Position.X, this.Position.Y + index + (index * gap));
                 break;
             case LayoutDirection.Row:
-                int SumWidthUntilIndex = 0;
+                int sumWidthUntilIndex = 0;
                 for (int i = 0; i < index; i++)
                 {
-                    SumWidthUntilIndex += selectableItems[i].Width;
+                    sumWidthUntilIndex += containedItems[i].Width;
                 }
                 
                 item.Position = index == 0 ? 
                     new Point(this.Position.X, this.Position.Y) : 
-                    new Point(this.Position.X + SumWidthUntilIndex + (index*gap),this.Position.Y);
+                    new Point(this.Position.X + sumWidthUntilIndex + (index*gap),this.Position.Y);
                 break;
         }
     }
     
     public override void CalcAllPositions()
     {
-        foreach (ISelectable item in selectableItems)
+        foreach (IComponent item in containedItems)
         {
             CalculatePosition(item);
         }
@@ -106,15 +101,27 @@ public abstract class Selector : Container
     
     #region Abstract Methods
     public abstract void MonitorInput();
-    
-    public abstract void Add(ISelectable item);
     #endregion
 
     
     #region Regular Methods
+    public void Add(ISelectable item)
+    {
+        containedItems.Add(item);
+        ProcessDimensions();
+        CalculatePosition(item);
+        
+        if (containedItems.Count == 1)
+        {
+            selected = (ISelectable) containedItems[0];
+        }
+    }
+    
     public void Remove(ISelectable item)
     {
-        selectableItems.Remove(item);
+        containedItems.Remove(item);
+        ProcessDimensions();
+        CalcAllPositions();
     }
 
     public void SetColors(ConsoleColor background, ConsoleColor foreground)

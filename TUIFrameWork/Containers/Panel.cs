@@ -11,13 +11,12 @@ public class Panel : Container
     // width still needs to be able to be set manually.
     
     #region Fields and Properties
-    private IList<IComponent> containedItems = new List<IComponent>();
     private IList<Selector> selectorContainers = new List<Selector>();
     private Selector monitoring;
     private Container? parent;
     
     public bool isMainPanel; // might not be needed
-    private bool isManuallySized; // might not be needed
+    private bool isManuallySized;
 
     private double widthPercent;
     private double heightPercent;
@@ -29,7 +28,6 @@ public class Panel : Container
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         
-        // this.direction = direction;
         this.gap = gap;
 
         parent = null;
@@ -39,23 +37,8 @@ public class Panel : Container
     }
     #endregion
 
-    #region Abstract Class Method Overrides
-    public override void Draw()
-    {
-        ProcessDimensions();
-        Console.BackgroundColor = backgroundColor;
-        Frame.SetCursorToPoint(Position);
-        for (int i = 0; i < Height; i++)
-        {
-            Console.Write(new string(' ', Width) + "\n");
-            Console.SetCursorPosition(Position.X, Position.Y + 1 + i);
-        }
-        foreach (IComponent item in containedItems)
-        {
-            item.Draw();
-        }
-    }
-
+    #region Inherited Abstract Methods
+    
     public override void ProcessDimensions()
     {
         Width = 0;
@@ -83,7 +66,6 @@ public class Panel : Container
                             Width = item.Width;
                     }
                 }));
-
                 break;
             
             case LayoutDirection.Row:
@@ -96,8 +78,7 @@ public class Panel : Container
                             Height = item.Height;
                     }
                 }));
-                
-                
+
                 //Process Width if row
                 ProcessWidth(new Action(delegate
                 {
@@ -108,7 +89,6 @@ public class Panel : Container
                     if (containedItems.Count > 1)
                         Width += gap * (containedItems.Count - 1);
                 }));
-
                 break;
         }
     }
@@ -154,21 +134,25 @@ public class Panel : Container
             }
         }
     }
-
     #endregion
 
+    
     #region Functionality Methods
     public void Add(IComponent item)
     {
         containedItems.Add(item);
         ProcessDimensions();
-        
-
 
         CalculatePosition(item);
-    }   
+    }
+
+    public void Remove(IComponent item)
+    {
+        containedItems.Remove(item);
+        ProcessDimensions();
+    }
     
-    public void setWidth(double width)
+    public void SetWidth(double width)
     {
         widthPercent = width;
         isManuallySized = true;
@@ -178,9 +162,7 @@ public class Panel : Container
     private void ProcessWidth(Action widthBlock) 
     {
         if (isManuallySized == false)
-        {
             widthBlock.Invoke();
-        }
         else
             try
             {
@@ -192,18 +174,17 @@ public class Panel : Container
             }
     }
 
-    public void setHeight(double height)
+    public void SetHeight(double height)
     {
         heightPercent = height;
         isManuallySized = true;
         ProcessDimensions();
     }
+    
     private void ProcessHeight(Action heightBlock)
     {
         if (isManuallySized == false)
-        {
             heightBlock.Invoke();
-        }
         else
             try
             {
