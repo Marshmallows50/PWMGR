@@ -23,6 +23,7 @@ public class Menu : Selector
     public override void Add(ISelectable item)
     {
         selectableItems.Add(item);
+        ProcessDimensions();
         CalculatePosition(item);
         
         if (selectableItems.Count == 1)
@@ -30,7 +31,7 @@ public class Menu : Selector
             selected = (ISelectable) selectableItems[0];
         }
         
-        ProcessDimensions();
+        
     }
     
     public override void MonitorInput()

@@ -17,14 +17,15 @@ public abstract class Selector : Container
     #region Abstract Class Method Overrides
     public override void Draw()
     {
+        ProcessDimensions();
         Console.BackgroundColor = backgroundColor;
         Frame.SetCursorToPoint(Position);
         for (int i = 0; i < Height; i++)
         {
             Console.Write(new string(' ', Width) + "\n");
-            Frame.SetCursorToPoint(Position);
+            Console.SetCursorPosition(Position.X, Position.Y + 1 + i);
         }
-        foreach (ISelectable item in selectableItems)
+        foreach (var item in selectableItems)
         {
             item.Draw();
         }

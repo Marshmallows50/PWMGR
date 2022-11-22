@@ -3,8 +3,6 @@ using TUIFrameWork.Containers;
 using TUIFrameWork.Selection;
 namespace TUIFrameWork.Components;
 
-
-
 public class Label : IComponent
 {
     #region Fields and Properties

@@ -1,13 +1,16 @@
 namespace TUIFrameWork;
 
 public enum HAlignment {Start, Center, End}
+public enum VAlignment {Start, Center, End}
 public abstract class Container : IComponent
 {
     #region Fields and Properties
-    protected LayoutDirection direction;
+    public LayoutDirection direction;
     protected int gap;
+    
 
     public HAlignment hAlignment;
+    public VAlignment vAlignment;
 
     public ConsoleColor foregroundColor = ConsoleColor.White;
     public ConsoleColor backgroundColor = ConsoleColor.Black;

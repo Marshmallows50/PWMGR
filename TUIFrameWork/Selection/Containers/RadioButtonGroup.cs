@@ -31,6 +31,7 @@ public class RadioButtonGroup : Selector
         if (item is RadioButton radioButton)
         {
             selectableItems.Add(radioButton);
+            ProcessDimensions();
             CalculatePosition(radioButton);
             
             if (selectableItems.Count == 1)
@@ -38,7 +39,7 @@ public class RadioButtonGroup : Selector
                 selected = selectableItems[0];
             }
             
-            ProcessDimensions();
+            
         }
         else
         {

@@ -1,19 +1,11 @@
 using TUIFrameWork.Selection;
-
 namespace TUIFrameWork.Containers;
-
-// public enum LayoutAlignment { Start, Center, End }
 
 public class Panel : Container
 {
-    //TODO: should container two lists. One for each IComponent and one of Containers for the purpose of changing who is MonitorInput()-ing
-    //TODO: justify-content and align-items equivalent
-
-   
-    //TODO: if size was set manually, ProcessDimensions should just do nothing.
-    //TODO: if size is set manually, the values should be based off a percentage of parents dimensions. if panel has no parent, use Console.Window sizes
-
+    //TODO: should contain two lists. One for each IComponent and one of Containers for the purpose of changing who is MonitorInput()-ing
     //TODO: main panel should always have 100% Width and Height.
+    //TODO: Add support for colors
     
     // for now, just make it so height is always automatic. no need for manual setting of height
     // width still needs to be able to be set manually.
@@ -28,36 +20,35 @@ public class Panel : Container
     private bool isManuallySized; // might not be needed
 
     private double widthPercent;
-    public int heightPercent;
-    
+    private double heightPercent;
     #endregion
     
     
     #region Constructor
-    public Panel(LayoutDirection direction, int gap, int margin, Point? position = null)
+    public Panel(int gap, Point? position = null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         
-        this.direction = direction;
+        // this.direction = direction;
         this.gap = gap;
 
         parent = null;
+        direction = LayoutDirection.Column;
         hAlignment = HAlignment.Start;
-        // this.margin = margin;
-        // Height = Console.WindowHeight;
-        // Width = Console.WindowWidth;
-
+        vAlignment = VAlignment.Start;
     }
     #endregion
 
     #region Abstract Class Method Overrides
     public override void Draw()
     {
+        ProcessDimensions();
         Console.BackgroundColor = backgroundColor;
         Frame.SetCursorToPoint(Position);
         for (int i = 0; i < Height; i++)
         {
             Console.Write(new string(' ', Width) + "\n");
+            Console.SetCursorPosition(Position.X, Position.Y + 1 + i);
         }
         foreach (IComponent item in containedItems)
         {
@@ -73,14 +64,16 @@ public class Panel : Container
         {
             case LayoutDirection.Column:
                 // Process Height if column
-                
-                foreach (IComponent item in containedItems)
+                ProcessHeight( new Action(delegate
                 {
-                    Height += item.Height;
-                }
-                if (containedItems.Count > 1)
-                    Height += gap * (containedItems.Count - 1);
-                
+                    foreach (IComponent item in containedItems)
+                    {
+                        Height += item.Height;
+                    }
+                    if (containedItems.Count > 1)
+                        Height += gap * (containedItems.Count - 1);
+                }));
+
                 // Process Width if column
                 ProcessWidth(new Action(delegate
                 {
@@ -95,11 +88,15 @@ public class Panel : Container
             
             case LayoutDirection.Row:
                 //Process Height if row
-                foreach (IComponent item in containedItems)
+                ProcessHeight(new Action(delegate
                 {
-                    if (item.Height > Height)
-                        Height = item.Height;
-                }
+                    foreach (IComponent item in containedItems)
+                    {
+                        if (item.Height > Height)
+                            Height = item.Height;
+                    }
+                }));
+                
                 
                 //Process Width if row
                 ProcessWidth(new Action(delegate
@@ -118,10 +115,9 @@ public class Panel : Container
 
     protected override void CalculatePosition(IComponent item)
     {
-        // item.Position = new Point(Position.X, Position.Y);
+        item.Position = new Point(Position.X, Position.Y);
         switch (hAlignment)
-        {                                            
-
+        {
             case HAlignment.Start:
                 HorizontalStart(item);
                 break;
@@ -130,6 +126,19 @@ public class Panel : Container
                 break;
             case HAlignment.End:
                 HorizontalEnd(item);
+                break;
+        }
+
+        switch (vAlignment)
+        {
+            case VAlignment.Start:
+                VerticalStart(item);
+                break;
+            case VAlignment.Center:
+                VerticalCenter(item);
+                break;
+            case VAlignment.End:
+                VerticalEnd(item);
                 break;
         }
     }
@@ -153,10 +162,10 @@ public class Panel : Container
     {
         containedItems.Add(item);
         ProcessDimensions();
-        // CalculatePosition(item);
         
 
-        CalcAllPositions();
+
+        CalculatePosition(item);
     }   
     
     public void setWidth(double width)
@@ -166,11 +175,11 @@ public class Panel : Container
         ProcessDimensions();
     }
 
-    private void ProcessWidth(Action codeBlock) 
+    private void ProcessWidth(Action widthBlock) 
     {
-        if (!isManuallySized)
+        if (isManuallySized == false)
         {
-            codeBlock.Invoke();
+            widthBlock.Invoke();
         }
         else
             try
@@ -180,6 +189,29 @@ public class Panel : Container
             catch
             {
                 Width = (int)(Console.WindowWidth * (widthPercent / 100));
+            }
+    }
+
+    public void setHeight(double height)
+    {
+        heightPercent = height;
+        isManuallySized = true;
+        ProcessDimensions();
+    }
+    private void ProcessHeight(Action heightBlock)
+    {
+        if (isManuallySized == false)
+        {
+            heightBlock.Invoke();
+        }
+        else
+            try
+            {
+                Height = (int)(parent.Height * (heightPercent / 100));
+            }
+            catch
+            {
+                Height = (int)(Console.WindowHeight * (heightPercent / 100));
             }
     }
     
@@ -192,15 +224,8 @@ public class Panel : Container
         switch (direction)
         {
             case LayoutDirection.Column:
-                int sumHeightUntilIndex = 0;
-                for (int i = 0; i < index; i++)
-                {
-                    sumHeightUntilIndex += containedItems[i].Height + gap;
-                }
-
-                item.Position.Y = (index == 0) ? Position.Y : Position.Y + sumHeightUntilIndex;
+                item.Position.X = Position.X;
                 break;
-                
             case LayoutDirection.Row:
                 int sumWidthUntilIndex = 0;
                 for (int i = 0; i < index; i++)
@@ -235,6 +260,8 @@ public class Panel : Container
                     sumWidthUntilIndex += containedItems[i].Width + gap;
 
                 x = (Width - sumWidthOfItems - gap) /2;
+                if (x < 0)
+                    x = 0;
                 
                 item.Position.X = index == 0 ? x : x + sumWidthUntilIndex;
                 break;
@@ -260,6 +287,8 @@ public class Panel : Container
                     sumWidthUntilIndex += containedItems[i].Width + gap;
 
                 int startingP = Width - sumWidthOfItems + gap;
+                if (startingP < 0)
+                    startingP = 0;
 
                 item.Position.X = index == 0 ? startingP : startingP + sumWidthUntilIndex;
                 break;
@@ -267,19 +296,80 @@ public class Panel : Container
         }
     }
 
-    private void VerticalStart()
+    private void VerticalStart(IComponent item)
     {
+        int index = containedItems.IndexOf(item);
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                int sumHeightUntilIndex = 0;
+                for (int i = 0; i < index; i++)
+                {
+                    sumHeightUntilIndex += containedItems[i].Height + gap;
+                }
+
+                item.Position.Y = (index == 0) ? Position.Y : Position.Y + sumHeightUntilIndex;
+                break;
+            case LayoutDirection.Row:
+                item.Position.Y = Position.Y;
+                break;
+        }
         
     }
 
-    private void VerticalCenter()
+    private void VerticalCenter(IComponent item)
     {
-        
+        int index = containedItems.IndexOf(item);
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                int sumHeightOfItems = 0;
+                int sumHeightUntilIndex = 0;
+
+                foreach (IComponent containedItem in containedItems)
+                    sumHeightOfItems += containedItem.Height + gap;
+
+                for (int i = 0; i < index; i++)
+                    sumHeightUntilIndex += containedItems[i].Height + gap;
+
+                int y = (Height - sumHeightOfItems - gap) / 2;
+                if (y < 0)
+                    y = 0;
+
+                item.Position.Y = index == 0 ? y : y + sumHeightUntilIndex;
+                break;
+            
+            case LayoutDirection.Row:
+                item.Position.Y = (Height - item.Height) / 2;
+                break;
+        }
     }
 
-    private void VerticalEnd()
+    private void VerticalEnd(IComponent item)
     {
-        
+        int index = containedItems.IndexOf(item);
+        switch (direction)
+        {
+            case LayoutDirection.Column:
+                int sumHeightOfItems = 0;
+                int sumHeightUntilIndex = 0;
+
+                foreach (IComponent containedItem in containedItems)
+                    sumHeightOfItems += containedItem.Height + gap;
+
+                for (int i = 0; i < index; i++)
+                    sumHeightUntilIndex += containedItems[i].Height + gap;
+
+                int startingP = Height - sumHeightOfItems + gap;
+                if (startingP < 0)
+                    startingP = 0;
+                
+                item.Position.Y = index == 0 ? startingP : startingP + sumHeightUntilIndex;
+                break;
+            case LayoutDirection.Row:
+                item.Position.Y = Height - item.Height;
+                break;
+        }
     }
 
     #endregion
