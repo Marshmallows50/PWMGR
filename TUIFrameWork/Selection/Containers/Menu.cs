@@ -8,7 +8,7 @@ public class Menu : Selector
     #endregion
 
     #region Inherited Abstract Methods
-    public override void MonitorInput()
+    public override ConsoleKey MonitorInput()
     {
         isMonitoringInput = true;
         while (isMonitoringInput)
@@ -51,10 +51,22 @@ public class Menu : Selector
                     break;
                 
                 case ConsoleKey.Escape when IsEscapable:
-                    isMonitoringInput = false;
-                    break;
+                    // isMonitoringInput = false;
+                    return ConsoleKey.Escape;
+
+                case ConsoleKey.PageUp when IsEscapable:
+                    // isMonitoringInput = false;
+                    return ConsoleKey.PageUp;
+                
+                case ConsoleKey.PageDown when IsEscapable:
+                    // isMonitoringInput = false;
+                    return ConsoleKey.PageDown;
             }
         }
+
+        // should be unreachable but makes compiler happy
+        return ConsoleKey.A;
     }
+    
     #endregion
 }

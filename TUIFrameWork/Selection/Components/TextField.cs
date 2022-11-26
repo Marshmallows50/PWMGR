@@ -15,6 +15,7 @@ public class TextField : ISelectable
     private string placeHolder;
     
     public Point Position {  get; set; }
+    public Container? Parent { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
     #endregion

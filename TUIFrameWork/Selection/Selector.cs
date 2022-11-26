@@ -6,7 +6,7 @@ public abstract class Selector : Container
 {
     #region Fields and Properties
     protected ISelectable selected;
-    protected bool isMonitoringInput;
+    
     
     public bool IsEscapable { get; set; }
     #endregion
@@ -33,7 +33,7 @@ public abstract class Selector : Container
         switch (direction)
         {
             case LayoutDirection.Column:
-                Height = containedItems.Count + (containedItems.Count * gap);
+                Height = containedItems.Count + (containedItems.Count * gap) - gap;
                 
                 int largest = 0;
                 foreach (IComponent item in containedItems)
@@ -62,6 +62,8 @@ public abstract class Selector : Container
                 Height = tallest;
                 break;
         }
+        if (Parent!=null)
+            Parent.ProcessDimensions();
     }
     
     //TODO: simplify this method to make a bit more efficient.
@@ -100,7 +102,7 @@ public abstract class Selector : Container
     
     
     #region Abstract Methods
-    public abstract void MonitorInput();
+    public abstract ConsoleKey MonitorInput();
     #endregion
 
     
@@ -108,6 +110,7 @@ public abstract class Selector : Container
     public void Add(ISelectable item)
     {
         containedItems.Add(item);
+        item.Parent = this;
         ProcessDimensions();
         CalculatePosition(item);
         
@@ -120,6 +123,8 @@ public abstract class Selector : Container
     public void Remove(ISelectable item)
     {
         containedItems.Remove(item);
+        item.Parent = null;
+        
         ProcessDimensions();
         CalcAllPositions();
     }

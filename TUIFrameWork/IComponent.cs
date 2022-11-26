@@ -6,6 +6,7 @@ public interface IComponent
     public Point Position { get; set; }
     public int Width { get; }
     public int Height { get; }
+    public Container? Parent { get; set; }
     #endregion
 
     #region Methods

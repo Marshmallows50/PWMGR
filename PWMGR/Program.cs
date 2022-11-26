@@ -14,16 +14,35 @@ Panel rowContainer2 = new Panel(2);
 // create some labels
 Label label1 = new Label("Demonstration of Cube layout!", 18, Alignment.Center);
 Label label2 = new Label("I hope this made sense! look at my code", 8, Alignment.Center);
+Label label3 = new Label("removed menus and added label", 5, Alignment.Center);
 
 // make 2 menus for each row container panel. each menu with column layout direction
-Menu row1menu1 = new Menu(false, 0, LayoutDirection.Column);
-RadioButtonGroup row1menu2 = new RadioButtonGroup(true, 0, LayoutDirection.Column);
+Menu row1menu1 = new Menu(true, 1, LayoutDirection.Column);
+RadioButtonGroup row1menu2 = new RadioButtonGroup(true, 1, LayoutDirection.Column);
 
-RadioButtonGroup row2menu1 = new RadioButtonGroup(true, 0, LayoutDirection.Column);
-Menu row2menu2 = new Menu(false, 0, LayoutDirection.Column);
+RadioButtonGroup row2menu1 = new RadioButtonGroup(true, 1, LayoutDirection.Column);
+Menu row2menu2 = new Menu(true, 1, LayoutDirection.Column);
 
 // make 3 items for each menu
-MenuItem menu1item1 = new MenuItem("Im a button!");
+MenuItem menu1item1 = new MenuItem("Im a button!")
+{
+    action = delegate
+    {   
+        // rowContainer1.Remove(row1menu1);
+        // rowContainer1.Remove(row1menu2);
+        // rowContainer1.Add(label3);
+        // rowContainer1.ProcessDimensions();
+        //
+        // mainPanel.ProcessDimensions();
+        // mainPanel.CalcAllPositions();
+        // mainPanel.Draw();
+        
+        label1.SetText("Change text test");
+        mainPanel.ProcessDimensions();
+        mainPanel.CalcAllPositions();
+        mainPanel.Draw();
+    }
+};
 CheckBox menu1item2 = new CheckBox("Check 1");
 TextField menu1item3 = new TextField(12,"Type!");
 
@@ -69,6 +88,7 @@ rowContainer1.Add(row1menu2);
 rowContainer2.Add(row2menu1);
 rowContainer2.Add(row2menu2);
 
+
 mainPanel.Add(label1); 
 mainPanel.Add(rowContainer1);
 mainPanel.Add(rowContainer2);
@@ -91,8 +111,8 @@ mainPanel.CalcAllPositions(); // figure out positions of children inside panel
 
 // draw
 mainPanel.Draw();
-
-row1menu1.MonitorInput();
+// row1menu1.MonitorInput();
+mainPanel.ManageInput();
 
 
 void PrintStats(IComponent container)
@@ -109,8 +129,8 @@ void Stats(Panel panel, Panel rowContainer3, Panel mainPanel1)
     PrintStats(mainPanel1);
 }
 
-// old stuff:
 
+// old stuff:
 // Menu mainMenu = new Menu(false, 0, LayoutDirection.Column);
 // RadioButtonGroup radioGroup = new RadioButtonGroup(true, 0, LayoutDirection.Column);
 

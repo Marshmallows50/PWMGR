@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWMGR", "PWMGR\PWMGR.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TUIFrameWork", "TUIFrameWork\TUIFrameWork.csproj", "{12B9DC94-5F25-4779-95E2-4645F2FBE52D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionAttempt", "EncryptionAttempt\EncryptionAttempt.csproj", "{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{12B9DC94-5F25-4779-95E2-4645F2FBE52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B9DC94-5F25-4779-95E2-4645F2FBE52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B9DC94-5F25-4779-95E2-4645F2FBE52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

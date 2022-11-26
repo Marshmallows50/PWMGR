@@ -12,8 +12,10 @@ public class Label : IComponent
     public string Text { get; private set; }
     
     public Point Position { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
+    public int Width { get; private set; }
+    public int Height { get; private set; }
+    public Container? Parent { get; set; }
+
     #endregion
 
     #region Constructor
@@ -54,6 +56,8 @@ public class Label : IComponent
     {
         Width = Text.Length + margin;
         Height = 1;
+        if (Parent!=null)
+            Parent.ProcessDimensions();
     }
     #endregion
 
@@ -61,7 +65,7 @@ public class Label : IComponent
     public void SetText(string text)
     {
         Text = text;
-        Width = Text.Length + margin;
+        ProcessDimensions();
     }
     #endregion
 }

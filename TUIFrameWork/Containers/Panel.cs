@@ -3,23 +3,19 @@ namespace TUIFrameWork.Containers;
 
 public class Panel : Container
 {
-    //TODO: should contain two lists. One for each IComponent and one of Containers for the purpose of changing who is MonitorInput()-ing
-    //TODO: main panel should always have 100% Width and Height.
-    //TODO: Add support for colors
-    
-    // for now, just make it so height is always automatic. no need for manual setting of height
-    // width still needs to be able to be set manually.
-    
+    // TODO: Add support for colors
+
     #region Fields and Properties
-    private IList<Selector> selectorContainers = new List<Selector>();
+    private IList<Selector> containers = new List<Selector>();
     private Selector monitoring;
-    private Container? parent;
+    private int indexOfMonitoring;
     
-    public bool isMainPanel; // might not be needed
     private bool isManuallySized;
 
     private double widthPercent;
     private double heightPercent;
+    
+    
     #endregion
     
     
@@ -29,16 +25,17 @@ public class Panel : Container
         Position = position ?? Frame.GetCursorPositionAsPoint();
         
         this.gap = gap;
-
-        parent = null;
+        
         direction = LayoutDirection.Column;
         hAlignment = HAlignment.Start;
         vAlignment = VAlignment.Start;
     }
     #endregion
 
+    
     #region Inherited Abstract Methods
     
+
     public override void ProcessDimensions()
     {
         Width = 0;
@@ -91,6 +88,8 @@ public class Panel : Container
                 }));
                 break;
         }
+        if (Parent != null)
+            Parent.ProcessDimensions();
     }
 
     protected override void CalculatePosition(IComponent item)
@@ -141,17 +140,121 @@ public class Panel : Container
     public void Add(IComponent item)
     {
         containedItems.Add(item);
-        ProcessDimensions();
+        if (item is Panel panel)
+            GetSelectors(panel);
 
+        item.Parent = this;
+        ProcessDimensions();
         CalculatePosition(item);
     }
-
+    
     public void Remove(IComponent item)
     {
         containedItems.Remove(item);
+        if (item is Panel panel)
+            RemoveSelectors(panel);
+
+        item.Parent = null;
         ProcessDimensions();
+        CalcAllPositions();
     }
     
+    private void GetSelectors(Panel panel)
+    {
+        foreach (IComponent component in panel)
+        {
+            switch (component)
+            {
+                case Selector childSelector:
+                    containers.Add(childSelector);
+                    if (Parent != null)
+                        ((Panel) Parent).containers.Add(childSelector);
+                    
+                    break;
+                case Panel childPanel:
+                    GetSelectors(childPanel);
+                    break;
+            }
+        }
+    }
+
+    private void RemoveSelectors(Panel panel)
+    {
+        foreach (IComponent component in panel)
+        {
+            switch (component)
+            {
+                case Selector childSelector:
+                    if (panel.Contains(childSelector))
+                    {
+                        containers.Remove(childSelector);
+                        if (Parent != null)
+                            ((Panel) Parent).containers.Remove(childSelector);
+                    }
+
+                    break;
+                case Panel childPanel:
+                    RemoveSelectors(childPanel);
+                    break;
+            }
+        }
+    }
+    
+    public void ManageInput()
+    {
+        monitoring = containers[0];
+        isMonitoringInput = true;
+        while (isMonitoringInput)
+        {
+            switch (monitoring.MonitorInput())
+            {
+                case ConsoleKey.PageUp:
+                    try
+                    {
+                        int newIndex = containers.IndexOf(monitoring) - 1;
+                        monitoring = containers[newIndex];
+                    }
+                    catch
+                    {
+                        monitoring = containers[0];
+                    }
+                    break;
+                
+                case ConsoleKey.PageDown:
+                    try
+                    {
+                        int newIndex = containers.IndexOf(monitoring) + 1;
+                        monitoring = containers[newIndex];
+                    }
+                    catch
+                    {
+                        monitoring = containers[^1];
+                    }
+                    break;
+                
+                case ConsoleKey.Escape:
+                    isMonitoringInput = false;
+                    break;
+            }
+        }
+    }
+
+    public void RefreshEverything() 
+    {
+        // if Framework is use correctly, this should probably not be used, but just in case here it is
+        foreach (IComponent item in containedItems)
+        {
+            if (item is not Panel panel) continue;
+            RemoveSelectors(panel);
+            GetSelectors(panel);
+        }
+        ProcessDimensions();
+        CalcAllPositions();
+    }
+    #endregion
+
+    
+    #region Dimension Calculation Methods
     public void SetWidth(double width)
     {
         widthPercent = width;
@@ -166,7 +269,7 @@ public class Panel : Container
         else
             try
             {
-                 Width = (int)(parent.Width * (widthPercent / 100));
+                Width = (int)(Parent.Width * (widthPercent / 100));
             }
             catch
             {
@@ -188,16 +291,15 @@ public class Panel : Container
         else
             try
             {
-                Height = (int)(parent.Height * (heightPercent / 100));
+                Height = (int)(Parent.Height * (heightPercent / 100));
             }
             catch
             {
                 Height = (int)(Console.WindowHeight * (heightPercent / 100));
             }
     }
-    
     #endregion
-
+    
     #region Position Calculation Methods
     private void HorizontalStart(IComponent item)
     {
@@ -352,6 +454,5 @@ public class Panel : Container
                 break;
         }
     }
-
     #endregion
 }
