@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using System.Text;
 
 namespace EncryptionAttempt;
 
@@ -7,16 +6,17 @@ public class EncryptDecrypt
 {
 
     // encrypt file using Symmetric Encryption with CryptoStream and AES algorithm
-    public static void Encrypt(string filepath)
+    public static void Encrypt(string filepath="file.txt")
     {
         try
         {
-            using (FileStream fileStream = new("SomeData.txt", FileMode.OpenOrCreate))
+            using (FileStream fileStream = new(filepath, FileMode.OpenOrCreate))
             {
                 using (Aes aes = Aes.Create())
                 {
                     // System.Security.Cryptography.CryptographicException: Specified key is not a valid size for this algorithm.
-                    // string password = "@myPassword1234";
+                    
+                    // string password = "@myPassword1234"; // ask user for input on this
                     // byte[] key = Encoding.UTF8.GetBytes(password);
                     
                     byte[] key =
@@ -26,7 +26,9 @@ public class EncryptDecrypt
                     };
                     aes.Key = key;
 
+                    
                     byte[] iv = aes.IV; // first time generating IV (initialization vector)
+                    
                     
                     // writes IV to file unencrypted. IV does not need to be secret.
                     fileStream.Write(iv, 0, iv.Length); 
@@ -56,7 +58,7 @@ public class EncryptDecrypt
         }
     }
 
-    public static async void Decrypt(string filepath)
+    public static async void Decrypt(string filepath="file.txt")
     {
         try
         {
@@ -76,6 +78,7 @@ public class EncryptDecrypt
                         numBytesToRead -= n;
                     }
 
+                    
                     byte[] key =
                     {
                         0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,

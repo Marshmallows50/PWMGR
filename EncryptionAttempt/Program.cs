@@ -8,31 +8,22 @@
 // MS given Symmetric Cryptography Demo
 // See https://learn.microsoft.com/en-us/dotnet/standard/security/encrypting-data
 // See https://learn.microsoft.com/en-us/dotnet/standard/security/decrypting-data
-// https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.cryptostream?view=net-7.0
+// See https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.cryptostream?view=net-7.0
 
-// AES algorithm
+// AES algorithm - Symmetric and Asymmetric
 // See https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes?view=net-7.0
 // See https://learn.microsoft.com/en-us/dotnet/standard/security/generating-keys-for-encryption-and-decryption
 
-// RSA algorithm
+// RSA algorithm - Asymmetric
 // see https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsa?view=net-7.0
 // See https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsaparameters?view=net-7.0
 // See https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsa.importparameters?view=net-7.0
 
-
-// accidentally 
-
-
-
 using System.Security.Cryptography;
 using EncryptionAttempt;
-
-Console.WriteLine("Hello, World!");
-
-
 
 RSA rsa = RSA.Create();
 Aes aes = Aes.Create();
 
-// EncryptDecrypt.Encrypt("SomeData.txt");
-EncryptDecrypt.Decrypt("SomeData.txt");
+EncryptDecrypt.Encrypt();
+EncryptDecrypt.Decrypt();

@@ -1,0 +1,124 @@
+using TUIFrameWork;
+using TUIFrameWork.Containers;
+using TUIFrameWork.Selection.Components;
+using TUIFrameWork.Selection.Containers;
+
+namespace PWMGR;
+
+public class Example2
+{
+    public static void MakeThing()
+    {
+        //create Panels
+        Panel mainPanel = new Panel(2);
+        Panel sideBar = new Panel(2);
+        Panel mainContent = new Panel(0);
+        
+        // create and configure menus
+        Menu sideMenu1 = CreateSideMenu1();
+        Menu sideMenu2 = CreateSideMenu2();
+        Menu menu3 = CreateMenu3();
+        
+        // add menus to Sidebar
+        sideBar.Add(sideMenu1);
+        sideBar.Add(sideMenu2);
+        
+
+        // add menu3 to mainContent
+        mainContent.Add(menu3);
+
+        // add Panels to MainPanel
+        
+        
+        // configure Top Level Panel First
+        mainPanel.direction = LayoutDirection.Row;
+        mainPanel.vAlignment = VAlignment.Center;
+        mainPanel.hAlignment = HAlignment.End;
+        mainPanel.SetHeight(50); // 50% of window
+        mainPanel.SetWidth(60);  // 60% of window
+        
+        mainPanel.Add(sideBar);
+        mainPanel.Add(mainContent);
+        
+        // configure MainPanels Children
+        sideBar.direction = LayoutDirection.Column;
+        sideBar.hAlignment = HAlignment.Center;
+        sideBar.backgroundColor = ConsoleColor.Gray;
+        sideBar.SetWidth(20); //20% of parent mainPanel (which is 50% of window)
+        sideBar.SetHeight(80); // 80% of parent mainPanel
+        sideBar.ProcessDimensions();
+        sideBar.CalcAllPositions();
+        
+        mainContent.direction = LayoutDirection.Row;
+        mainContent.hAlignment = HAlignment.End;
+        mainContent.vAlignment = VAlignment.Center;
+        mainContent.backgroundColor = ConsoleColor.Cyan;
+        mainContent.SetWidth(70); // 80% of parent mainPanel
+        mainContent.SetHeight(80); // 80% of parent mainPanel
+        menu3.ProcessDimensions();
+        menu3.CalcAllPositions();
+        mainContent.ProcessDimensions();
+        mainContent.CalcAllPositions();
+        
+        
+        
+        mainPanel.ProcessDimensions();
+        mainPanel.CalcAllPositions();
+        mainPanel.Draw();
+        mainPanel.ManageInput();
+    }
+
+    private static Menu CreateMenu3()
+    {
+        Menu menu3 = new Menu(true, 2);
+        MenuItem btna = new MenuItem("Btn a");
+        MenuItem btnb = new MenuItem("Btn b");
+        MenuItem btnc = new MenuItem("Btn c");
+
+        menu3.Add(btna);
+        menu3.Add(btnb);
+        menu3.Add(btnc);
+        
+        return menu3;
+    }
+
+    private static Menu CreateSideMenu1()
+    {
+        Menu sideMenu1 = new Menu(true, 0);
+
+        MenuItem btn1 = new MenuItem("Btn 1");
+        MenuItem btn2 = new MenuItem("Btn 2");
+        MenuItem btn3 = new MenuItem("Btn 3");
+        MenuItem btn4 = new MenuItem("Btn 4");
+        MenuItem btn5 = new MenuItem("Btn 5");
+
+        sideMenu1.Add(btn1);
+        sideMenu1.Add(btn2);
+        sideMenu1.Add(btn3);
+        sideMenu1.Add(btn4);
+        sideMenu1.Add(btn5);
+        sideMenu1.ProcessDimensions();
+        sideMenu1.CalcAllPositions();
+        return sideMenu1;
+    }
+
+    private static Menu CreateSideMenu2()
+    {
+        Menu sideMenu2 = new Menu(true, 0);
+
+        MenuItem btn6 = new MenuItem("Btn 6");
+        MenuItem btn7 = new MenuItem("Btn 7");
+        MenuItem btn8 = new MenuItem("Btn 8");
+        MenuItem btn9 = new MenuItem("Btn 9");
+        MenuItem btn0 = new MenuItem("Btn 0");
+
+        sideMenu2.Add(btn6);
+        sideMenu2.Add(btn7);
+        sideMenu2.Add(btn8);
+        sideMenu2.Add(btn9);
+        sideMenu2.Add(btn0);
+        sideMenu2.ProcessDimensions();
+        sideMenu2.CalcAllPositions();
+        return sideMenu2;
+    }
+}

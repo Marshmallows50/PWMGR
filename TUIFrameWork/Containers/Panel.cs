@@ -6,7 +6,7 @@ public class Panel : Container
     // TODO: Add support for colors
 
     #region Fields and Properties
-    private IList<Selector> containers = new List<Selector>();
+    internal IList<Selector> containers = new List<Selector>();
     private Selector monitoring;
     private int indexOfMonitoring;
     
@@ -34,62 +34,48 @@ public class Panel : Container
 
     
     #region Inherited Abstract Methods
-    
-
     public override void ProcessDimensions()
     {
         Width = 0;
         Height = 0;
-        switch (direction)
+
+        switch (isManuallySized)
         {
-            case LayoutDirection.Column:
-                // Process Height if column
-                ProcessHeight( new Action(delegate
-                {
-                    foreach (IComponent item in containedItems)
-                    {
-                        Height += item.Height;
-                    }
-                    if (containedItems.Count > 1)
-                        Height += gap * (containedItems.Count - 1);
-                }));
-
-                // Process Width if column
-                ProcessWidth(new Action(delegate
-                {
-                    foreach (IComponent item in containedItems)
-                    {
-                        if (item.Width > Width)
-                            Width = item.Width;
-                    }
-                }));
+            case true when Parent!=null:
+                Width = (int)(Parent.Width * (widthPercent / 100));
+                Height = (int)(Parent.Height * (heightPercent / 100));
                 break;
+            case true when Parent==null:
+                Width = (int)(Console.WindowWidth * (widthPercent / 100));
+                Height = (int)(Console.WindowHeight * (heightPercent / 100));
+                break;
+            default:
+            {
+                switch (direction)
+                {
+                    case LayoutDirection.Column:
+                        foreach (IComponent item in containedItems)
+                        {
+                            Height += item.Height + gap;
+                            if (item.Width > Width)
+                                Width = item.Width;
+                        }
+                        Height -= gap;
+                        break;
             
-            case LayoutDirection.Row:
-                //Process Height if row
-                ProcessHeight(new Action(delegate
-                {
-                    foreach (IComponent item in containedItems)
-                    {
-                        if (item.Height > Height)
-                            Height = item.Height;
-                    }
-                }));
-
-                //Process Width if row
-                ProcessWidth(new Action(delegate
-                {
-                    foreach (IComponent item in containedItems)
-                    {
-                        Width += item.Width;
-                    }
-                    if (containedItems.Count > 1)
-                        Width += gap * (containedItems.Count - 1);
-                }));
+                    case LayoutDirection.Row:
+                        foreach (IComponent item in containedItems)
+                        {
+                            Width += item.Width + gap;
+                            if (item.Height > Height)
+                                Height = item.Height;
+                        }
+                        Width -= gap;
+                        break;
+                }
                 break;
+            }
         }
-        if (Parent != null)
-            Parent.ProcessDimensions();
     }
 
     protected override void CalculatePosition(IComponent item)
@@ -140,66 +126,42 @@ public class Panel : Container
     public void Add(IComponent item)
     {
         containedItems.Add(item);
-        if (item is Panel panel)
-            GetSelectors(panel);
+        if (item is Selector selector)
+            AddSelector(selector);
 
         item.Parent = this;
-        ProcessDimensions();
-        CalculatePosition(item);
     }
     
     public void Remove(IComponent item)
     {
         containedItems.Remove(item);
-        if (item is Panel panel)
-            RemoveSelectors(panel);
+        if (item is Selector selector)
+            RemoveSelector(selector);
 
         item.Parent = null;
-        ProcessDimensions();
-        CalcAllPositions();
     }
-    
-    private void GetSelectors(Panel panel)
+
+
+    private void AddSelector(Selector selector)
     {
-        foreach (IComponent component in panel)
+        containers.Add(selector);
+        if (Parent != null)
         {
-            switch (component)
-            {
-                case Selector childSelector:
-                    containers.Add(childSelector);
-                    if (Parent != null)
-                        ((Panel) Parent).containers.Add(childSelector);
-                    
-                    break;
-                case Panel childPanel:
-                    GetSelectors(childPanel);
-                    break;
-            }
+            ((Panel) Parent).containers.Add(selector);
+            ((Panel) Parent).AddSelector(selector);
         }
     }
 
-    private void RemoveSelectors(Panel panel)
+    private void RemoveSelector(Selector selector)
     {
-        foreach (IComponent component in panel)
+        containers.Remove(selector);
+        if (Parent != null)
         {
-            switch (component)
-            {
-                case Selector childSelector:
-                    if (panel.Contains(childSelector))
-                    {
-                        containers.Remove(childSelector);
-                        if (Parent != null)
-                            ((Panel) Parent).containers.Remove(childSelector);
-                    }
-
-                    break;
-                case Panel childPanel:
-                    RemoveSelectors(childPanel);
-                    break;
-            }
+            ((Panel) Parent).containers.Remove(selector);
+            ((Panel) Parent).RemoveSelector(selector);
         }
     }
-    
+
     public void ManageInput()
     {
         monitoring = containers[0];
@@ -238,65 +200,15 @@ public class Panel : Container
             }
         }
     }
-
-    public void RefreshEverything() 
-    {
-        // if Framework is use correctly, this should probably not be used, but just in case here it is
-        foreach (IComponent item in containedItems)
-        {
-            if (item is not Panel panel) continue;
-            RemoveSelectors(panel);
-            GetSelectors(panel);
-        }
-        ProcessDimensions();
-        CalcAllPositions();
-    }
     #endregion
 
     
     #region Dimension Calculation Methods
-    public void SetWidth(double width)
+    public void SetDimensions(double width, double height)
     {
         widthPercent = width;
-        isManuallySized = true;
-        ProcessDimensions();
-    }
-
-    private void ProcessWidth(Action widthBlock) 
-    {
-        if (isManuallySized == false)
-            widthBlock.Invoke();
-        else
-            try
-            {
-                Width = (int)(Parent.Width * (widthPercent / 100));
-            }
-            catch
-            {
-                Width = (int)(Console.WindowWidth * (widthPercent / 100));
-            }
-    }
-
-    public void SetHeight(double height)
-    {
         heightPercent = height;
         isManuallySized = true;
-        ProcessDimensions();
-    }
-    
-    private void ProcessHeight(Action heightBlock)
-    {
-        if (isManuallySized == false)
-            heightBlock.Invoke();
-        else
-            try
-            {
-                Height = (int)(Parent.Height * (heightPercent / 100));
-            }
-            catch
-            {
-                Height = (int)(Console.WindowHeight * (heightPercent / 100));
-            }
     }
     #endregion
     
