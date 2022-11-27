@@ -36,7 +36,6 @@ public abstract class Container : IComponent, IEnumerable<IComponent>
     #region Inherited Interface Methods
     public void Draw()
     {
-        ProcessDimensions();
         Console.BackgroundColor = backgroundColor;
         Frame.SetCursorToPoint(Position);
         for (int i = 0; i < Height; i++)

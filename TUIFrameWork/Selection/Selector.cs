@@ -26,6 +26,7 @@ public abstract class Selector : Container
     
     
     #region Inherited Abstract Methods
+    //TODO: simplify this method to make a bit more efficient.
     public override void ProcessDimensions()
     {
         Width = 0;
@@ -111,9 +112,7 @@ public abstract class Selector : Container
     {
         containedItems.Add(item);
         item.Parent = this;
-        ProcessDimensions();
-        CalculatePosition(item);
-        
+
         if (containedItems.Count == 1)
         {
             selected = (ISelectable) containedItems[0];
@@ -124,9 +123,6 @@ public abstract class Selector : Container
     {
         containedItems.Remove(item);
         item.Parent = null;
-        
-        ProcessDimensions();
-        CalcAllPositions();
     }
 
     public void SetColors(ConsoleColor background, ConsoleColor foreground)

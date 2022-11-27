@@ -44,10 +44,20 @@ public class Panel : Container
             case true when Parent!=null:
                 Width = (int)(Parent.Width * (widthPercent / 100));
                 Height = (int)(Parent.Height * (heightPercent / 100));
+                foreach (IComponent item in containedItems)
+                {
+                    if (item is Panel { isManuallySized: true })
+                        item.ProcessDimensions();
+                }
                 break;
             case true when Parent==null:
                 Width = (int)(Console.WindowWidth * (widthPercent / 100));
                 Height = (int)(Console.WindowHeight * (heightPercent / 100));
+                foreach (IComponent item in containedItems)
+                {
+                    if (item is Panel { isManuallySized: true })
+                        item.ProcessDimensions();
+                }
                 break;
             default:
             {
@@ -126,18 +136,12 @@ public class Panel : Container
     public void Add(IComponent item)
     {
         containedItems.Add(item);
-        if (item is Selector selector)
-            AddSelector(selector);
-
         item.Parent = this;
     }
     
     public void Remove(IComponent item)
     {
         containedItems.Remove(item);
-        if (item is Selector selector)
-            RemoveSelector(selector);
-
         item.Parent = null;
     }
 
@@ -147,7 +151,6 @@ public class Panel : Container
         containers.Add(selector);
         if (Parent != null)
         {
-            ((Panel) Parent).containers.Add(selector);
             ((Panel) Parent).AddSelector(selector);
         }
     }
@@ -241,20 +244,22 @@ public class Panel : Container
         switch (direction)
         {
             case LayoutDirection.Column:
-                item.Position.X = (Width - item.Width) /2;
+                item.Position.X = Position.X + (Width - item.Width) /2;
                 break;
             
             case LayoutDirection.Row:
                 int sumWidthOfItems = 0;
                 int sumWidthUntilIndex = 0;
 
-                foreach (IComponent containedItem in containedItems)
-                    sumWidthOfItems += containedItem.Width + gap;
-                
-                for (int i = 0; i < index; i++)
-                    sumWidthUntilIndex += containedItems[i].Width + gap;
+                for (int i = 0; i < containedItems.Count; i++)
+                {
+                    sumWidthOfItems += containedItems[i].Width + gap;
+                    if (i < index)
+                        sumWidthUntilIndex += containedItems[i].Width + gap;
+                }
+                sumWidthOfItems -= gap;
 
-                x = (Width - sumWidthOfItems - gap) /2;
+                x = Position.X + (Width - sumWidthOfItems) /2;
                 if (x < 0)
                     x = 0;
                 
@@ -269,7 +274,7 @@ public class Panel : Container
         switch (direction)
         {
             case LayoutDirection.Column:
-                item.Position.X = Width - item.Width;
+                item.Position.X = Position.X + Width - item.Width;
                 break;
             case LayoutDirection.Row:
                 int sumWidthOfItems = 0;
@@ -281,7 +286,7 @@ public class Panel : Container
                 for (int i = 0; i < index; i++)
                     sumWidthUntilIndex += containedItems[i].Width + gap;
 
-                int startingP = Width - sumWidthOfItems + gap;
+                int startingP = Position.X + Width - sumWidthOfItems + gap;
                 if (startingP < 0)
                     startingP = 0;
 
@@ -323,11 +328,12 @@ public class Panel : Container
 
                 foreach (IComponent containedItem in containedItems)
                     sumHeightOfItems += containedItem.Height + gap;
+                sumHeightOfItems -= gap;
 
                 for (int i = 0; i < index; i++)
                     sumHeightUntilIndex += containedItems[i].Height + gap;
 
-                int y = (Height - sumHeightOfItems - gap) / 2;
+                int y = (Height - sumHeightOfItems) / 2;
                 if (y < 0)
                     y = 0;
 
@@ -335,7 +341,7 @@ public class Panel : Container
                 break;
             
             case LayoutDirection.Row:
-                item.Position.Y = (Height - item.Height) / 2;
+                item.Position.Y = Position.Y + (Height - item.Height) / 2;
                 break;
         }
     }
