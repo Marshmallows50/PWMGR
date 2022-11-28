@@ -22,8 +22,8 @@
 using System.Security.Cryptography;
 using EncryptionAttempt;
 
-RSA rsa = RSA.Create();
-Aes aes = Aes.Create();
+// RSA rsa = RSA.Create();
+// Aes aes = Aes.Create();
 
-EncryptDecrypt.Encrypt();
+// EncryptDecrypt.Encrypt();
 EncryptDecrypt.Decrypt();

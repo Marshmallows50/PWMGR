@@ -14,8 +14,6 @@ public class Panel : Container
 
     private double widthPercent;
     private double heightPercent;
-    
-    
     #endregion
     
     
@@ -136,32 +134,49 @@ public class Panel : Container
     public void Add(IComponent item)
     {
         containedItems.Add(item);
+        AddSelector(item);
         item.Parent = this;
     }
     
     public void Remove(IComponent item)
     {
         containedItems.Remove(item);
+        RemoveSelector(item);
         item.Parent = null;
     }
 
 
-    private void AddSelector(Selector selector)
+    private void AddSelector(IComponent item)
     {
-        containers.Add(selector);
-        if (Parent != null)
+        switch (item)
         {
-            ((Panel) Parent).AddSelector(selector);
+            case Selector selector:
+            {
+                this.containers.Add(selector);
+                if (Parent != null)
+                    ((Panel) Parent).AddSelector(selector);
+                break;
+            }
+            case Panel panel:
+                containers = containers.Concat(panel.containers).Distinct().ToList();
+                break;
         }
     }
 
-    private void RemoveSelector(Selector selector)
+    private void RemoveSelector(IComponent item)
     {
-        containers.Remove(selector);
-        if (Parent != null)
+        switch (item)
         {
-            ((Panel) Parent).containers.Remove(selector);
-            ((Panel) Parent).RemoveSelector(selector);
+            case Selector selector:
+            {
+                this.containers.Remove(selector);
+                if (Parent != null)
+                    ((Panel) Parent).RemoveSelector(selector);
+                break;
+            }
+            case Panel panel:
+                containers = containers.Except(panel.containers).ToList();
+                break;
         }
     }
 
@@ -203,10 +218,7 @@ public class Panel : Container
             }
         }
     }
-    #endregion
-
     
-    #region Dimension Calculation Methods
     public void SetDimensions(double width, double height)
     {
         widthPercent = width;
@@ -214,6 +226,7 @@ public class Panel : Container
         isManuallySized = true;
     }
     #endregion
+    
     
     #region Position Calculation Methods
     private void HorizontalStart(IComponent item)
@@ -280,11 +293,12 @@ public class Panel : Container
                 int sumWidthOfItems = 0;
                 int sumWidthUntilIndex = 0;
 
-                foreach (IComponent containedItem in containedItems)
-                    sumWidthOfItems += containedItem.Width + gap;
-                
-                for (int i = 0; i < index; i++)
-                    sumWidthUntilIndex += containedItems[i].Width + gap;
+                for (int i = 0; i < containedItems.Count; i++)
+                {
+                    sumWidthOfItems += containedItems[i].Width + gap;
+                    if (i < index)
+                        sumWidthUntilIndex += containedItems[i].Width + gap;
+                }
 
                 int startingP = Position.X + Width - sumWidthOfItems + gap;
                 if (startingP < 0)
@@ -326,12 +340,13 @@ public class Panel : Container
                 int sumHeightOfItems = 0;
                 int sumHeightUntilIndex = 0;
 
-                foreach (IComponent containedItem in containedItems)
-                    sumHeightOfItems += containedItem.Height + gap;
+                for (int i = 0; i < containedItems.Count; i++)
+                {
+                    sumHeightOfItems += containedItems[i].Height + gap;
+                    if (i < index)
+                        sumHeightUntilIndex += containedItems[i].Height + gap;
+                }
                 sumHeightOfItems -= gap;
-
-                for (int i = 0; i < index; i++)
-                    sumHeightUntilIndex += containedItems[i].Height + gap;
 
                 int y = (Height - sumHeightOfItems) / 2;
                 if (y < 0)
@@ -355,11 +370,12 @@ public class Panel : Container
                 int sumHeightOfItems = 0;
                 int sumHeightUntilIndex = 0;
 
-                foreach (IComponent containedItem in containedItems)
-                    sumHeightOfItems += containedItem.Height + gap;
-
-                for (int i = 0; i < index; i++)
-                    sumHeightUntilIndex += containedItems[i].Height + gap;
+                for (int i = 0; i < containedItems.Count; i++)
+                {
+                    sumHeightOfItems += containedItems[i].Height + gap;
+                    if (i < index)
+                        sumHeightUntilIndex += containedItems[i].Height + gap;
+                }
 
                 int startingP = Height - sumHeightOfItems + gap;
                 if (startingP < 0)

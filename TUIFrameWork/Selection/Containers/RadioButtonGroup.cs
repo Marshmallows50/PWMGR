@@ -5,6 +5,7 @@ public class RadioButtonGroup : Selector
 {
     #region Fields and Properties
     public bool HasToggled { get; private set; }
+    
     #endregion
 
     #region Constructor

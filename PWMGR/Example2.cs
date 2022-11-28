@@ -29,7 +29,6 @@ public class Example2
         mainContent.vAlignment = VAlignment.Center;
         mainContent.SetDimensions(50, 100);
         mainContent.backgroundColor = ConsoleColor.Yellow;
-        
 
         // create and configure menus
         Menu sideMenu1 = CreateSideMenu1();
@@ -54,8 +53,8 @@ public class Example2
         mainPanel.CalcAllPositions();
         mainPanel.Draw();
 
-        menu3.MonitorInput();
-        // mainPanel.ManageInput();
+        // menu3.MonitorInput();
+        mainPanel.ManageInput();
     }
 
     private static Menu CreateMenu3()

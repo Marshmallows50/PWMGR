@@ -15,7 +15,7 @@ public class Cube
         mainPanel.direction = LayoutDirection.Column;
         mainPanel.hAlignment = HAlignment.Center;
         mainPanel.vAlignment = VAlignment.Center;
-        mainPanel.SetDimensions(70, 70);
+        mainPanel.SetDimensions(100, 99);
         mainPanel.ProcessDimensions();
 
 
@@ -39,21 +39,7 @@ public class Cube
 
 
         // make 3 items for each menu
-        MenuItem menu1item1 = new MenuItem("Im a button!")
-        {
-            action = delegate
-            {
-                rowContainer1.Remove(row1menu1);
-                rowContainer1.Remove(row1menu2);
-                Label label3 = new Label("removed menus and added label", 5, Alignment.Center);
-                rowContainer1.Add(label3);
-                rowContainer1.ProcessDimensions();
-
-                // mainPanel.ProcessDimensions();
-                mainPanel.CalcAllPositions();
-                mainPanel.Draw();
-            }
-        };
+        
 
         CheckBox menu1item2 = new CheckBox("Check 1");
         TextField menu1item3 = new TextField(12, "Type!");
@@ -70,6 +56,8 @@ public class Cube
         CheckBox menu4item2 = new CheckBox("Check 1");
         TextField menu4item3 = new TextField(12, "Type!");
 
+        MenuItem menu1item1 = new MenuItem("Im a button!");
+        
 
         // add items to menus
         row1menu1.Add(menu1item1);
@@ -112,13 +100,60 @@ public class Cube
         mainPanel.Add(rowContainer2);
         mainPanel.Add(label2);
         mainPanel.ProcessDimensions();
-        
+
         mainPanel.CalcAllPositions(); // figure out positions of children inside panel
 
         // draw
         mainPanel.Draw();
-        
-        row1menu1.MonitorInput();
-        // mainPanel.ManageInput();
+
+        bool isRemoved =false;
+        menu1item1.action = delegate
+        {
+            if (menu3item1.Toggled)
+            {
+                if (menu1item2.Toggled && isRemoved)
+                {
+                    rowContainer1.Add(row1menu2);
+                    rowContainer1.ProcessDimensions();
+                                                
+                    menu1item2.Act();
+                                                
+                    mainPanel.ProcessDimensions(); 
+                    mainPanel.CalcAllPositions();
+                    mainPanel.Draw();
+                    isRemoved = false;
+                }
+                else
+                {
+                    rowContainer1.Remove(row1menu2);
+                    rowContainer1.ProcessDimensions();
+                    
+                    menu1item2.Act();
+                    
+                    mainPanel.ProcessDimensions();
+                    mainPanel.CalcAllPositions();
+                    mainPanel.Draw();
+                    isRemoved = true;
+                }
+            }
+                
+            else if (menu3item2.Toggled)
+            {
+                row1menu1.backgroundColor = ConsoleColor.Yellow;
+                row1menu1.Draw();
+            }
+            else if (menu3item3.Toggled)
+            {
+                row1menu1.backgroundColor = ConsoleColor.Magenta;
+                row1menu1.Draw();
+            }
+        };
+
+        // row1menu1.MonitorInput();
+        mainPanel.ManageInput();
+
+
+
     }
 }
+    
