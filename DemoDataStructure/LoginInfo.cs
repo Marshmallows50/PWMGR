@@ -8,6 +8,6 @@ namespace DemoDataStructure
 {
     public class LoginInfo
     {
-
+        //TODO
     }
 }
