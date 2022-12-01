@@ -1,10 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWMGR", "PWMGR\PWMGR.csproj", "{224D7D35-55B4-4E4F-A76A-F80B95D1B55B}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PWMGR", "PWMGR\PWMGR.csproj", "{224D7D35-55B4-4E4F-A76A-F80B95D1B55B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TUIFrameWork", "TUIFrameWork\TUIFrameWork.csproj", "{12B9DC94-5F25-4779-95E2-4645F2FBE52D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TUIFrameWork", "TUIFrameWork\TUIFrameWork.csproj", "{12B9DC94-5F25-4779-95E2-4645F2FBE52D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionAttempt", "EncryptionAttempt\EncryptionAttempt.csproj", "{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptionAttempt", "EncryptionAttempt\EncryptionAttempt.csproj", "{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoDataStructure", "DemoDataStructure\DemoDataStructure.csproj", "{2EF99143-D2E9-4E05-A3BD-966974FD89B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +29,15 @@ Global
 		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A3108D0-1DB7-40CE-A365-3A8ECA2C79E3}
 	EndGlobalSection
 EndGlobal
