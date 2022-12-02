@@ -22,7 +22,7 @@ public abstract class Container : IComponent, IEnumerable<IComponent>
     public Point Position { get; set; }
     public int Width { get; internal set; }
     public int Height { get; internal set; }
-    public Container? Parent { get; set; }
+    public Container? Parent { get; private set; }
 
     Container? IComponent.Parent
     {
@@ -70,5 +70,4 @@ public abstract class Container : IComponent, IEnumerable<IComponent>
         return GetEnumerator();
     }
     #endregion
-
 }

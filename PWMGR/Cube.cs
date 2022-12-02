@@ -15,7 +15,7 @@ public class Cube
         mainPanel.direction = LayoutDirection.Column;
         mainPanel.hAlignment = HAlignment.Center;
         mainPanel.vAlignment = VAlignment.Center;
-        mainPanel.SetDimensions(100, 99);
+        mainPanel.SetDimensions(70, 70);
         mainPanel.ProcessDimensions();
 
 

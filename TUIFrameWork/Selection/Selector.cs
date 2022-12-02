@@ -7,7 +7,6 @@ public abstract class Selector : Container
     #region Fields and Properties
     protected ISelectable selected;
     
-    
     public bool IsEscapable { get; set; }
     #endregion
 
@@ -19,14 +18,11 @@ public abstract class Selector : Container
         
         this.gap = gap;
         this.direction = direction;
-
-        ProcessDimensions();
     }
     #endregion
     
     
     #region Inherited Abstract Methods
-    //TODO: simplify this method to make a bit more efficient.
     public override void ProcessDimensions()
     {
         Width = 0;
@@ -35,59 +31,36 @@ public abstract class Selector : Container
         {
             case LayoutDirection.Column:
                 Height = containedItems.Count + (containedItems.Count * gap) - gap;
-                
-                int largest = 0;
-                foreach (IComponent item in containedItems)
-                {
-                    if (item.Width > largest)
-                        largest = item.Width;
-                }
-
-                Width = largest;
+                Width = containedItems.Select(i => i.Width).Max();
                 break;
             
             case LayoutDirection.Row:
-                foreach (IComponent item in containedItems)
-                {
-                    Width += item.Width + gap;
-                }
-                Width -= gap;
-
-                int tallest = 0;
-                foreach (IComponent item in containedItems)
-                {
-                    if (item.Height > tallest)
-                        tallest = item.Height;
-                }
-
-                Height = tallest;
+                Width = containedItems.Select(i => i.Width).Sum()
+                    + (containedItems.Count * gap) - gap;
+                Height = containedItems.Select(i => i.Height).Max();
                 break;
         }
         if (Parent!=null)
             Parent.ProcessDimensions();
     }
     
-    //TODO: simplify this method to make a bit more efficient.
     protected override void CalculatePosition(IComponent item)
     {
         int index = containedItems.IndexOf((ISelectable) item);
+        item.Position = new Point(Position.X, Position.Y);
         switch (direction)
         {
             case LayoutDirection.Column:
-                item.Position = index == 0 ?
-                    new Point(this.Position.X, this.Position.Y) : 
-                    item.Position = new Point(this.Position.X, this.Position.Y + index + (index * gap));
+                if (index > 0)
+                    item.Position.Y += index + (index * gap);
                 break;
             case LayoutDirection.Row:
                 int sumWidthUntilIndex = 0;
                 for (int i = 0; i < index; i++)
-                {
                     sumWidthUntilIndex += containedItems[i].Width;
-                }
-                
-                item.Position = index == 0 ? 
-                    new Point(this.Position.X, this.Position.Y) : 
-                    new Point(this.Position.X + sumWidthUntilIndex + (index*gap),this.Position.Y);
+
+                if (index > 0)
+                    item.Position.X += sumWidthUntilIndex + (index * gap);
                 break;
         }
     }
@@ -95,9 +68,7 @@ public abstract class Selector : Container
     public override void CalcAllPositions()
     {
         foreach (IComponent item in containedItems)
-        {
             CalculatePosition(item);
-        }
     }
     #endregion
     
@@ -114,9 +85,7 @@ public abstract class Selector : Container
         item.Parent = this;
 
         if (containedItems.Count == 1)
-        {
             selected = (ISelectable) containedItems[0];
-        }
     }
     
     public void Remove(ISelectable item)

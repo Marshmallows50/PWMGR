@@ -28,6 +28,7 @@ public class Menu : Selector
                     catch
                     {
                         selected = (ISelectable) containedItems[0];
+                        selected.Select();
                     }
                     break;
                 
@@ -37,12 +38,12 @@ public class Menu : Selector
                         selected.Deselect();
                         int newIndex = containedItems.IndexOf(selected) + 1;
                         selected = (ISelectable) containedItems[newIndex];
-
                         selected.Select();
                     }
                     catch
                     {
                         selected = (ISelectable) containedItems[^1];
+                        selected.Select();
                     }
                     break;
                 
@@ -51,15 +52,12 @@ public class Menu : Selector
                     break;
                 
                 case ConsoleKey.Escape when IsEscapable:
-                    // isMonitoringInput = false;
                     return ConsoleKey.Escape;
 
                 case ConsoleKey.PageUp when IsEscapable:
-                    // isMonitoringInput = false;
                     return ConsoleKey.PageUp;
                 
                 case ConsoleKey.PageDown when IsEscapable:
-                    // isMonitoringInput = false;
                     return ConsoleKey.PageDown;
             }
         }

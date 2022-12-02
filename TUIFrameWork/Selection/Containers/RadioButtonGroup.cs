@@ -34,6 +34,7 @@ public class RadioButtonGroup : Selector
                     catch
                     {
                         selected = (ISelectable) containedItems[0];
+                        selected.Select();
                     }
 
                     break;
@@ -48,6 +49,7 @@ public class RadioButtonGroup : Selector
                     catch
                     {
                         selected = (ISelectable) containedItems[^1];
+                        selected.Select();
                     }
                     break;
                 
@@ -67,15 +69,12 @@ public class RadioButtonGroup : Selector
                     break;
                 
                 case ConsoleKey.Escape when IsEscapable:
-                    // isMonitoringInput = false;
                     return ConsoleKey.Escape;
 
                 case ConsoleKey.PageUp when IsEscapable:
-                    // isMonitoringInput = false;
                     return ConsoleKey.PageUp;
                 
                 case ConsoleKey.PageDown when IsEscapable:
-                    // isMonitoringInput = false;
                     return ConsoleKey.PageDown;
             }
         }

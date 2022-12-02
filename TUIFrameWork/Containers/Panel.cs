@@ -6,7 +6,7 @@ public class Panel : Container
     // TODO: Add support for colors
 
     #region Fields and Properties
-    internal IList<Selector> containers = new List<Selector>();
+    private IList<Selector> containers = new List<Selector>();
     private Selector monitoring;
     private int indexOfMonitoring;
     
@@ -62,23 +62,15 @@ public class Panel : Container
                 switch (direction)
                 {
                     case LayoutDirection.Column:
-                        foreach (IComponent item in containedItems)
-                        {
-                            Height += item.Height + gap;
-                            if (item.Width > Width)
-                                Width = item.Width;
-                        }
-                        Height -= gap;
+                        Height = containedItems.Select(i => i.Height).Sum()
+                                 + (containedItems.Count * gap) - gap;
+                        Width = containedItems.Select(i => i.Width).Max();
                         break;
             
                     case LayoutDirection.Row:
-                        foreach (IComponent item in containedItems)
-                        {
-                            Width += item.Width + gap;
-                            if (item.Height > Height)
-                                Height = item.Height;
-                        }
-                        Width -= gap;
+                        Width = containedItems.Select(i => i.Width).Sum()
+                                + (containedItems.Count * gap) - gap;
+                        Height = containedItems.Select(i => i.Height).Max();
                         break;
                 }
                 break;
@@ -88,7 +80,6 @@ public class Panel : Container
 
     protected override void CalculatePosition(IComponent item)
     {
-        item.Position = new Point(Position.X, Position.Y);
         switch (hAlignment)
         {
             case HAlignment.Start:
@@ -144,8 +135,7 @@ public class Panel : Container
         RemoveSelector(item);
         item.Parent = null;
     }
-
-
+    
     private void AddSelector(IComponent item)
     {
         switch (item)
@@ -240,12 +230,9 @@ public class Panel : Container
             case LayoutDirection.Row:
                 int sumWidthUntilIndex = 0;
                 for (int i = 0; i < index; i++)
-                {
                     sumWidthUntilIndex += containedItems[i].Width + gap;
-                }
-
-                item.Position.X = (index == 0) ? Position.X : Position.X + sumWidthUntilIndex;
                 
+                item.Position.X = (index == 0) ? Position.X : Position.X + sumWidthUntilIndex;
                 break;
         }
     }
@@ -253,7 +240,6 @@ public class Panel : Container
     private void HorizontalCenter(IComponent item)
     {
         int index = containedItems.IndexOf(item);
-        int x;
         switch (direction)
         {
             case LayoutDirection.Column:
@@ -272,7 +258,7 @@ public class Panel : Container
                 }
                 sumWidthOfItems -= gap;
 
-                x = Position.X + (Width - sumWidthOfItems) /2;
+                int x = Position.X + (Width - sumWidthOfItems) /2;
                 if (x < 0)
                     x = 0;
                 
@@ -318,9 +304,7 @@ public class Panel : Container
             case LayoutDirection.Column:
                 int sumHeightUntilIndex = 0;
                 for (int i = 0; i < index; i++)
-                {
                     sumHeightUntilIndex += containedItems[i].Height + gap;
-                }
 
                 item.Position.Y = (index == 0) ? Position.Y : Position.Y + sumHeightUntilIndex;
                 break;
@@ -354,7 +338,6 @@ public class Panel : Container
 
                 item.Position.Y = index == 0 ? y : y + sumHeightUntilIndex;
                 break;
-            
             case LayoutDirection.Row:
                 item.Position.Y = Position.Y + (Height - item.Height) / 2;
                 break;
