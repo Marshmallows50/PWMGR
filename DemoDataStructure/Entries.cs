@@ -37,26 +37,25 @@ namespace DemoDataStructure
         public void remove(Entry entry) {
             EntriesContainer.Remove(entry);
         }
-
         #endregion
 
         #region Filtering methods
 
         public IEnumerable<Entry> GetByTag(string tag) {
             return EntriesContainer
-                .Where(e => e.URL.Equals(tag));
+                .Where(e => e.Tags.Contains(tag));
         }
 
         public IEnumerable<Entry> GetByTitle(string title)
         {
             return EntriesContainer
-                .Where(e => e.URL.Equals(title));
+                .Where(e => e.Title.Equals(title));
         }
 
         public IEnumerable<Entry> GetByUsername(string username)
         {
             return EntriesContainer
-                .Where(e => e.URL.Equals(username));
+                .Where(e => e.Username.Equals(username));
         }
 
         public IEnumerable<Entry> GetByURL(string url)

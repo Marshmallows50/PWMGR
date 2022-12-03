@@ -15,9 +15,9 @@ namespace DemoDataStructure
         public string Password { get; set; }
         public string URL { get; set; }
         public int Id { get; set; }
-        List<string> Tags { get; set; }
-        string Group { get; set; }
-        string Title { get; set; }
+        public List<string> Tags { get; set; }
+        public string Group { get; set; }
+        public string Title { get; set; }
 
 
         public Entry
