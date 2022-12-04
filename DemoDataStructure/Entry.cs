@@ -22,8 +22,10 @@ namespace DemoDataStructure
 
 
         public Entry
-            (string user, string pass, string url, int id, string group)
+            (string title, string user, string pass, string url, int id, string group)
         {
+            Tags = new List<string>();
+            Title = title;
             Username = user;
             Password = pass;
             URL = url;
@@ -33,8 +35,8 @@ namespace DemoDataStructure
 
         public override string ToString()
         {
-            return String.Format("Username: {0,7:S} || Password:{1,19:S} || URL: {2,15:S} || Id: {3,1:D}",
-                                Username,Password,URL,Id);
+            return String.Format("Title: {0,7:S}  || Username: {1,7:S} || Password:{2,19:S} || URL: {3,15:S} || Id: {4,1:D}",
+                                Title,Username,Password,URL,Id);
         }
     }
 }

@@ -31,19 +31,18 @@ namespace DemoDataStructure
         
         
         #region Functionality Methods
-        public void add(Entry entry) {
-            EntriesContainer.Add((Entry) entry);
+        public void Add(Entry entry) {
+            EntriesContainer.Add(entry);
         }
 
-        public void remove(Entry entry) {
+        public void Remove(Entry entry) {
             EntriesContainer.Remove(entry);
         }
         #endregion
 
         #region Filtering methods
 
-        public IEnumerable<Entry> GetByTag(string tag)
-        {
+        public IEnumerable<Entry> GetByTagList(string tag) {
             return EntriesContainer
                 .Where(e => e.Tags.Contains(tag));
         }
@@ -70,24 +69,41 @@ namespace DemoDataStructure
         #endregion
 
         #region Sorting methods
+        
+        public IEnumerable<Entry> SortByPassword()
+        {
+            return 
+                from e in EntriesContainer
+                orderby e.Password
+                select e;
+        }
         public IEnumerable<Entry> SortByTags()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Entry> SortByTitle()
+        public IOrderedEnumerable<Entry> SortByTitle(string title)
         {
-            throw new NotImplementedException();
+           return 
+                from e in EntriesContainer
+                orderby e.Title
+                select e;
         }
 
         public IEnumerable<Entry> SortByUsername()
         {
-            throw new NotImplementedException();
+            return 
+                from e in EntriesContainer
+                orderby e.Username
+                select e;
         }
 
         public IEnumerable<Entry> SortByURL()
         {
-            throw new NotImplementedException();
+            return 
+                from e in EntriesContainer
+                orderby e.URL
+                select e;
         }
 
         #endregion
@@ -109,11 +125,11 @@ namespace DemoDataStructure
         {
             int n = 1;
             IEnumerable<Entry> logins = new List<Entry> {
-                new Entry("Ri","Unh@ckab13PAsSW0rd","coolwebsite.com",n++, "2410 Group Project"),
-                new Entry("Gabe","l33tMar$All0ooooow","hello.com",n++, "2410 Group Project"),
-                new Entry("Hunter","CA1iTripp1n","goodbye.com",n++, "2410 Group Project"),
-                new Entry("Jasmine","H1kinGH@Xz","coolwebsite.com",n++,"2410 Group Project"),
-                new Entry("Steven","Mmmmyst3ryM@N","goodbye.com",n++,"2410 Group Project")
+                new Entry("Person","Ri","Unh@ckab13PAsSW0rd","coolwebsite.com",n++, "2410 Group Project"),
+                new Entry("Person","Gabe","l33tMar$All0ooooow","hello.com",n++, "2410 Group Project"),
+                new Entry("Non-Person","Hunter","CA1iTripp1n","goodbye.com",n++, "2410 Group Project"),
+                new Entry("Person","Jasmine","H1kinGH@Xz","coolwebsite.com",n++,"2410 Group Project"),
+                new Entry("Person","Steven","Mmmmyst3ryM@N","goodbye.com",n++,"2410 Group Project")
             };
 
             Console.WriteLine("All users:");
