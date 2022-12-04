@@ -6,12 +6,15 @@ using TUIFrameWork.Containers;
 using TUIFrameWork;
 using TUIFrameWork.Base;
 
+//LoginFrame.DrawLoginFrame();
+//MainFrame.DrawMainFrame();
+//PsswdGeneratorFrame.DrawPsswdGenerator();
 
 Panel mainPanel = new Panel(1);
 mainPanel.direction = LayoutDirection.Column;
 mainPanel.hAlignment = HAlignment.Center;
 mainPanel.vAlignment = VAlignment.Start;
-mainPanel.SetDimensions(85,85);
+mainPanel.SetDimensions(85, 85);
 mainPanel.ProcessDimensions();
 mainPanel.backgroundColor = ConsoleColor.Cyan;
 
