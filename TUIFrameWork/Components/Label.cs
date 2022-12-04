@@ -50,14 +50,15 @@ public class Label : IComponent
         switch (alignment)
         {
             case Alignment.Left:
-                Console.Write($"{new string(' ',margin)}{Text}");
+                Console.Write($"{Text}{new string(' ',margin)}");
+                
                 break;
             case Alignment.Center:
                 string spaces = new string(' ',margin/2);
                 Console.Write($"{spaces}{Text}{spaces}");
                 break;
             case Alignment.Right:
-                Console.Write($"{Text}{new string(' ',margin)}");
+                Console.Write($"{new string(' ',margin)}{Text}");
                 break;
         }
     }

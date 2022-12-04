@@ -11,7 +11,7 @@ namespace PWMGR
     public class EntryGroup
     {  
         public string Name { get; set; }
-        public List<Entry> Entries { get; }
+        public List<Entry> Entries { get; set; }
         public int Size { get; }
         public ConsoleColor GroupColor { get; set; }
         
@@ -113,7 +113,8 @@ namespace PWMGR
         public IEnumerable<string[]> GetTableData()
         {
             return Entries
-                .Select(e => new string[] { e.Title, e.Username, e.Password, e.URL });
+                .Select(e => new string[] 
+                    { e.Title, e.Username, e.Password, e.URL });
         }
         #endregion
         
