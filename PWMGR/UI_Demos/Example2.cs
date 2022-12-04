@@ -3,7 +3,7 @@ using TUIFrameWork.Containers;
 using TUIFrameWork.Selection.Components;
 using TUIFrameWork.Selection.Containers;
 
-namespace PWMGR;
+namespace PWMGR.UI_Demos;
 
 public class Example2
 {
