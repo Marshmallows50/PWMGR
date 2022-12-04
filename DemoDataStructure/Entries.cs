@@ -22,15 +22,17 @@ namespace DemoDataStructure
         /// <param name="name"></param> name for this group of entries 
         /// <param name="entries"></param>
         /// <param name="color"></param> a designated color for this group of entries 
-        Entries(string name, ConsoleColor color = ConsoleColor.Black) { 
+        public Entries(string name, ConsoleColor color = ConsoleColor.Black) { 
             Name = name;
             GroupColor = color;
+
+            EntriesContainer = new List<Entry>();
         }
         
         
         #region Functionality Methods
         public void add(Entry entry) {
-            EntriesContainer.Add(entry);
+            EntriesContainer.Add((Entry) entry);
         }
 
         public void remove(Entry entry) {
@@ -40,7 +42,8 @@ namespace DemoDataStructure
 
         #region Filtering methods
 
-        public IEnumerable<Entry> GetByTag(string tag) {
+        public IEnumerable<Entry> GetByTag(string tag)
+        {
             return EntriesContainer
                 .Where(e => e.Tags.Contains(tag));
         }
@@ -62,6 +65,7 @@ namespace DemoDataStructure
             return EntriesContainer
                 .Where(e => e.URL.Equals(url));
         }
+
 
         #endregion
 
