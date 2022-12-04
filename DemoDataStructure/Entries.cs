@@ -13,9 +13,7 @@ namespace DemoDataStructure
     {  
         public string Name { get; set; }
         public List<Entry> EntriesContainer { get; }
-
         public int Size { get; }
-
         public ConsoleColor GroupColor { get; set; }
         
         /// <summary>
@@ -24,11 +22,12 @@ namespace DemoDataStructure
         /// <param name="name"></param> name for this group of entries 
         /// <param name="entries"></param>
         /// <param name="color"></param> a designated color for this group of entries 
-        Entries(string name, List<Entry> entries = null, ConsoleColor color = ConsoleColor.Black) { 
+        Entries(string name, ConsoleColor color = ConsoleColor.Black) { 
             Name = name;
-            EntriesContainer = entries;
             GroupColor = color;
         }
+        
+        
         #region Functionality Methods
         public void add(Entry entry) {
             EntriesContainer.Add(entry);
@@ -95,10 +94,8 @@ namespace DemoDataStructure
 
         #endregion
 
-        #region Get attibutes
-
+        #region Get attributes
         //TODO
-
         #endregion
 
         /// <summary>
