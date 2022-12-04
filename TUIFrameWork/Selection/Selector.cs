@@ -1,7 +1,12 @@
+using TUIFrameWork.Base;
 using TUIFrameWork.Containers;
 
 namespace TUIFrameWork.Selection;
-
+/// <summary>
+/// Selector abstract class inherits from Container. Selectors are responsible for managing,
+/// positioning, and drawing its children. They also keep track of what ISelectable is currently
+/// selected and monitors for user input to determine what to do.
+/// </summary>
 public abstract class Selector : Container
 {
     #region Fields and Properties
@@ -44,7 +49,7 @@ public abstract class Selector : Container
             Parent.ProcessDimensions();
     }
     
-    protected override void CalculatePosition(IComponent item)
+    public override void CalculatePosition(IComponent item)
     {
         int index = containedItems.IndexOf((ISelectable) item);
         item.Position = new Point(Position.X, Position.Y);
@@ -74,11 +79,19 @@ public abstract class Selector : Container
     
     
     #region Abstract Methods
+    /// <summary>
+    /// Monitors for user input and acts accordingly.
+    /// </summary>
+    /// <returns></returns>
     public abstract ConsoleKey MonitorInput();
     #endregion
 
     
     #region Regular Methods
+    /// <summary>
+    /// Adds item to Selector
+    /// </summary>
+    /// <param name="item"></param>
     public void Add(ISelectable item)
     {
         containedItems.Add(item);
@@ -88,16 +101,14 @@ public abstract class Selector : Container
             selected = (ISelectable) containedItems[0];
     }
     
+    /// <summary>
+    /// Removes item from Selector
+    /// </summary>
+    /// <param name="item"></param>
     public void Remove(ISelectable item)
     {
         containedItems.Remove(item);
         item.Parent = null;
-    }
-
-    public void SetColors(ConsoleColor background, ConsoleColor foreground)
-    {
-        backgroundColor = background;
-        foregroundColor = foreground;
     }
     #endregion
 }

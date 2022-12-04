@@ -15,7 +15,7 @@ IComponent - implemented
 TextInputField - done
 Panel - done
 Table
-PanelSwitcher
+PanelSwitcher - done
 EmptyGap
 ---------------
 HorizontalLine
@@ -24,5 +24,4 @@ DropDown
 
 Have TextInputField be a fixed length and scroll text on overflow
 add option to choose colors (fg and bg) for every component
-add Doc Comments to literally everything
 

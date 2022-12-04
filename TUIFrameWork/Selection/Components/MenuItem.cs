@@ -1,6 +1,12 @@
+using TUIFrameWork.Base;
 using TUIFrameWork.Containers;
 namespace TUIFrameWork.Selection.Components;
 
+/// <summary>
+/// MenuItem is a button equivalent that inherits from ISelectable
+/// and can be added to a menu. MenuItem can be assigned an Action Delegate
+/// to be called when the MenuItem is pressed.
+/// </summary>
 public class MenuItem : ISelectable
 {
     #region Fields and Properties
@@ -14,6 +20,11 @@ public class MenuItem : ISelectable
     #endregion
 
     #region Contructor
+    /// <summary>
+    /// Creates a new MenuItem with provided text.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="position"></param>
     public MenuItem(string text, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();

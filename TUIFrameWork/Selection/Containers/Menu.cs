@@ -1,8 +1,20 @@
+using TUIFrameWork.Base;
+
 namespace TUIFrameWork.Selection.Containers;
 
+/// <summary>
+/// A Selector able to contain any ISelectable.
+/// </summary>
 public class Menu : Selector
 {
     #region Constructor
+    /// <summary>
+    /// Initializes a new Menu with the provided parameters
+    /// </summary>
+    /// <param name="isEscapable"></param>
+    /// <param name="gap"></param>
+    /// <param name="direction"></param>
+    /// <param name="position"></param>
     public Menu(bool isEscapable = false, int gap = 0, LayoutDirection direction = LayoutDirection.Column,
         Point? position = null) : base(isEscapable, gap, direction, position) { }
     #endregion

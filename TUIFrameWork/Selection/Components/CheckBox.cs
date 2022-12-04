@@ -1,6 +1,10 @@
+using TUIFrameWork.Base;
 using TUIFrameWork.Containers;
 namespace TUIFrameWork.Selection.Components;
 
+/// <summary>
+/// An ISelectable that can be toggled on or off
+/// </summary>
 public class CheckBox : ISelectable
 {
     #region Fields and Properties
@@ -14,6 +18,11 @@ public class CheckBox : ISelectable
     #endregion
 
     #region Constructor
+    /// <summary>
+    /// Creates a new CheckBox with provided text.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="position"></param>
     public CheckBox(string text, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();

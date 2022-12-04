@@ -1,8 +1,11 @@
 using System.Linq.Expressions;
+using TUIFrameWork.Base;
 using TUIFrameWork.Containers;
 using TUIFrameWork.Selection;
 namespace TUIFrameWork.Components;
-
+/// <summary>
+/// Creates a Label that contains text and a background color
+/// </summary>
 public class Label : IComponent
 {
     #region Fields and Properties
@@ -19,6 +22,13 @@ public class Label : IComponent
     #endregion
 
     #region Constructor
+    /// <summary>
+    /// Constructor creates a new label with provided text, margin, alignment, and position.
+    /// </summary>
+    /// <param name="text"></param> text to display in label
+    /// <param name="margin"></param>
+    /// <param name="alignment"></param>
+    /// <param name="position"></param>
     public Label(string text, int margin=0, Alignment alignment=Alignment.Left, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
@@ -62,6 +72,10 @@ public class Label : IComponent
     #endregion
 
     #region Functionality Methods
+    /// <summary>
+    /// Changes the Label's text
+    /// </summary>
+    /// <param name="text"></param>
     public void SetText(string text)
     {
         Text = text;

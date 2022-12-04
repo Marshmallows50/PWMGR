@@ -1,13 +1,20 @@
 using System.Collections;
+using TUIFrameWork.Base;
 using TUIFrameWork.Containers;
-namespace TUIFrameWork;
+namespace TUIFrameWork.Containers;
 
 public enum HAlignment {Start, Center, End}
 public enum VAlignment {Start, Center, End}
+
+/// <summary>
+/// Container abstract class inherits from IComponent and IEnumerable interfaces.
+/// This class is responsible for defining what a container is and provides functionality
+/// for subclasses.
+/// </summary>
 public abstract class Container : IComponent, IEnumerable<IComponent>
 {
     #region Fields and Properties
-    protected IList<IComponent> containedItems = new List<IComponent>();
+    internal IList<IComponent> containedItems = new List<IComponent>();
     protected int gap;
     
     internal bool isMonitoringInput;
@@ -22,14 +29,13 @@ public abstract class Container : IComponent, IEnumerable<IComponent>
     public Point Position { get; set; }
     public int Width { get; internal set; }
     public int Height { get; internal set; }
-    public Container? Parent { get; private set; }
+    public Container? Parent { get; internal set; }
 
     Container? IComponent.Parent
     {
         get => this.Parent;
         set => this.Parent = value;
     }
-
     #endregion
     
     
@@ -54,11 +60,20 @@ public abstract class Container : IComponent, IEnumerable<IComponent>
 
     
     #region Abstract Methods
-    
+    /// <summary>
+    /// Calculates the Positions of all items in the container. child container's item
+    /// positions are also calculated recursively.
+    /// </summary>
     public abstract void CalcAllPositions();
-    protected abstract void CalculatePosition(IComponent item);
+    
+    /// <summary>
+    /// Calculates the position of a single item in the container
+    /// </summary>
+    /// <param name="item"></param>
+    public abstract void CalculatePosition(IComponent item);
     #endregion
 
+    
     #region Enumeration Methods
     public IEnumerator<IComponent> GetEnumerator()
     {

@@ -1,16 +1,17 @@
-namespace TUIFrameWork.Containers;
-
+namespace TUIFrameWork.Base;
+/// <summary>
+/// Static Frame class responsible for managing the console title, cursor, etc.
+/// </summary>
 public static class Frame
 {
-    // Static Fields
+    #region Fields and Properties
     public static int WindowHeight { get; }
     public static int WindowWidth { get; }
     private static bool IsWindows;
 
-    // Properties
-    public static Panel MainPanel { get; private set; }
-    public static string Title { get; private set; }
     
+    public static string Title { get; private set; }
+    #endregion
     
     
     /// <summary>
@@ -23,7 +24,7 @@ public static class Frame
         {
             Console.SetWindowSize(100,30);
         }
-        catch (Exception e)
+        catch
         {
             IsWindows = false;
         }
@@ -33,17 +34,6 @@ public static class Frame
     }
 
     #region Functionality Methods
-    /// <summary>
-    /// Sets <code>panel</code> as the main panel, which is the initial panel that
-    /// is drawn when the program starts.
-    /// </summary>
-    /// <param name="panel"></param>
-    public static void SetMainContentPanel(Panel panel)
-    {
-        MainPanel = panel;
-        // do some stuff?
-    }
-
     /// <summary>
     /// Sets <code>text</code> as the title to display in the console title bar.
     /// </summary>
@@ -77,7 +67,7 @@ public static class Frame
             SetCursorToPoint(position);
             return true;
         }
-        catch (Exception e)
+        catch
         {
             return false;
         }

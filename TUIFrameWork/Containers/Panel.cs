@@ -1,12 +1,17 @@
+using TUIFrameWork.Base;
 using TUIFrameWork.Selection;
 namespace TUIFrameWork.Containers;
 
+/// <summary>
+/// A container that can contain any IComponent. This Class is responsible for managing,
+/// positioning, and drawing its children. It also manages user inputs for its children.
+/// </summary>
 public class Panel : Container
 {
     // TODO: Add support for colors
 
     #region Fields and Properties
-    private IList<Selector> containers = new List<Selector>();
+    internal IList<Selector> containers = new List<Selector>();
     private Selector monitoring;
     private int indexOfMonitoring;
     
@@ -18,7 +23,12 @@ public class Panel : Container
     
     
     #region Constructor
-    public Panel(int gap, Point? position = null)
+    /// <summary>
+    /// Constructor initializes a panel with the provided parameters.
+    /// </summary>
+    /// <param name="gap"></param>
+    /// <param name="position"></param>
+    public Panel(int gap=0, Point? position = null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         
@@ -78,7 +88,7 @@ public class Panel : Container
         }
     }
 
-    protected override void CalculatePosition(IComponent item)
+    public override void CalculatePosition(IComponent item)
     {
         switch (hAlignment)
         {
@@ -122,6 +132,10 @@ public class Panel : Container
 
     
     #region Functionality Methods
+    /// <summary>
+    /// Adds item to the panel.
+    /// </summary>
+    /// <param name="item"></param>
     public void Add(IComponent item)
     {
         containedItems.Add(item);
@@ -129,13 +143,66 @@ public class Panel : Container
         item.Parent = this;
     }
     
+    /// <summary>
+    /// Inserts item into panel at the given index.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="index"></param>
+    public void Insert(IComponent item, int index)
+    {
+        containedItems.Insert(index, item);
+        AddSelector(item);
+        item.Parent = this;
+    }
+    
+    /// <summary>
+    /// Removed item from Panel
+    /// </summary>
+    /// <param name="item"></param>
     public void Remove(IComponent item)
     {
         containedItems.Remove(item);
         RemoveSelector(item);
         item.Parent = null;
     }
+
+    /// <summary>
+    /// Returns the index of a given item in the panel.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns>the index of a given item in the panel.</returns>
+    public int GetIndex(IComponent item)
+    {
+        return containedItems.IndexOf(item);
+    }
     
+    /// <summary>
+    /// Manually sizes the panel to the provided width and height.
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    public void SetDimensions(double width, double height)
+    {
+        widthPercent = width;
+        heightPercent = height;
+        isManuallySized = true;
+    }
+    
+    /// <summary>
+    /// clears the panel from the console window.
+    /// </summary>
+    public void Clear()
+    {
+        for (int i = 0; i < Height; i++)
+        {
+            Console.Write(new string(' ', Width) + "\n");
+            Console.SetCursorPosition(Position.X, Position.Y + 1 + i);
+        }
+    }
+    #endregion
+    
+    
+    #region Input Management
     private void AddSelector(IComponent item)
     {
         switch (item)
@@ -170,6 +237,10 @@ public class Panel : Container
         }
     }
 
+    /// <summary>
+    /// Manages Input of Panel. Allows user to select and interact
+    /// with any Selector in the panel.
+    /// </summary>
     public void ManageInput()
     {
         monitoring = containers[0];
@@ -207,13 +278,6 @@ public class Panel : Container
                     break;
             }
         }
-    }
-    
-    public void SetDimensions(double width, double height)
-    {
-        widthPercent = width;
-        heightPercent = height;
-        isManuallySized = true;
     }
     #endregion
     
@@ -332,7 +396,7 @@ public class Panel : Container
                 }
                 sumHeightOfItems -= gap;
 
-                int y = (Height - sumHeightOfItems) / 2;
+                int y = Position.Y + (Height - sumHeightOfItems) / 2;
                 if (y < 0)
                     y = 0;
 
@@ -360,7 +424,7 @@ public class Panel : Container
                         sumHeightUntilIndex += containedItems[i].Height + gap;
                 }
 
-                int startingP = Height - sumHeightOfItems + gap;
+                int startingP = Position.Y + Height - sumHeightOfItems + gap;
                 if (startingP < 0)
                     startingP = 0;
                 

@@ -1,7 +1,10 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
+using TUIFrameWork.Base;
 using TUIFrameWork.Containers;
+using Point = TUIFrameWork.Base.Point;
+
 namespace TUIFrameWork.Selection.Components;
 
 public class TextField : ISelectable

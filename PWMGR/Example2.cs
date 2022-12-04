@@ -7,7 +7,7 @@ namespace PWMGR;
 
 public class Example2
 {
-    public static void MakeThing()
+    public static Panel MakeThing()
     {
         //create Panels
         Panel mainPanel = new Panel(2);
@@ -51,10 +51,11 @@ public class Example2
         mainPanel.Add(mainContent);
         mainPanel.ProcessDimensions();
         mainPanel.CalcAllPositions();
-        mainPanel.Draw();
+        // mainPanel.Draw();
 
         // menu3.MonitorInput();
-        mainPanel.ManageInput();
+        // mainPanel.ManageInput();
+        return mainPanel;
     }
 
     private static Menu CreateMenu3()

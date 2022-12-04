@@ -8,7 +8,7 @@ namespace PWMGR;
 
 public class Cube
 {
-    public static void MakeCube()
+    public static Panel MakeCube()
     {
         // create and configure some Panels
         Panel mainPanel = new Panel(1);
@@ -101,10 +101,10 @@ public class Cube
         mainPanel.Add(label2);
         mainPanel.ProcessDimensions();
 
-        mainPanel.CalcAllPositions(); // figure out positions of children inside panel
+        // mainPanel.CalcAllPositions(); // figure out positions of children inside panel
 
         // draw
-        mainPanel.Draw();
+        // mainPanel.Draw();
 
         bool isRemoved =false;
         menu1item1.action = delegate
@@ -150,9 +150,9 @@ public class Cube
         };
 
         // row1menu1.MonitorInput();
-        mainPanel.ManageInput();
+        // mainPanel.ManageInput();
 
-
+        return mainPanel;
 
     }
 }

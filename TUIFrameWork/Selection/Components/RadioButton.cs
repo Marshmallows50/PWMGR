@@ -1,8 +1,14 @@
+using TUIFrameWork.Base;
 using TUIFrameWork.Containers;
 using TUIFrameWork.Selection.Containers;
 
 namespace TUIFrameWork.Selection.Components;
 
+/// <summary>
+/// An ISelectable that can be added to a RadioButtonGroup
+/// and toggled on or off. When Toggled, other RadioButtons in
+/// the same RadioButtonGroup will be de-selected
+/// </summary>
 public class RadioButton : ISelectable
 {
     #region Fields and Properties
@@ -16,6 +22,11 @@ public class RadioButton : ISelectable
     #endregion
 
     #region Constructor
+    /// <summary>
+    /// Creates a new RadioButton with the provided text.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="position"></param>
     public RadioButton(string text, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();

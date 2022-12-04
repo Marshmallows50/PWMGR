@@ -1,6 +1,12 @@
+using TUIFrameWork.Base;
 using TUIFrameWork.Selection.Components;
 namespace TUIFrameWork.Selection.Containers;
 
+/// <summary>
+/// A Selector able to contain only RadioButtons. This class keeps track of
+/// which RadioButton is selected and deselects all other RadioButtons when
+/// one is selected.
+/// </summary>
 public class RadioButtonGroup : Selector
 {
     #region Fields and Properties
@@ -9,6 +15,13 @@ public class RadioButtonGroup : Selector
     #endregion
 
     #region Constructor
+    /// <summary>
+    /// Initializes a new RadioButtonGroup with the provided parameters
+    /// </summary>
+    /// <param name="isEscapable"></param>
+    /// <param name="gap"></param>
+    /// <param name="direction"></param>
+    /// <param name="position"></param>
     public RadioButtonGroup(bool isEscapable=true, int gap=1, LayoutDirection direction=LayoutDirection.Column,
         Point? position=null) : base(isEscapable, gap, direction, position) { }
     #endregion
@@ -84,6 +97,10 @@ public class RadioButtonGroup : Selector
     }
     #endregion
     
+    /// <summary>
+    /// Adds a RadioButton to the RadioButtonGroup
+    /// </summary>
+    /// <param name="item"></param>
     public void Add(RadioButton item)
     {
         base.Add(item);
