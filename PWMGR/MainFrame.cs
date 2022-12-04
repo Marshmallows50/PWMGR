@@ -8,7 +8,7 @@ namespace PWMGR
 {
     public class MainFrame
     {
-        public static void DrawMainFrame()
+        public static Panel DrawMainFrame()
         {
             // create panels
             Panel mainPanel = new Panel(0);
@@ -52,10 +52,10 @@ namespace PWMGR
             mainPanel.Add(rowContainer2);
             mainPanel.ProcessDimensions();
             mainPanel.CalcAllPositions();
-            mainPanel.Draw();
+            // mainPanel.Draw();
 
-            menuBar.MonitorInput();
-            sideBar.MonitorInput();
+
+            return mainPanel;
         }
 
         public static Menu CreateMenuBar()

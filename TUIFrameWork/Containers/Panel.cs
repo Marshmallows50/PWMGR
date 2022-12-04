@@ -46,7 +46,7 @@ public class Panel : Container
     {
         Width = 0;
         Height = 0;
-
+        
         switch (isManuallySized)
         {
             case true when Parent!=null:
