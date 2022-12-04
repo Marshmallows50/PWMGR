@@ -108,15 +108,19 @@ namespace DemoDataStructure
 
         #endregion
 
+        
+        #region Get attributes
+        
+        #endregion
+        
+        
         #region Serialization
 
         //TODO
 
         #endregion
 
-        #region Get attributes
-        //TODO
-        #endregion
+
 
         /// <summary>
         /// Demonstration of basic functionality, LINQ, and lamdas.
