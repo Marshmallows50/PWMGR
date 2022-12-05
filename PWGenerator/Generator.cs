@@ -1,8 +1,8 @@
 namespace PWGenerator;
 
-public class Generator
+public static class Generator
 {
-    public int Length { get; set; }
+    public static int Length { get; set; }
 
     private const string Upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const string Lower = "abcdefghijklmnopqrstuvwxyz";
@@ -12,89 +12,54 @@ public class Generator
     public static bool isLowerChecked = true;
     public static bool isNumberChecked = true;
     public static bool isSymbolChecked = true;
-
-    public Generator()
-    {
-        Length = Length;
-    }
-
-    public string CreatePassword()
-    {
-        
-    }
-    public string CreateUnlimitedPassword(int length)
-    {
-        string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
-        Random rand = new Random();
-        
-        char[] chars = new char[length];
-
-        for (int i = 0; i < length; i++)
-        {
-            chars[i] = validChars[rand.Next(0, validChars.Length)];
-        }
-
-        return new string(chars);
-    }
     
-    public string CreatePasswordNoUppercase(int length)
+    public static string CreatePassword()
     {
-        string validChars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
-        Random rand = new Random();
+        string container = "";
         
-        char[] chars = new char[length];
 
-        for (int i = 0; i < length; i++)
+        if (isUpperChecked)
         {
-            chars[i] = validChars[rand.Next(0, validChars.Length)];
+            container += Upper;
         }
 
-        return new string(chars);
-    }
-    
-    public string CreatePasswordNoLowercase(int length)
-    {
-        string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*?_-";
-        Random rand = new Random();
-        
-        char[] chars = new char[length];
 
-        for (int i = 0; i < length; i++)
+        if (isLowerChecked)
         {
-            chars[i] = validChars[rand.Next(0, validChars.Length)];
+            container += Lower;
+            
         }
 
-        return new string(chars);
-    }
-    
-    public string CreatePasswordNoNumbers(int length)
-    {
-        string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%^&*?_-";
-        Random rand = new Random();
-        
-        char[] chars = new char[length];
-
-        for (int i = 0; i < length; i++)
+        if (isNumberChecked)
         {
-            chars[i] = validChars[rand.Next(0, validChars.Length)];
+            container += Numbers;
+            
         }
 
-        return new string(chars);
-    }
-    public string CreatePasswordNoSymbols(int length)
-    {
-        string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        Random rand = new Random();
-        
-        char[] chars = new char[length];
-
-        for (int i = 0; i < length; i++)
+        if (isSymbolChecked)
         {
-            chars[i] = validChars[rand.Next(0, validChars.Length)];
+            container += Symbols;
+            
+        }
+        
+        if (isUpperChecked == false && isLowerChecked == false && isNumberChecked == false && isSymbolChecked == false)
+        {
+            container += Lower;
         }
 
+        Console.WriteLine("Enter a number for password length: ");
+        int passwordLength = Convert.ToInt32(Console.ReadLine());
+        Random rand = new Random();
+        char[] chars = new char[passwordLength];
+        for (int i = 0; i < passwordLength; i++)
+        {
+            chars[i] = container[rand.Next(0, container.Length)];
+        }
+        
         return new string(chars);
+        
     }
     
 }
+
 
