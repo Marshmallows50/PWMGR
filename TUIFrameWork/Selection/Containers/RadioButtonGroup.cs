@@ -15,6 +15,7 @@ public class RadioButtonGroup : Selector
     #endregion
 
     #region Constructor
+
     /// <summary>
     /// Initializes a new RadioButtonGroup with the provided parameters
     /// </summary>
@@ -22,8 +23,12 @@ public class RadioButtonGroup : Selector
     /// <param name="gap"></param>
     /// <param name="direction"></param>
     /// <param name="position"></param>
-    public RadioButtonGroup(bool isEscapable=true, int gap=1, LayoutDirection direction=LayoutDirection.Column,
-        Point? position=null) : base(isEscapable, gap, direction, position) { }
+    public RadioButtonGroup(bool isEscapable = true, int gap = 1, LayoutDirection direction = LayoutDirection.Column,
+        Point? position = null) : base(isEscapable, gap, direction, position)
+    {
+        foregroundColor = ConsoleColor.White;
+        backgroundColor = ConsoleColor.Black;
+    }
     #endregion
 
     #region Inherited Abstract Methods

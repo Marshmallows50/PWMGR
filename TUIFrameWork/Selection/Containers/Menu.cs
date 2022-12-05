@@ -8,6 +8,7 @@ namespace TUIFrameWork.Selection.Containers;
 public class Menu : Selector
 {
     #region Constructor
+
     /// <summary>
     /// Initializes a new Menu with the provided parameters
     /// </summary>
@@ -16,7 +17,11 @@ public class Menu : Selector
     /// <param name="direction"></param>
     /// <param name="position"></param>
     public Menu(bool isEscapable = false, int gap = 0, LayoutDirection direction = LayoutDirection.Column,
-        Point? position = null) : base(isEscapable, gap, direction, position) { }
+        Point? position = null) : base(isEscapable, gap, direction, position)
+    {
+        foregroundColor = ConsoleColor.White;
+        backgroundColor = ConsoleColor.Black;
+    }
     #endregion
 
     #region Inherited Abstract Methods

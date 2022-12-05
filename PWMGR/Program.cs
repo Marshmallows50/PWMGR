@@ -7,9 +7,9 @@ using TUIFrameWork.Containers;
 using TUIFrameWork;
 using TUIFrameWork.Base;
 
-LoginFrame.DrawLoginFrame();
-MainFrame.DrawMainFrame();
-PsswdGeneratorFrame.DrawPsswdGenerator();
+// LoginFrame.DrawLoginFrame();
+// MainFrame.DrawMainFrame();
+// PsswdGeneratorFrame.DrawPsswdGenerator();
 
-// StartUiDemo.Start();
+StartUiDemo.Start();
 
