@@ -19,9 +19,6 @@ public class RadioButton : ISelectable
     public Container? Parent { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
-    
-    public ConsoleColor foregroundColor { get; set; }
-    public ConsoleColor backgroundColor { get; set; }
     #endregion
 
     #region Constructor
@@ -34,9 +31,6 @@ public class RadioButton : ISelectable
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
-
-        foregroundColor = ConsoleColor.White;
-        foregroundColor = ConsoleColor.Black;
         ProcessDimensions();
     }
     #endregion
@@ -44,8 +38,9 @@ public class RadioButton : ISelectable
     #region Interface Methods
     public void Select()
     {
-        Console.BackgroundColor = backgroundColor;
+        Console.BackgroundColor = ConsoleColor.Gray;
         UpdateConsole();
+        Console.BackgroundColor = ConsoleColor.Black;
     }
 
     public void Deselect()
@@ -84,13 +79,6 @@ public class RadioButton : ISelectable
             Console.Write($"{text}: (X)");
         else
             Console.Write($"{text}: ( )");
-    }
-    
-    public void InheritColors()
-    {
-        if (Parent == null) return;
-        foregroundColor = Parent.foregroundColor;
-        backgroundColor = Parent.backgroundColor;
     }
     #endregion
 }

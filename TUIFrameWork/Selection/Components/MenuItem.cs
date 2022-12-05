@@ -17,9 +17,6 @@ public class MenuItem : ISelectable
     public Container? Parent { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
-    
-    public ConsoleColor foregroundColor { get; set; }
-    public ConsoleColor backgroundColor { get; set; }
     #endregion
 
     #region Contructor
@@ -32,9 +29,6 @@ public class MenuItem : ISelectable
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
-
-        foregroundColor = ConsoleColor.White;
-        backgroundColor = ConsoleColor.Black;
         
         ProcessDimensions();
     }
@@ -46,7 +40,7 @@ public class MenuItem : ISelectable
         Frame.SetCursorToPoint(Position);
         Console.BackgroundColor = ConsoleColor.Gray;
         Console.Write(text);
-        Console.BackgroundColor = backgroundColor;
+        Console.BackgroundColor = ConsoleColor.Black;
     }
     
     public void Deselect()
@@ -63,7 +57,7 @@ public class MenuItem : ISelectable
     public void Draw()
     {
         Frame.SetCursorToPoint(Position);
-        Console.BackgroundColor = backgroundColor;
+        Console.BackgroundColor = ConsoleColor.Black;
         Console.Write(text);
     }
     
@@ -73,11 +67,4 @@ public class MenuItem : ISelectable
         Height = 1;
     }
     #endregion
-    
-    public void InheritColors()
-    {
-        if (Parent == null) return;
-        foregroundColor = Parent.foregroundColor;
-        backgroundColor = Parent.backgroundColor;
-    }
 }

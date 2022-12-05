@@ -15,10 +15,6 @@ public class CheckBox : ISelectable
     public Container? Parent { get; set; }
     public int Width { get; private set; }
     public int Height { get; private set; }
-    
-    
-    public ConsoleColor foregroundColor { get; set; }
-    public ConsoleColor backgroundColor { get; set; }
     #endregion
 
     #region Constructor
@@ -31,9 +27,6 @@ public class CheckBox : ISelectable
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         this.text = text;
-        foregroundColor = ConsoleColor.White;
-        backgroundColor = ConsoleColor.Black;
-        
         ProcessDimensions();
     }
     #endregion
@@ -81,13 +74,6 @@ public class CheckBox : ISelectable
             Console.Write($"{text}: [X]");
         else
             Console.Write($"{text}: [ ]");
-    }
-    
-    public void InheritColors()
-    {
-        if (Parent == null) return;
-        foregroundColor = Parent.foregroundColor;
-        backgroundColor = Parent.backgroundColor;
     }
     #endregion
 }

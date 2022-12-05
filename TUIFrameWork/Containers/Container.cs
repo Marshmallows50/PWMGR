@@ -23,8 +23,8 @@ public abstract class Container : IComponent, IEnumerable<IComponent>
     public HAlignment hAlignment;
     public VAlignment vAlignment;
 
-    public ConsoleColor foregroundColor { get; set; }
-    public ConsoleColor backgroundColor { get; set; }
+    public ConsoleColor foregroundColor = ConsoleColor.White;
+    public ConsoleColor backgroundColor = ConsoleColor.Black;
     
     public Point Position { get; set; }
     public int Width { get; internal set; }
@@ -56,13 +56,6 @@ public abstract class Container : IComponent, IEnumerable<IComponent>
     }
     
     public abstract void ProcessDimensions();
-    public void InheritColors()
-    {
-        if (Parent == null) return;
-        foregroundColor = Parent.foregroundColor;
-        backgroundColor = Parent.backgroundColor;
-    }
-
     #endregion
 
     

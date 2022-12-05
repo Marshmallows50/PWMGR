@@ -21,9 +21,6 @@ public class TextField : ISelectable
     public Container? Parent { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
-    
-    public ConsoleColor foregroundColor { get; set; }
-    public ConsoleColor backgroundColor { get; set; }
     #endregion
 
     #region Constructor
@@ -32,9 +29,6 @@ public class TextField : ISelectable
         Position = position ?? Frame.GetCursorPositionAsPoint();
         Width = width;
         Height = 1;
-
-        foregroundColor = ConsoleColor.Black;
-        backgroundColor = ConsoleColor.White;
         this.placeHolder = placeHolder;
     }
     #endregion
@@ -90,12 +84,12 @@ public class TextField : ISelectable
 
     public void Draw()
     {
-        Console.BackgroundColor = backgroundColor;
+        Console.BackgroundColor = ConsoleColor.White;
         Frame.SetCursorToPoint(Position);
         Console.Write(new string(' ',Width));
         
         Frame.SetCursorToPoint(Position);
-        Console.ForegroundColor = foregroundColor;
+        Console.ForegroundColor = ConsoleColor.Black;
         switch (isModified)
         {
             case true:
@@ -164,15 +158,8 @@ public class TextField : ISelectable
     
     private void ResetColors()
     {
-        Console.ForegroundColor = foregroundColor;
-        Console.BackgroundColor = backgroundColor;
-    }
-    
-    public void InheritColors()
-    {
-        if (Parent == null) return;
-        foregroundColor = Parent.foregroundColor;
-        backgroundColor = Parent.backgroundColor;
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.BackgroundColor = ConsoleColor.Black;
     }
     #endregion
 }

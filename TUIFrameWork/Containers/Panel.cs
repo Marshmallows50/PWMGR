@@ -32,9 +32,6 @@ public class Panel : Container
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
         
-        foregroundColor = ConsoleColor.White;
-        backgroundColor = ConsoleColor.Black;
-        
         this.gap = gap;
         
         direction = LayoutDirection.Column;
