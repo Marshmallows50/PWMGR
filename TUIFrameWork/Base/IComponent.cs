@@ -11,6 +11,9 @@ public interface IComponent
     public int Width { get; }
     public int Height { get; }
     public Container? Parent { get; set; }
+    
+    public ConsoleColor foregroundColor { get; set; }
+    public ConsoleColor backgroundColor { get; set; }
     #endregion
 
     #region Methods
@@ -23,5 +26,8 @@ public interface IComponent
     /// Determines the Height and Width of the IComponent
     /// </summary>
     void ProcessDimensions();
+
+    public void InheritColors();
+
     #endregion
 }

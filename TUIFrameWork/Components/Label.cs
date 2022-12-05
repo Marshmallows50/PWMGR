@@ -18,6 +18,9 @@ public class Label : IComponent
     public int Width { get; private set; }
     public int Height { get; private set; }
     public Container? Parent { get; set; }
+    
+    public ConsoleColor foregroundColor { get; set; }
+    public ConsoleColor backgroundColor { get; set; }
 
     #endregion
 
@@ -32,9 +35,10 @@ public class Label : IComponent
     public Label(string text, int margin=0, Alignment alignment=Alignment.Left, Point? position=null)
     {
         Position = position ?? Frame.GetCursorPositionAsPoint();
-        
         Text = text;
-        
+
+        foregroundColor = ConsoleColor.White;
+        backgroundColor = ConsoleColor.DarkBlue;
         this.margin = margin;
         this.alignment = alignment;
         
@@ -46,7 +50,7 @@ public class Label : IComponent
     public void Draw()
     {
         Frame.SetCursorToPoint(Position);
-        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.BackgroundColor = backgroundColor;
         switch (alignment)
         {
             case Alignment.Left:
@@ -81,6 +85,13 @@ public class Label : IComponent
     {
         Text = text;
         ProcessDimensions();
+    }
+
+    public void InheritColors()
+    {
+        if (Parent == null) return;
+        foregroundColor = Parent.foregroundColor;
+        backgroundColor = Parent.backgroundColor;
     }
     #endregion
 }
