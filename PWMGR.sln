@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptionAttempt", "Encryp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoDataStructure", "DemoDataStructure\DemoDataStructure.csproj", "{2EF99143-D2E9-4E05-A3BD-966974FD89B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWGenerator", "PWGenerator\PWGenerator.csproj", "{5A7B5D9F-4908-4DA1-98E5-74D2CAC09F80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A7B5D9F-4908-4DA1-98E5-74D2CAC09F80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A7B5D9F-4908-4DA1-98E5-74D2CAC09F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A7B5D9F-4908-4DA1-98E5-74D2CAC09F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A7B5D9F-4908-4DA1-98E5-74D2CAC09F80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
