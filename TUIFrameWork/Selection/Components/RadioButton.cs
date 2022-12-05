@@ -36,7 +36,7 @@ public class RadioButton : ISelectable
         this.text = text;
 
         foregroundColor = ConsoleColor.White;
-        foregroundColor = ConsoleColor.Black;
+        backgroundColor = ConsoleColor.Black;
         ProcessDimensions();
     }
     #endregion
@@ -44,6 +44,7 @@ public class RadioButton : ISelectable
     #region Interface Methods
     public void Select()
     {
+        Console.ForegroundColor = foregroundColor;
         Console.BackgroundColor = backgroundColor;
         UpdateConsole();
     }
@@ -64,7 +65,8 @@ public class RadioButton : ISelectable
 
     public void Draw()
     {
-        Console.BackgroundColor = ConsoleColor.Black;
+        Console.BackgroundColor = backgroundColor;
+        Console.ForegroundColor = foregroundColor;
         UpdateConsole();
     }
 

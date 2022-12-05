@@ -23,7 +23,7 @@ public class StartUiDemo
         Panel thingPanel = Example2.MakeThing();
         Table demoTable = TableWithData.MakeFillTable();
 
-        PanelSwitcher switcher = new PanelSwitcher(cubePanel);
+        
 
         Menu menu = new Menu(true, 2, LayoutDirection.Row);
         MenuItem p1 = new MenuItem("Cube");
@@ -38,6 +38,9 @@ public class StartUiDemo
 
         mainPanel.Add(menu);
         mainPanel.Add(cubePanel);
+        
+        PanelSwitcher switcher = new PanelSwitcher(cubePanel);
+        
         mainPanel.ProcessDimensions();
         mainPanel.CalcAllPositions();
         mainPanel.Draw();

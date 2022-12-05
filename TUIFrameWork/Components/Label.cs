@@ -51,6 +51,7 @@ public class Label : IComponent
     {
         Frame.SetCursorToPoint(Position);
         Console.BackgroundColor = backgroundColor;
+        Console.ForegroundColor = foregroundColor;
         switch (alignment)
         {
             case Alignment.Left:

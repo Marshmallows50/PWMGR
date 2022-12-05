@@ -62,7 +62,8 @@ public class CheckBox : ISelectable
     
     public void Draw()
     {
-        Console.BackgroundColor = ConsoleColor.Black;
+        Console.BackgroundColor = backgroundColor;
+        Console.ForegroundColor = foregroundColor;
         UpdateConsole();
     }
     

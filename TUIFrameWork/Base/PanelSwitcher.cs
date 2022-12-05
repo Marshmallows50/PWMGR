@@ -35,7 +35,7 @@ public class PanelSwitcher
     /// <param name="newPanel"></param> is the panel to replace CurrentPanel.
     public void SwitchTo(Panel newPanel)
     {
-        if (CurrentPanel.Parent != null)
+        if (CurrentPanel.Parent != null && !CurrentPanel.Equals(newPanel))
         {
             index = ((Panel)CurrentPanel.Parent).GetIndex(CurrentPanel);
             ((Panel)CurrentPanel.Parent).Insert(newPanel, index);
