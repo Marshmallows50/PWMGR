@@ -156,6 +156,12 @@ public class TextField : ISelectable
         Console.SetCursorPosition(x,Position.Y);
 
     }
+    
+    public void SetText(string text)
+    {
+        this.text = text;
+    }
+    
     private void ResetColors()
     {
         Console.ForegroundColor = foregroundColor;
