@@ -40,7 +40,7 @@ public class StartUiDemo
         mainPanel.Add(cubePanel);
         
         PanelSwitcher switcher = new PanelSwitcher(cubePanel);
-        
+ 
         mainPanel.ProcessDimensions();
         mainPanel.CalcAllPositions();
         mainPanel.Draw();

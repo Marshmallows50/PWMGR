@@ -6,10 +6,17 @@ using TUIFrameWork.Components;
 using TUIFrameWork.Containers;
 using TUIFrameWork;
 using TUIFrameWork.Base;
+using PWMGR.UI;
 
-// LoginFrame.DrawLoginFrame();
-// MainFrame.DrawMainFrame();
-// PsswdGeneratorFrame.DrawPsswdGenerator();
+//StartUiDemo.Start();
 
-StartUiDemo.Start();
+//LoginFrame.DrawLoginFrame();
+//MainFrame.DrawMainFrame();
+//PsswdGeneratorFrame.DrawPsswdGenerator();
 
+TopLevelPanel topLevel = new TopLevelPanel();
+//topLevel.CreateContentPanel();
+
+
+//CreateLoginPanel login = new CreateLoginPanel();
+//login.DrawLoginFrame();
