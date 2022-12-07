@@ -84,6 +84,7 @@ public class RadioButtonGroup : Selector
                         item.Draw();
                     }
                     selected.Act();
+                    selected.Select();
                     break;
                 
                 case ConsoleKey.Escape when IsEscapable:

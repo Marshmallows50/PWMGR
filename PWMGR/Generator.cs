@@ -1,4 +1,4 @@
-namespace PWGenerator;
+namespace PWMGR;
 
 public static class Generator
 {
@@ -8,10 +8,10 @@ public static class Generator
     private const string Lower = "abcdefghijklmnopqrstuvwxyz";
     private const string Numbers = "0123456789";
     private const string Symbols = "!@#$%&*?";
-    public static bool isUpperChecked = true;
-    public static bool isLowerChecked = true;
-    public static bool isNumberChecked = true;
-    public static bool isSymbolChecked = true;
+    public static bool isUpperChecked;
+    public static bool isLowerChecked;
+    public static bool isNumberChecked;
+    public static bool isSymbolChecked;
     
     public static string CreatePassword()
     {
@@ -19,42 +19,38 @@ public static class Generator
         
 
         if (isUpperChecked)
-        {
             container += Upper;
-        }
+        
 
 
         if (isLowerChecked)
-        {
             container += Lower;
-            
-        }
+        
 
         if (isNumberChecked)
-        {
             container += Numbers;
-            
-        }
+        
 
         if (isSymbolChecked)
-        {
             container += Symbols;
-            
-        }
         
-        if (isUpperChecked == false && isLowerChecked == false && isNumberChecked == false && isSymbolChecked == false)
-        {
+        
+        if (!isUpperChecked && !isLowerChecked && !isNumberChecked && !isSymbolChecked)
             container += Lower;
-        }
-
-        Console.WriteLine("Enter a number for password length: ");
-        int passwordLength = Convert.ToInt32(Console.ReadLine());
+        
+        
         Random rand = new Random();
-        char[] chars = new char[passwordLength];
-        for (int i = 0; i < passwordLength; i++)
+        char[] chars = new char[Length];
+        for (int i = 0; i < Length; i++)
         {
             chars[i] = container[rand.Next(0, container.Length)];
         }
+        
+        isUpperChecked = false;
+        isLowerChecked = false;
+        isNumberChecked = false;
+        isSymbolChecked = false;
+        Length = 0;
         
         return new string(chars);
         

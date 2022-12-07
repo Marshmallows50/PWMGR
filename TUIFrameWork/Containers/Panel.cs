@@ -219,6 +219,8 @@ public class Panel : Container
             }
             case Panel panel:
                 containers = containers.Concat(panel.containers).Distinct().ToList();
+                if (Parent != null)
+                    ((Panel) Parent).AddSelector(panel);
                 break;
         }
     }
@@ -236,9 +238,18 @@ public class Panel : Container
             }
             case Panel panel:
                 containers = containers.Except(panel.containers).ToList();
+                if (Parent != null)
+                    ((Panel) Parent).RemoveSelector(panel);
                 break;
         }
     }
+
+    public void RestartInput()
+    {
+        isMonitoringInput = false;
+        ManageInput();
+    }
+    
 
     /// <summary>
     /// Manages Input of Panel. Allows user to select and interact

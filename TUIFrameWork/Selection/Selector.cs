@@ -10,6 +10,7 @@ namespace TUIFrameWork.Selection;
 public abstract class Selector : Container
 {
     #region Fields and Properties
+
     protected ISelectable selected;
     
     public bool IsEscapable { get; set; }
@@ -36,7 +37,10 @@ public abstract class Selector : Container
         {
             case LayoutDirection.Column:
                 Height = containedItems.Count + (containedItems.Count * gap) - gap;
-                Width = containedItems.Select(i => i.Width).Max();
+
+                if (containedItems.Count !=0)
+                    Width = containedItems.Select(i => i.Width).Max();
+
                 break;
             
             case LayoutDirection.Row:

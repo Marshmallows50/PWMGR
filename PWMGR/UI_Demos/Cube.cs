@@ -70,13 +70,13 @@ public class Cube
         row1menu2.Add(menu2item2);
         row1menu2.Add(menu2item3);
         row1menu2.ProcessDimensions();
-        row1menu2.backgroundColor = ConsoleColor.Red;
+        // row1menu2.backgroundColor = ConsoleColor.Red;
 
         row2menu1.Add(menu3item1);
         row2menu1.Add(menu3item2);
         row2menu1.Add(menu3item3);
         row2menu1.ProcessDimensions();
-        row2menu1.backgroundColor = ConsoleColor.Yellow;
+        // row2menu1.backgroundColor = ConsoleColor.Yellow;
 
         row2menu2.Add(menu4item1);
         row2menu2.Add(menu4item2);

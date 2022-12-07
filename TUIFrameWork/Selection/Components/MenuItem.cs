@@ -44,6 +44,7 @@ public class MenuItem : ISelectable
     public void Select()
     {
         Frame.SetCursorToPoint(Position);
+        Console.ForegroundColor = foregroundColor;
         Console.BackgroundColor = ConsoleColor.Gray;
         Console.Write(text);
         Console.BackgroundColor = backgroundColor;

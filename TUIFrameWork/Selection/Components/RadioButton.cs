@@ -44,8 +44,7 @@ public class RadioButton : ISelectable
     #region Interface Methods
     public void Select()
     {
-        Console.ForegroundColor = foregroundColor;
-        Console.BackgroundColor = backgroundColor;
+        Console.BackgroundColor = ConsoleColor.Gray;
         UpdateConsole();
     }
 

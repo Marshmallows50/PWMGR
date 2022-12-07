@@ -17,26 +17,28 @@ namespace PWMGR
         public string URL { get; set; }
         public int Id { get; set; }
         public List<string> Tags { get; set; }
-        public string Group { get; set; }
+        public EntryGroup Group { get; set; }
+
+        private static int nextId = 0;
         
 
 
         public Entry
-            (string title, string user, string pass, string url, int id, string group)
+            (string title, EntryGroup group, string user=" ", string pass=" ", string url=" ")
         {
             Tags = new List<string>();
             Title = title;
             Username = user;
             Password = pass;
             URL = url;
-            Id = id;
+            Id = nextId++;
             Group = group;
         }
 
-        public override string ToString()
+        public int GetIndex()
         {
-            return String.Format("Title: {0,7:S}  || Username: {1,7:S} || Password:{2,19:S} || URL: {3,15:S} || Id: {4,1:D}",
-                                Title,Username,Password,URL,Id);
+            return Group.Entries.IndexOf(this);
         }
+        
     }
 }

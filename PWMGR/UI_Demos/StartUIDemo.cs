@@ -21,7 +21,7 @@ public class StartUiDemo
 
         Panel cubePanel = Cube.MakeCube();
         Panel thingPanel = Example2.MakeThing();
-        Table demoTable = TableWithData.MakeFillTable();
+        // Table demoTable = TableWithData.MakeFillTable();
 
         
 
@@ -62,13 +62,13 @@ public class StartUiDemo
             mainPanel.Draw();
         };
         
-        p3.action = delegate
-        {
-            switcher.SwitchTo(demoTable);
-            mainPanel.ProcessDimensions();
-            mainPanel.CalcAllPositions();
-            mainPanel.Draw();
-        };
+        // p3.action = delegate
+        // {
+        //     switcher.SwitchTo(demoTable);
+        //     mainPanel.ProcessDimensions();
+        //     mainPanel.CalcAllPositions();
+        //     mainPanel.Draw();
+        // };
 
         mainPanel.ManageInput();
     }

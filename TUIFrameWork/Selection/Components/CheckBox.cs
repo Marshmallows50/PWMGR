@@ -11,6 +11,8 @@ public class CheckBox : ISelectable
     private string text;
     public bool Toggled { get; private set; }
     
+    public Action? action;
+    
     public Point Position {  get; set; }
     public Container? Parent { get; set; }
     public int Width { get; private set; }
@@ -43,7 +45,6 @@ public class CheckBox : ISelectable
     {
         Console.BackgroundColor = ConsoleColor.Gray;
         UpdateConsole();
-        Console.BackgroundColor = ConsoleColor.Black;
     }
 
     public void Deselect()

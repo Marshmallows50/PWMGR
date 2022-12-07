@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -12,31 +13,48 @@ namespace PWMGR
     {  
         public string Name { get; set; }
         public List<Entry> Entries { get; set; }
-        public int Size { get; }
+        public int Size => Entries.Count;
+
+        public Entry selectedEntry;
         public ConsoleColor GroupColor { get; set; }
         
         /// <summary>
         /// A group of login entries.
         /// </summary>
         /// <param name="name"></param> name for this group of entries 
-        /// <param name="entries"></param>
         /// <param name="color"></param> a designated color for this group of entries 
         public EntryGroup(string name, ConsoleColor color = ConsoleColor.Black) { 
             Name = name;
             GroupColor = color;
 
             Entries = new List<Entry>();
+            selectedEntry = new Entry("", this);
         }
         
         
         #region Functionality Methods
         public void Add(Entry entry) {
             Entries.Add(entry);
+            SelectEntry(entry);
         }
 
         public void Remove(Entry entry) {
-            Entries.Remove(entry);
+            try
+            {
+                Entries.Remove(entry);
+            }
+            catch
+            {
+                int i = 0;
+            }
+            
         }
+
+        public void SelectEntry(Entry entry)
+        {
+            selectedEntry = entry;
+        }
+        
         #endregion
 
         #region Filtering methods
@@ -76,10 +94,6 @@ namespace PWMGR
                 orderby e.Password
                 select e;
         }
-        public IEnumerable<Entry> SortByTags()
-        {
-            throw new NotImplementedException();
-        }
 
         public IOrderedEnumerable<Entry> SortByTitle(string title)
         {
@@ -114,7 +128,7 @@ namespace PWMGR
         {
             return Entries
                 .Select(e => new string[] 
-                    { e.Title, e.Username, e.Password, e.URL });
+                    { e.Title, e.Username, e.Password, e.URL, e.Id.ToString() });
         }
         #endregion
         

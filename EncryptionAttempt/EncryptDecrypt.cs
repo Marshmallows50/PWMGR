@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-
 namespace EncryptionAttempt;
 
 public class EncryptDecrypt

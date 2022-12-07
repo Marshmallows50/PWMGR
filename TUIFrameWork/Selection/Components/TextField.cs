@@ -14,7 +14,7 @@ public class TextField : ISelectable
     private bool isModified;
     
     private StringBuilder sb;
-    public string? text;
+    public string text;
     private string placeHolder;
     
     public Point Position {  get; set; }
@@ -38,7 +38,8 @@ public class TextField : ISelectable
         this.placeHolder = placeHolder;
     }
     #endregion
-    
+
+
     #region Interface Methods
     public void Select()
     {
@@ -83,7 +84,7 @@ public class TextField : ISelectable
         }
         else
         {
-            text = Console.ReadLine();
+            text = Console.ReadLine() ?? string.Empty;
             isModified = true;
         }
     }
@@ -157,9 +158,11 @@ public class TextField : ISelectable
 
     }
     
-    public void SetText(string text)
+    public void SetText(string newText)
     {
-        this.text = text;
+        text = newText;
+        isModified = true;
+        Draw();
     }
     
     private void ResetColors()

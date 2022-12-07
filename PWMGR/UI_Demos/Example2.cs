@@ -14,7 +14,7 @@ public class Example2
         mainPanel.direction = LayoutDirection.Row;
         mainPanel.vAlignment = VAlignment.Center;
         mainPanel.hAlignment = HAlignment.Center;
-        mainPanel.SetDimensions(50,50);
+        mainPanel.SetDimensions(50,70);
         
         Panel sideBar = new Panel(2);
         sideBar.direction = LayoutDirection.Column;

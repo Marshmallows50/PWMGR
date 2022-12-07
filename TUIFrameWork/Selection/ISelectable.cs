@@ -23,3 +23,4 @@ public interface ISelectable : IComponent
     /// </summary>
     public void Act();
 }
+
