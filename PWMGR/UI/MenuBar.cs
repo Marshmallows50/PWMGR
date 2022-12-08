@@ -39,7 +39,7 @@ public class MenuBar : Menu
         #region Button Actions
         newEntryBtn.action = delegate
         {
-            ui.Entries.SelectedGroup.Add(new Entry("Default", ui.Entries.SelectedGroup));
+            ui.Entries.SelectedGroup.Add(new Entry("Default", ui.Entries.SelectedGroup, ui.Entries.nextId++));
             ui.Entry.DisplayGroup();
         };
         

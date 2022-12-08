@@ -21,20 +21,19 @@ namespace PWMGR
         public List<string> Tags { get; set; }
         
         public EntryGroup Group { get; set; }
-
-        private static int nextId = 0;
         
 
 
+
         public Entry
-            (string title, EntryGroup group, string user=" ", string pass=" ", string url=" ")
+            (string title, EntryGroup group, int id, string user=" ", string pass=" ", string url=" ")
         {
             Tags = new List<string>();
             Title = title;
             Username = user;
             Password = pass;
             URL = url;
-            Id = nextId++;
+            Id = id;
             Group = group;
         }
         

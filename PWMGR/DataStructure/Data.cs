@@ -5,6 +5,7 @@ namespace PWMGR;
 public class Data : IEnumerable<EntryGroup>
 {
     private List<EntryGroup> groups;
+    internal int nextId = 0;
     public EntryGroup SelectedGroup { get; set; }
 
     public int Size => groups.Count;
@@ -35,7 +36,7 @@ public class Data : IEnumerable<EntryGroup>
     {
         SelectedGroup = group;
     }
-
+    
     public IEnumerator<EntryGroup> GetEnumerator()
     {
         return groups.GetEnumerator();

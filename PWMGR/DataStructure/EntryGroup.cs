@@ -19,6 +19,8 @@ namespace PWMGR
         
         public Entry SelectedEntry { get; set; }
         public ConsoleColor GroupColor { get; set; }
+
+        internal Data Parent;
         
         /// <summary>
         /// A group of login entries.
@@ -30,7 +32,7 @@ namespace PWMGR
             GroupColor = color;
 
             Entries = new List<Entry>();
-            SelectedEntry = new Entry("", this);
+            SelectedEntry = new Entry("", this, 100000);
         }
 
         #region Functionality Methods
