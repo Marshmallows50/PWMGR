@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace PWMGR
 {
@@ -14,7 +15,7 @@ namespace PWMGR
         public string Name { get; set; }
         public List<Entry> Entries { get; set; }
         public int Size => Entries.Count;
-
+        
         public Entry selectedEntry;
         public ConsoleColor GroupColor { get; set; }
         
@@ -29,6 +30,11 @@ namespace PWMGR
 
             Entries = new List<Entry>();
             selectedEntry = new Entry("", this);
+        }
+
+        public EntryGroup()
+        {
+            
         }
         
         
@@ -135,7 +141,14 @@ namespace PWMGR
         
         #region Serialization
 
-        //TODO
+        public void ApplyParent()
+        {
+            foreach (Entry entry in Entries)
+            {
+                entry.Group = this;
+            }
+        }
+        
 
         #endregion
     }

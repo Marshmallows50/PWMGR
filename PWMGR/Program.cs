@@ -1,4 +1,5 @@
 using System.Reflection.Emit;
+using System.Security.Cryptography;
 using PWMGR;
 using PWMGR.UI;
 using PWMGR.UI_Demos;
@@ -10,9 +11,8 @@ using TUIFrameWork.Selection.Components;
 using TUIFrameWork.Selection.Containers;
 using Label = TUIFrameWork.Components.Label;
 
-
+Aes aes = Aes.Create();
 Ui start = new Ui();
-Console.ReadLine();
 
 
 //

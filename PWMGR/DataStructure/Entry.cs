@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace PWMGR
 {   /// <summary>
@@ -17,6 +18,8 @@ namespace PWMGR
         public string URL { get; set; }
         public int Id { get; set; }
         public List<string> Tags { get; set; }
+        
+        [XmlIgnore]
         public EntryGroup Group { get; set; }
 
         private static int nextId = 0;
@@ -33,6 +36,11 @@ namespace PWMGR
             URL = url;
             Id = nextId++;
             Group = group;
+        }
+
+        public Entry()
+        {
+            
         }
 
         public int GetIndex()

@@ -1,4 +1,6 @@
 using System.Security.Cryptography;
+using System.Text;
+
 namespace EncryptionAttempt;
 
 public class EncryptDecrypt
@@ -15,27 +17,30 @@ public class EncryptDecrypt
                 {
                     // System.Security.Cryptography.CryptographicException: Specified key is not a valid size for this algorithm.
                     
-                    // string password = "@myPassword1234"; // ask user for input on this
-                    // byte[] key = Encoding.UTF8.GetBytes(password);
+                    string password = "@myPassword1234"; // ask user for input on this
+                    byte[] key = Encoding.UTF8.GetBytes(password);
                     
-                    byte[] key =
-                    {
-                        0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                        0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
-                    };
+                    // byte[] key =
+                    // {
+                    //     0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+                    //     0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
+                    // };
+                    // aes.Key = key;
+                    Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(key, key, 10000);
+                    key = rfc.GetBytes(32);
                     aes.Key = key;
-
+                    
                     
                     byte[] iv = aes.IV; // first time generating IV (initialization vector)
                     
-                    
                     // writes IV to file unencrypted. IV does not need to be secret.
-                    fileStream.Write(iv, 0, iv.Length); 
+                    fileStream.Write(iv, 0, iv.Length);
+                    ICryptoTransform encryptor = aes.CreateEncryptor(key, iv);
 
                     // create CryptoStream from fileStream and aes
                     using (CryptoStream cryptoStream = new(
                                fileStream,
-                               aes.CreateEncryptor(),
+                               encryptor,
                                CryptoStreamMode.Write))
                     {
                         // By default, the StreamWriter uses UTF-8 encoding.

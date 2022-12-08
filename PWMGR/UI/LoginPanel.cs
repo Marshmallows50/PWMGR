@@ -1,3 +1,7 @@
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
+using System.Xml.Serialization;
 using TUIFrameWork;
 using TUIFrameWork.Components;
 using TUIFrameWork.Containers;
@@ -21,7 +25,7 @@ public class LoginPanel : Panel
         // login components
         Label passwordLbl = new Label("Password:");
         
-        Menu passwordMenu = new Menu(false, 2, LayoutDirection.Row);
+        Menu passwordMenu = new Menu(true, 2, LayoutDirection.Row);
         #region add components to Menu
         TextField passwordField = new TextField(30, "Login Password");
         MenuItem unlockBtn = new MenuItem("Unlock");
@@ -39,14 +43,23 @@ public class LoginPanel : Panel
         
         unlockBtn.action = delegate
         {
-            //TODO create MainPanel and switch to it.
-            //TODO deserialize 
-            //TODO un-encrypt
+            XmlSerializer ser = new XmlSerializer(typeof(Data));
+            Stream stream = new FileStream("MyFile.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
+            ui.Entries = (Data) ser.Deserialize(stream) ?? ui.Entries; 
+            stream.Close();
+            
+            // ui.Decrypt("@myPassword1234");
+
+            foreach (EntryGroup entryGroup in ui.Entries)
+            {
+                entryGroup.ApplyParent();
+            }
             ui.ContentPaneSwitcher.SwitchTo(ui.MeatNPotatoes);
             ui.ContentPane.ProcessDimensions();
             ui.ContentPane.CalcAllPositions();
             ui.ContentPane.Draw();
             ui.ContentPane.ManageInput();
+            
         };
     }
 }

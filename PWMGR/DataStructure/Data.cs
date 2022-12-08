@@ -1,7 +1,6 @@
 using System.Collections;
 
 namespace PWMGR;
-
 public class Data : IEnumerable<EntryGroup>
 {
     private List<EntryGroup> groups;
@@ -13,7 +12,11 @@ public class Data : IEnumerable<EntryGroup>
     {
         groups = new List<EntryGroup>();
     }
-    
+
+    public void Add(EntryGroup group)
+    {
+        AddGroup(group);
+    }
 
     public void AddGroup(EntryGroup group)
     {

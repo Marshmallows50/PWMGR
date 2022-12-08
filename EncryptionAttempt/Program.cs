@@ -25,5 +25,5 @@ using EncryptionAttempt;
 // RSA rsa = RSA.Create();
 // Aes aes = Aes.Create();
 
-// EncryptDecrypt.Encrypt();
-EncryptDecrypt.Decrypt();
+EncryptDecrypt.Encrypt();
+// EncryptDecrypt.Decrypt();
