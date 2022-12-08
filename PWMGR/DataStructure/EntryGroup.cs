@@ -10,13 +10,14 @@ using System.Xml.Serialization;
 
 namespace PWMGR
 {
+    [Serializable]
     public class EntryGroup
     {  
         public string Name { get; set; }
         public List<Entry> Entries { get; set; }
         public int Size => Entries.Count;
         
-        public Entry selectedEntry;
+        public Entry SelectedEntry { get; set; }
         public ConsoleColor GroupColor { get; set; }
         
         /// <summary>
@@ -29,15 +30,9 @@ namespace PWMGR
             GroupColor = color;
 
             Entries = new List<Entry>();
-            selectedEntry = new Entry("", this);
+            SelectedEntry = new Entry("", this);
         }
 
-        public EntryGroup()
-        {
-            
-        }
-        
-        
         #region Functionality Methods
         public void Add(Entry entry) {
             Entries.Add(entry);
@@ -51,14 +46,14 @@ namespace PWMGR
             }
             catch
             {
-                int i = 0;
+                int i = 0; // do nothing, don't show anything either
             }
             
         }
 
         public void SelectEntry(Entry entry)
         {
-            selectedEntry = entry;
+            SelectedEntry = entry;
         }
         
         #endregion

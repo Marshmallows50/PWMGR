@@ -14,7 +14,10 @@ public class EntryPanel : Panel
     
     private Menu groupMenu;
     private Panel tablePanel;
-    private Menu tableMenu;                                     
+    private Menu tableMenu;
+    
+    //select by default
+    public MenuItem FinanceBtn { get; private set; }
 
 
     public EntryPanel(Ui ui) : base(6)
@@ -39,13 +42,13 @@ public class EntryPanel : Panel
         groupMenu = new Menu(true, 1);
 
         #region Buttons
-        MenuItem financeBtn = new MenuItem("Finance");
+        FinanceBtn = new MenuItem("Finance");
         MenuItem entertainmentBtn = new MenuItem("Entertainment");
         MenuItem shoppingBtn = new MenuItem("Shopping");
         MenuItem socialBtn = new MenuItem("Social Media");
         MenuItem workBtn = new MenuItem("Work");
         
-        groupMenu.Add(financeBtn);
+        groupMenu.Add(FinanceBtn);
         groupMenu.Add(entertainmentBtn);
         groupMenu.Add(shoppingBtn);
         groupMenu.Add(socialBtn);
@@ -54,14 +57,14 @@ public class EntryPanel : Panel
         groupMenu.ProcessDimensions();
 
         #region Button Actions
-        financeBtn.action = delegate { SelectAndDisplay("Finance"); };
+        FinanceBtn.action = delegate { SelectAndDisplay("Finance"); };
         entertainmentBtn.action = delegate { SelectAndDisplay("Entertainment"); };
         shoppingBtn.action = delegate { SelectAndDisplay("Shopping"); };
         socialBtn.action = delegate { SelectAndDisplay("Social Media"); };
         workBtn.action = delegate { SelectAndDisplay("Work"); };
         #endregion
         
-        // financeBtn.Act();
+        // FinanceBtn.Act();
         return groupMenu;
     }
 
@@ -108,7 +111,7 @@ public class EntryPanel : Panel
         tablePanel.Remove(tableMenu);
         tableMenu = new Menu(true);
         
-        List<string[]> rows = ui.Entries.selectedGroup.GetTableData().ToList();
+        List<string[]> rows = ui.Entries.SelectedGroup.GetTableData().ToList();
         
         foreach (string[] t in rows)
         {
@@ -126,12 +129,12 @@ public class EntryPanel : Panel
             MenuItem entry = new MenuItem(sb.ToString());
             entry.action = delegate
             {
-                ui.Entries.selectedGroup
-                    .SelectEntry(ui.Entries.selectedGroup.Entries
+                ui.Entries.SelectedGroup
+                    .SelectEntry(ui.Entries.SelectedGroup.Entries
                         .Single(e => e.Id == int.Parse(t[4])));
                 
-                ui.MeatNPotatoesSwitcher.SwitchTo(ui.editPanel);
-                ui.editPanel.UpdateValues();
+                ui.MeatNPotatoesSwitcher.SwitchTo(ui.Edit);
+                ui.Edit.UpdateValues();
                 ui.ContentPane.ProcessDimensions();
                 ui.ContentPane.CalcAllPositions();
                 ui.ContentPane.Draw();

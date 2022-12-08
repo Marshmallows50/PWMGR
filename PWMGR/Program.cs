@@ -22,7 +22,7 @@ Ui start = new Ui();
 //         
 // Panel frame = new Panel();
 // PanelSwitcher UnlockSwitch;
-// Panel loginPanel;
+// Panel Login;
 // Panel mainPanel;
 //
 //
@@ -32,26 +32,26 @@ Ui start = new Ui();
 // frame.hAlignment = HAlignment.Center;
 // frame.vAlignment = VAlignment.Center;
 //         
-// loginPanel = CreateLoginPanel();
+// Login = CreateLoginPanel();
 // mainPanel = TuiMain.CreateMainPanel();
 //         
-// UnlockSwitch = new PanelSwitcher(loginPanel);
+// UnlockSwitch = new PanelSwitcher(Login);
 //         
-// frame.Add(loginPanel);
+// frame.Add(Login);
 // frame.ProcessDimensions();
 // frame.CalcAllPositions();
 // frame.Draw();
 //         
-// loginPanel.ManageInput();
+// Login.ManageInput();
 //
 //
 // Panel CreateLoginPanel()
 // {
 //     // create and configure login Panel 
-//     loginPanel = new Panel(1);
-//     loginPanel.SetDimensions(60, 40);
-//     loginPanel.hAlignment = HAlignment.Center;
-//     loginPanel.vAlignment = VAlignment.Center;
+//     Login = new Panel(1);
+//     Login.SetDimensions(60, 40);
+//     Login.hAlignment = HAlignment.Center;
+//     Login.vAlignment = VAlignment.Center;
 //
 //     // Panel for login components
 //     Panel loginInputPanel = new Panel(2);
@@ -72,9 +72,9 @@ Ui start = new Ui();
 //     loginInputPanel.Add(passwordMenu);
 //     loginInputPanel.ProcessDimensions();
 //         
-//     loginPanel.Add(loginInputPanel);
-//     loginPanel.ProcessDimensions();
-//     loginPanel.CalcAllPositions();
+//     Login.Add(loginInputPanel);
+//     Login.ProcessDimensions();
+//     Login.CalcAllPositions();
 //         
 //     unlockBtn.action = delegate
 //     {
@@ -89,5 +89,5 @@ Ui start = new Ui();
 //         mainPanel.ManageInput();
 //     };
 //
-//     return loginPanel;
+//     return Login;
 // }

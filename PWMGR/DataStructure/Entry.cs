@@ -10,6 +10,7 @@ namespace PWMGR
 {   /// <summary>
     /// A class representation of a username - password pair for an associated website. 
     /// </summary>
+    [Serializable]
     public class Entry
     {
         public string Title { get; set; }
@@ -19,7 +20,6 @@ namespace PWMGR
         public int Id { get; set; }
         public List<string> Tags { get; set; }
         
-        [XmlIgnore]
         public EntryGroup Group { get; set; }
 
         private static int nextId = 0;
@@ -37,12 +37,7 @@ namespace PWMGR
             Id = nextId++;
             Group = group;
         }
-
-        public Entry()
-        {
-            
-        }
-
+        
         public int GetIndex()
         {
             return Group.Entries.IndexOf(this);

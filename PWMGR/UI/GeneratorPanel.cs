@@ -45,13 +45,13 @@ public class GeneratorPanel : Panel
         genBtn.action = delegate
         {
             if (upperCase.Toggled)
-                Generator.isUpperChecked = true;
+                Generator.IsUpperChecked = true;
             if (lowerCase.Toggled)
-                Generator.isLowerChecked = true;
+                Generator.IsLowerChecked = true;
             if (numbers.Toggled)
-                Generator.isNumberChecked = true;
+                Generator.IsNumberChecked = true;
             if (symbols.Toggled)
-                Generator.isSymbolChecked = true;
+                Generator.IsSymbolChecked = true;
         
             int.TryParse(generatedPwLength.text, out int number);
             Generator.Length = number;

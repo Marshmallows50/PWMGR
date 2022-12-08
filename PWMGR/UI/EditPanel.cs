@@ -44,13 +44,13 @@ public class EditPanel : Panel
 
         apply.action = delegate
         {
-            ui.Entries.selectedGroup.selectedEntry.Title = titleField.text;
-            ui.Entries.selectedGroup.selectedEntry.Username = usernField.text;
-            ui.Entries.selectedGroup.selectedEntry.Password = passField.text;
-            ui.Entries.selectedGroup.selectedEntry.URL = urlField.text;
+            ui.Entries.SelectedGroup.SelectedEntry.Title = titleField.text;
+            ui.Entries.SelectedGroup.SelectedEntry.Username = usernField.text;
+            ui.Entries.SelectedGroup.SelectedEntry.Password = passField.text;
+            ui.Entries.SelectedGroup.SelectedEntry.URL = urlField.text;
 
             if (addTag.text != String.Empty)
-                ui.Entries.selectedGroup.selectedEntry.Tags.Add(addTag.text);
+                ui.Entries.SelectedGroup.SelectedEntry.Tags.Add(addTag.text);
 
             ui.ContentPane.ProcessDimensions();
             ui.ContentPane.CalcAllPositions();
@@ -61,10 +61,10 @@ public class EditPanel : Panel
 
     public void UpdateValues()
     {
-        titleField.SetText(ui.Entries.selectedGroup.selectedEntry.Title);
-        usernField.SetText(ui.Entries.selectedGroup.selectedEntry.Username);
-        passField.SetText(ui.Entries.selectedGroup.selectedEntry.Password);
-        urlField.SetText(ui.Entries.selectedGroup.selectedEntry.URL);
+        titleField.SetText(ui.Entries.SelectedGroup.SelectedEntry.Title);
+        usernField.SetText(ui.Entries.SelectedGroup.SelectedEntry.Username);
+        passField.SetText(ui.Entries.SelectedGroup.SelectedEntry.Password);
+        urlField.SetText(ui.Entries.SelectedGroup.SelectedEntry.URL);
         addTag.SetText(String.Empty);
         
     }

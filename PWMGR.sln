@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PWMGR", "PWMGR\PWMGR.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TUIFrameWork", "TUIFrameWork\TUIFrameWork.csproj", "{12B9DC94-5F25-4779-95E2-4645F2FBE52D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptionAttempt", "EncryptionAttempt\EncryptionAttempt.csproj", "{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoDataStructure", "DemoDataStructure\DemoDataStructure.csproj", "{2EF99143-D2E9-4E05-A3BD-966974FD89B4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,14 +21,6 @@ Global
 		{12B9DC94-5F25-4779-95E2-4645F2FBE52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B9DC94-5F25-4779-95E2-4645F2FBE52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B9DC94-5F25-4779-95E2-4645F2FBE52D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D050A0A-66E5-4EF8-BC93-8D5CCB0C8334}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EF99143-D2E9-4E05-A3BD-966974FD89B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

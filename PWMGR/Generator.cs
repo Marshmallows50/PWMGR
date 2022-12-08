@@ -6,36 +6,36 @@ public static class Generator
 
     private const string Upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const string Lower = "abcdefghijklmnopqrstuvwxyz";
-    private const string Numbers = "0123456789";
-    private const string Symbols = "!@#$%&*?";
-    public static bool isUpperChecked;
-    public static bool isLowerChecked;
-    public static bool isNumberChecked;
-    public static bool isSymbolChecked;
+    private const string Numbers = "01234567890123456789";
+    private const string Symbols = "!@#$%&*?!@#$%&*?!@#$%&*?";
+    public static bool IsUpperChecked { get; set; }
+    public static bool IsLowerChecked { get; set; }
+    public static bool IsNumberChecked { get; set; }
+    public static bool IsSymbolChecked { get; set; }
     
     public static string CreatePassword()
     {
         string container = "";
         
 
-        if (isUpperChecked)
+        if (IsUpperChecked)
             container += Upper;
         
 
 
-        if (isLowerChecked)
+        if (IsLowerChecked)
             container += Lower;
         
 
-        if (isNumberChecked)
+        if (IsNumberChecked)
             container += Numbers;
         
 
-        if (isSymbolChecked)
+        if (IsSymbolChecked)
             container += Symbols;
         
         
-        if (!isUpperChecked && !isLowerChecked && !isNumberChecked && !isSymbolChecked)
+        if (!IsUpperChecked && !IsLowerChecked && !IsNumberChecked && !IsSymbolChecked)
             container += Lower;
         
         
@@ -46,10 +46,10 @@ public static class Generator
             chars[i] = container[rand.Next(0, container.Length)];
         }
         
-        isUpperChecked = false;
-        isLowerChecked = false;
-        isNumberChecked = false;
-        isSymbolChecked = false;
+        IsUpperChecked = false;
+        IsLowerChecked = false;
+        IsNumberChecked = false;
+        IsSymbolChecked = false;
         Length = 0;
         
         return new string(chars);

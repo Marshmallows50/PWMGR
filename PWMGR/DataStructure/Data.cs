@@ -1,10 +1,11 @@
 using System.Collections;
 
 namespace PWMGR;
+[Serializable]
 public class Data : IEnumerable<EntryGroup>
 {
     private List<EntryGroup> groups;
-    public EntryGroup selectedGroup;
+    public EntryGroup SelectedGroup { get; set; }
 
     public int Size => groups.Count;
     
@@ -22,7 +23,7 @@ public class Data : IEnumerable<EntryGroup>
     {
         groups.Add(group);
         if (Size == 1)
-            selectedGroup = group;
+            SelectedGroup = group;
     }
 
     public void RemoveGroup(EntryGroup group)
@@ -32,7 +33,7 @@ public class Data : IEnumerable<EntryGroup>
 
     public void SelectGroup(EntryGroup group)
     {
-        selectedGroup = group;
+        SelectedGroup = group;
     }
 
     public IEnumerator<EntryGroup> GetEnumerator()

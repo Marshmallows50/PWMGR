@@ -39,19 +39,20 @@ public class MenuBar : Menu
         #region Button Actions
         newEntryBtn.action = delegate
         {
-            ui.Entries.selectedGroup.Add(new Entry("Default", ui.Entries.selectedGroup));
-            ui.entryPanel.DisplayGroup();
+            ui.Entries.SelectedGroup.Add(new Entry("Default", ui.Entries.SelectedGroup));
+            ui.Entry.DisplayGroup();
         };
         
         remEntryBtn.action = delegate
         {
-            ui.Entries.selectedGroup.Remove(ui.Entries.selectedGroup.selectedEntry);
-            ui.entryPanel.DisplayGroup();
+            ui.Entries.SelectedGroup.Remove(ui.Entries.SelectedGroup.SelectedEntry);
+            ui.Entry.DisplayGroup();
         };
         
         tableBtn.action = delegate
         {
-            ui.MeatNPotatoesSwitcher.SwitchTo(ui.entryPanel);
+            ui.MeatNPotatoesSwitcher.SwitchTo(ui.Entry);
+            ui.Entry.FinanceBtn.Act();
             ui.MeatNPotatoes.ProcessDimensions();
             ui.MeatNPotatoes.CalcAllPositions();
             ui.MeatNPotatoes.Draw();
@@ -59,7 +60,7 @@ public class MenuBar : Menu
         
         pwGeneratorBtn.action = delegate
         {
-            ui.MeatNPotatoesSwitcher.SwitchTo(ui.generatorPanel);
+            ui.MeatNPotatoesSwitcher.SwitchTo(ui.Generator);
             ui.MeatNPotatoes.ProcessDimensions();
             ui.MeatNPotatoes.CalcAllPositions();
             ui.MeatNPotatoes.Draw();
